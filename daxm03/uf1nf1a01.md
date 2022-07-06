@@ -29,7 +29,7 @@ Durant la fase de disseny i desenvolupament s'han de modelar les dades, definir 
 
 Les metodologies de desenvolupament actuals inclouen la documentació i prova dintre del propi procés de desenvolupament del codi.
 
-El disseny utilitza diagrames gràfics i (pseudocodi)[https://ca.wikipedia.org/wiki/Pseudocodi].
+El disseny utilitza diagrames gràfics i [pseudocodi](https://ca.wikipedia.org/wiki/Pseudocodi).
 
 Els diagrames permeten una visualització gràfica de l'estructura del codi (**diagrama de flux**) o de les dades (**diagrama UML**).
 
