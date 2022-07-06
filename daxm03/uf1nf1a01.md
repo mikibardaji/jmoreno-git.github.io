@@ -18,10 +18,10 @@ El **cicle de vida d'un programa** és el conjunt de fases per les que passa el 
 
 Les fases principals que es poden considerar són:
 
-* Anàlisi de requisits
-* Disseny i desenvolupament
-* Documentació
-* Prova
+- Anàlisi de requisits
+- Disseny i desenvolupament
+- Documentació
+- Prova
 
 L'anàlisi de requisits ha de permetre determinar quina informació ha de processar el programa, què ha de fer amb la informació, quin mecanismes de comunicació té amb els usuaris, etc.
 
