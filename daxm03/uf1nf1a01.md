@@ -8,7 +8,7 @@
 
 La programació d'ordinadors s'utilitza per resoldre problemes. Generalment, els problemes a resoldre consisteixen en processar informació i obtenir un resultat o prendre accions o decisions.
 
-El procediment per resoldre un problema concret s'anomena **algorisme**. 
+El procediment per resoldre un problema concret s'anomena **algorisme**. (https://es.wikipedia.org/wiki/Algoritmo)
 
 Un algorisme consisteix en un conjunt ordenat d'operacions que permeten resoldre un problema en un nombre finit de passos i en un temps finit. Pot acceptar un conjunt de **dades d'entrada** i un conjunt de **dades de sortida**.
 
@@ -68,4 +68,12 @@ En funció del tipus de dades que connecten i de l'operació que representen pod
 Són combinacions de dades i operadors que proporcionen un resultat.
 
 A les expressions, els operadors s'avaluen aplicant els criteris de prioritat establerts pel llenguatge. Si tenen igual grup de prioritat, s'avaluen d'esquerra a dreta.
+
+## Representació de programes
+
+Una manera convenient de reprentar gràficament un algorisme o procés és el [diagrama de flux o ordinograma](https://es.wikipedia.org/wiki/Diagrama_de_flujo).
+
+Un altre sistema per representar un algorisme és el [pseudocodi](https://ca.wikipedia.org/wiki/Pseudocodi). Consisteix en un llenguatge intermedi entre el llenguatge natural i el llenguatge de programació i permet definir l'estructura del codi i el processat de les dades sense entrar en els detalls del llenguatge de programació a utilitzar.
+
+
 
