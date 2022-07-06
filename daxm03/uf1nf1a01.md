@@ -1,10 +1,21 @@
 # Conceptes bàsics de programació estructurada
 
 1. Programes i algorismes
-2. Elements d'un programa
-3. Representació de programes
+2. Cicle de vida d'una aplicació
+3. Elements d'un programa
+4. Representació de programes
 
 ## Programes i algorismes
+
+Un ordinador és una màquina electrònica dotada d'una memòria de gran capacitat i de mètodes de tractament de la informació, capaç de resoldre problemes matemàtics i lògics mitjançant la utilització automàtica de programes informàtics.
+
+Els components principals d'un ordinador són el processador central, la memòria i els perifèrics. Entre els perifèrics destaquen el teclat, la pantalla i els discs d'emmagatzemament (dics durs).
+
+El **processador central** és el cervell de l'ordinador i realitza operacions aritmètico-lògiques sobre la informació que recupera de la memòria.
+
+Els components físics de l'ordinador són el **maquinari**. Les dades i els programes constitueixen el **programari**.
+
+El sistema operatiu de l'ordinador és la capa de programari que s'encarrega de la gestió i control del maquinari i proporciona eines per gestionar la informació i els programes.
 
 La programació d'ordinadors s'utilitza per resoldre problemes. Generalment, els problemes a resoldre consisteixen en processar informació i obtenir un resultat o prendre accions o decisions.
 
@@ -12,30 +23,38 @@ El procediment per resoldre un problema concret s'anomena [**algorisme**](https:
 
 Un algorisme consisteix en un conjunt ordenat d'operacions que permeten resoldre un problema en un nombre finit de passos i en un temps finit. Pot acceptar un conjunt de **dades d'entrada** i un conjunt de **dades de sortida**.
 
-La codificació dún algorisme en un ordinador s'anomena **programa**.
+La codificació d'un algorisme en un ordinador s'anomena **programa**.
 
-El **cicle de vida d'un programa** és el conjunt de fases per les que passa el proceś de creació del programa. 
+**Activitat**
+Prova de programar el moviment per arribar a la destinació [Blockly:laberint](https://blockly.games/maze?lang=es)
+
+## Cicle de vida d'una aplicació
+
+El procés que se segueix des del plantejament d'un problema fins a tenir una solució instal·lada en la computadora, i en funcionament pels usuaris finals, es denomina **cicle de vida d'una aplicació informàtica**.
 
 Les fases principals que es poden considerar són:
 
-- Anàlisi de requisits
-- Disseny i desenvolupament
-- Documentació
-- Prova
+- Anàlisi
+- Disseny
+- Codificació
+- Compilació
+- Muntatge
+- Prova i depuració
+- Explotació i manteniment
 
-L'anàlisi de requisits ha de permetre determinar quina informació ha de processar el programa, què ha de fer amb la informació, quin mecanismes de comunicació té amb els usuaris, etc.
+L'anàlisi ha de permetre determinar quina informació ha de processar el programa, què ha de fer amb la informació, quin mecanismes de comunicació té amb els usuaris, etc.
 
-Durant la fase de disseny i desenvolupament s'han de modelar les dades, definir i documentar les estructures de dades i desenvolupar i documentar el codi necessari.
-
-Les metodologies de desenvolupament actuals inclouen la documentació i prova dintre del propi procés de desenvolupament del codi.
-
-El disseny utilitza diagrames gràfics i [pseudocodi](https://ca.wikipedia.org/wiki/Pseudocodi).
+Durant la fase de disseny s'han de modelar les dades i definir la solució al problema (algorisme) utilitzant diagrames gràfics o [pseudocodi](https://ca.wikipedia.org/wiki/Pseudocodi).
 
 Els diagrames permeten una visualització gràfica de l'estructura del codi (**diagrama de flux**) o de les dades (**diagrama UML**).
 
-Per codificar els programes s'utilitzen llenguatges de programació, com per exemple java, C#, php, python, ... El resultat és el **codi font** del programa.
+La fase de codificació consisteix en transcriure l'algorisme utilitzant llenguatges de programació, com per exemple java, C#, php, python, ... El resultat és el **codi font** del programa.
 
-Per tal que l'ordinador pugui executar el programa, cal traduir el codi font al *codi màquina*, específic del sistema on s'ha d'executar.
+Els llenguatges més propers a les característiques i arquitectura de l'ordinador es diuen **llenguatges de baix nivell**, com ara el *llenguatge màquina* i el *llenguatge assemblador*.
+
+Els llenguatges més propers al programador, amb característiques més complexes s'anomenen **llenguatges d'alt nivell**, com per exemple, Fortran, C, Cobol, Pascal, Java, etc.
+
+Per tal que l'ordinador pugui executar el programa, cal traduir el codi font al *codi màquina*, específic del sistema on s'ha d'executar. Això es realitza a les fases de compilació i muntatge.
 
 Segons el tipus de traducció que es realitza, els llenguatges es classifiquen en interpretats i compilats.
 
@@ -45,13 +64,37 @@ Als llenguatges **compilats**, en primer lloc un programa anomenat compilador fa
 
 Un tipus especial de llenguatges compilats són els que tenen un codi objecte intermig entre el codi font i el codi màquina. Aquests llenguatges necessiten una capa virtual que interpreti el codi intermig per executar-lo. Tot i que la velocitat no serà la mateixa que en el cas de codi objecte natiu, tenen com a avantatge que són multiplataforma, és a dir, que es poden executar un cop compilats en qualsevol sistema, ja que és aquesta capa virtual l'unica que cal instal·lar de forma específica a cada sistema. És el cas del llenguatge **java**.
 
+A la fase de prova i depuració es verifica que el programa funciona d'acord amb les especificacions requerides i es corregeixen els errors que s'hi trobin.
+
+A les fases d'explotació i manteniment, el programa és utilitzat pel usuaris finals i els programadors realitzen canvis, correccions i modificacions d'acord amb els requeriments dels usuaris.
+
+### Errors d'un programa
+
+Els errors són funcionaments anòmals o manca de funcionament absoluta del programa en determinades circumstàncies. Cal fer un procés de prova intensiu amb dades d'entrada prou diverses per detectar possibles errors i poder-los corregir.
+
+Els errors es clasifiquen en:
+
+- de compilació
+- d'execució
+- de lògica
+- d'especificació
+
+Els errors de compilació corresponen a incompliment de les regles de sintaxi del llenguatge i són generats pel compilador o intèrpret.
+
+Els erros d'execució es produeixen quan alguna operació no es pot realitzar sobre les dades subministrades. Són més difícils de detectar, ja que es produeixen en temps d'execució i només en circumstàncies molt concretes, depenent de les dades d'entrada.
+
+Els errors de lògica produeixen resultats no correctes. Per detectar-los cal usar un joc de dades d'entrada prou extens en realitzar les proves.
+
+Els errors d'especificació es produeixen per deficiències de comunicació entre client i desenvolupador. El resultat és que el programa no respon a les especificacions demanades pel client i acostuma a obligar a refer gran part del programa.
+
+
 ## Elements d'un programa
 
-En un el codi d'un programa informàtic podem trobar aquests elements:
+En el codi d'un programa informàtic podem trobar diversos elements. El programa es divideix en **instruccions o sentències**, cada una de les quals realitza una acció concreta i definida. Segons el tipus de sentència, poden contenir diferents elements:
 
 ### Variables i constants
 
-Serveixen per emmagatzemar dades dintre del programa.
+Serveixen per emmagatzemar **dades** dintre del programa.
 
 Han de tenir un tipus (defineix el tipus de dada contindrà), un valor (la dada concreta emmagatzemada) i un identificador (el nom amb què ens referirem a la variable o constant dintre del programa).
 
