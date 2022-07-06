@@ -74,6 +74,3 @@ A les expressions, els operadors s'avaluen aplicant els criteris de prioritat es
 Una manera convenient de reprentar gràficament un algorisme o procés és el [diagrama de flux o ordinograma](https://es.wikipedia.org/wiki/Diagrama_de_flujo).
 
 Un altre sistema per representar un algorisme és el [pseudocodi](https://ca.wikipedia.org/wiki/Pseudocodi). Consisteix en un llenguatge intermedi entre el llenguatge natural i el llenguatge de programació i permet definir l'estructura del codi i el processat de les dades sense entrar en els detalls del llenguatge de programació a utilitzar.
-
-
-
