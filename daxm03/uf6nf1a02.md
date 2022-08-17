@@ -1,8 +1,9 @@
-==== Relació entre vols i passatgers ====
+### Relació entre vols i passatgers
 
-Per implementar la relació mxn entre vols i passatgers crearem una classe amb les claus foranes que mapegen la taula de la relació.
+Per implementar la relació mxn entre vols i passatgers crearem una
+classe amb les claus foranes que mapegen la taula de la relació.
 
-<code java FlightPassenger.java>
+``` java
 /**
  * Transport persistence class for flight-passenger mxn relationship.
  * @author ProvenSoft
@@ -71,11 +72,12 @@ public class FlightPassenger {
     }
     
 }
-</code>
+```
 
-I per a la persistència de la relació, crearem la classe //FlightPassengerDao//.
+I per a la persistència de la relació, crearem la classe
+*FlightPassengerDao*.
 
-<code java FlightPassengerDao.java>
+``` java
 /**
  * DAO for flight-passsenger relationship persistence.
  * @author ProvenSoft
@@ -203,11 +205,12 @@ public class FlightPassengerDao {
         queries.put("sWherePassengerId", String.format("select * from %s where passenger_id = ?", TABLE_NAME));
     }
 }
-</code>
+```
 
-Per fer les consultes creuades, crearem al Model mètodes que utilizin les classes anteriors.
+Per fer les consultes creuades, crearem al Model mètodes que utilizin
+les classes anteriors.
 
-<code java>
+``` java
     /**
      * search passengers in given flight.
      * @param flight the flight to search passengers in.
@@ -226,6 +229,7 @@ Per fer les consultes creuades, crearem al Model mètodes que utilizin les class
         }
         return result;
     }
-</code>
+```
 
-Exercici: A partir del codi mostrat, cal completar les consultes que falten.
+Exercici: A partir del codi mostrat, cal completar les consultes que
+falten.
