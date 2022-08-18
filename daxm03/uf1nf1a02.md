@@ -17,7 +17,7 @@ Els **tipus primitius** estan incorporats dintre de la sintaxi del llenguatge de
 
 Els **tipus referencials** són tota la resta. Corresponen a estructures de dades més complexes i a objectes. El valor de la variable de tipus referencial no és el que està emmagatzemat en memòria, sinó una referència (un apuntador) al lloc on està emmagatzemat. Aquestes variables no s'inicialitzen en declarar-les, sinó que cal contruir els objectes amb un operador del llenguatge (***new***).
 
-![](assets/java_primitive_data_types.jpg)
+![](assets/tipos_datos_java.png)
 
 ## Operadors i expressions
 
