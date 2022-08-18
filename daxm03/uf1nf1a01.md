@@ -117,3 +117,43 @@ A les expressions, els operadors s'avaluen aplicant els criteris de prioritat es
 Una manera convenient de reprentar gràficament un algorisme o procés és el [diagrama de flux o ordinograma](https://es.wikipedia.org/wiki/Diagrama_de_flujo).
 
 Un altre sistema per representar un algorisme és el [pseudocodi](https://ca.wikipedia.org/wiki/Pseudocodi). Consisteix en un llenguatge intermedi entre el llenguatge natural i el llenguatge de programació i permet definir l'estructura del codi i el processat de les dades sense entrar en els detalls del llenguatge de programació a utilitzar.
+
+## Característiques del llenguatge Java
+
+El llenguatge Java va ser creat l'any 1009 per l'empresa Sun Microsystems, la qual va ser comprada l'any 2009 per Oracle.
+
+És un llenguatge compilat, d'alt nivell i amb sintaxi estricta. El compilador genera un codi intermig (bytecodes) que s'executa posteriorment sobre una entorn d'execució (màquina virtual). Aixó permet que sigui multiplataforma, ja que el codi compilat és el mateix per a totes les plataformes. Només cal tenir instal·lat l'entorn virtual (JRE: Java Runtime Environment) corresponent a la plataforma concreta.
+
+Java és un llenguatge orientat a objectes. Això implica que les funcions (anomenades mètodes) del llenguatge es troben encapsulades dintre d'objectes contenidors. El paradigma de l'orientació a objectes facilita molt el disseny i la construcció d'aplicacions grans.
+
+Es pot escriure un programa en Java amb qualsevol editor de text, tot i que un IDE (Integrated Development Environment) és convenient per disposar d'eines de compleció i evitar errors d'escriptura. Els fitxers de codi font porten l'extensió .java. el compilador genera fitxers en format bytecode amb extensió .class.
+
+Tot programa en Java es compon d'un conjunt de classes, cadascuna de les quals acostuma a estar en un fitxer amb el mateix nom que la classe. La classe que es carrega primer quan s'executa el programa ha de contenir un mètode main().
+
+Heus aquí un exemple d'aplicació petita en Java:
+
+``` java
+/**
+ * Hola món
+ * @author ProvenSoft
+ */
+public class HolaMon {
+    public static void main(String[] args) {
+        //imprimir missatge
+        System.out.println("Hola món!);
+    } 
+}
+```
+El fitxer s'ha de dir HolaMon.java.
+
+Els comentaris poden ser multilínia /*  */ o unilínia //.
+
+La classe HolaMon conté un únic mètode main. Les claus {} encerclen blocs de codi, en aquest cas, el corresponent al mètode main. Conté una única instrucció, la qual usa el mètode println per mostrar una cadena de text ("Hola món!"). El mètode println pertany a un objecte (out), el qual está contingut a la classe System.
+
+Per als noms s'utilitza la notació CamelCase:
+
+  - Noms de classes: inicial en majúscules i majúscula la inicial de cada nova paraula.
+  - Noms de mètodes i variables: inicial en minúscules i majúscula la inicial de cada nova paraula.
+  - Noms de constants: tots els caràcters en majúscula i paraules separades per guions baixos.
+
+
