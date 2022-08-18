@@ -79,7 +79,7 @@ int b = 2;
 float suma = a + b;
 ```
 
-També es pot expressar de forma explícita indicant el tipus entre parèntesis abans de la variable.
+També es pot expressar de forma **explícita** indicant el tipus entre parèntesis abans de la variable.
 
 ```java
 int iVal = 3;
