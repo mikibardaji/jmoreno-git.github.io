@@ -140,17 +140,17 @@ Heus aquí un exemple d'aplicació petita en Java:
 public class HolaMon {
     public static void main(String[] args) {
         //imprimir missatge
-        System.out.println("Hola món!);
+        System.out.println("Hola món!");
     } 
 }
 ```
-El fitxer s'ha de dir HolaMon.java.
+El fitxer s'ha de dir *HolaMon.java*.
 
-Els comentaris poden ser multilínia /*  */ o unilínia //.
+Els comentaris poden ser multilínia (/*  */) o unilínia (//).
 
-La classe HolaMon conté un únic mètode main. Les claus {} encerclen blocs de codi, en aquest cas, el corresponent al mètode main. Conté una única instrucció, la qual usa el mètode println per mostrar una cadena de text ("Hola món!"). El mètode println pertany a un objecte (out), el qual está contingut a la classe System.
+La classe *HolaMon* conté un únic mètode *main*. Les claus {} encerclen blocs de codi, en aquest cas, el corresponent al mètode *main*. Conté una única instrucció, la qual usa el mètode **println** per mostrar una cadena de text ("Hola món!"). El mètode println pertany a un objecte (*out*), el qual está contingut a la classe *System*.
 
-Per als noms s'utilitza la notació CamelCase:
+Per als noms s'utilitza la notació **CamelCase**:
 
   - Noms de classes: inicial en majúscules i majúscula la inicial de cada nova paraula.
   - Noms de mètodes i variables: inicial en minúscules i majúscula la inicial de cada nova paraula.
