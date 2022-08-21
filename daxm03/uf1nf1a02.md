@@ -17,7 +17,7 @@ Els **tipus primitius** estan incorporats dintre de la sintaxi del llenguatge de
 
 Els **tipus referencials** són tota la resta. Corresponen a estructures de dades més complexes i a objectes. El valor de la variable de tipus referencial no és el que està emmagatzemat en memòria, sinó una referència (un apuntador) al lloc on està emmagatzemat. Aquestes variables no s'inicialitzen en declarar-les, sinó que cal contruir els objectes amb un operador del llenguatge (***new***).
 
-![](assets/tipos_datos_java.png)
+![](assets/1.1/tipos_datos_java.png)
 
 ## Operadors i expressions
 
@@ -27,13 +27,13 @@ Normalment, els operadors actuen sobre dades (**operands**) d'un mateix tipus.
 
 Els operadors que actuen sobre un únic operand s'anomenen **unaris**. Els que actuen sobre dos operands s'anomenen **binaris**.
 
-![](assets/java_operators.png)
+![](assets/1.1/java_operators.png)
 
 Una **expressió** és una combinació qualsevol d'operadors i operands.
 
 L'avaluació d'una expressió es realiza avaluant els parèntesis, començant pels més interns i aplicant als operadors la seva precedència.
 
-![](assets/java_operator_precedence.png)
+![](assets/1.1/java_operator_precedence.png)
 
 ## Declaració de variables i constants
 

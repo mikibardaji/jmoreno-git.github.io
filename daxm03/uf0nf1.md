@@ -2,15 +2,15 @@
 
 ## Eines de desenvolupament
 
-[Pàgina oficial de Git](https://git-scm.com/)
+[Pàgina oficial de Git](https://0.1/git-scm.com/)
 
 [Manual oficial de Git](https://git-scm.com/book/es/v2)
 
-[Manual ràpid de Git](assets/comandos_git.pdf)
+[Manual ràpid de Git](assets/0.1/comandos_git.pdf)
 
-![Comandes de Git](assets/gitcheat.png)
+![Comandes de Git](assets/0.1/gitcheat.png)
 
-[Presentació de Git](assets/presentacio_git.pdf)
+[Presentació de Git](assets/0.1/presentacio_git.odp)
 
 [Netbeans](https://www.netbeans.org)
 
