@@ -1,4 +1,4 @@
-# Estructures seqüencials
+# Estructures condicionals
 
 [Code.org](http://www.code.org)
 

@@ -156,4 +156,4 @@ Per als noms s'utilitza la notació **CamelCase**:
   - Noms de mètodes i variables: inicial en minúscules i majúscula la inicial de cada nova paraula.
   - Noms de constants: tots els caràcters en majúscula i paraules separades per guions baixos.
 
-
+[Introducció a Java (ceedcv)](assets/1.1/ud4_Introduccion_a_Java.pdf)
