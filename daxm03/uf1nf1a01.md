@@ -157,3 +157,19 @@ Per als noms s'utilitza la notació **CamelCase**:
   - Noms de constants: tots els caràcters en majúscula i paraules separades per guions baixos.
 
 [Introducció a Java (ceedcv)](assets/1.1/ud4_Introduccion_a_Java.pdf)
+
+## Paradigmes de programació
+
+### Programació modular
+
+El programa es divideix en mòduls, cadascun dels quals executa una única activitat i es codifiquen independentment. Cada programa conté un mòdul principal que transfereix el control a altres mòduls (d'ara endavant subprogrames) que tornen el control al mòdul principal en acabar la seva tasca. Cada subprograma pot transferir el control a altres subprogrames, però cada un ha de tornar el control al mòdul que el va invocar. És aconsellable dimensionar els mòduls de manera que no ocupin més de 30 o 40 línies d'instruccions.
+
+Podem definir un mòdul com una o diverses instruccions físicament contigües i lògicament encadenades, tals que es poden referenciar mitjançant un nom i ser anomenades des de diferents punts d'un programa, així com el conjunt de dades privades d'aquest mòdul requerides per les instruccions. Els mòduls han de tenir la màxima cohesió i el mínim acoblament. La sortida del mòdul ha de ser funció només de la vostra entrada.
+
+### Programació estructurada
+
+Per augmentar l'eficiència de la programació i del manteniment, cal dotar els programes d'una estructura. Això, a més, assegura que els programes siguin adaptables, manejables, fàcilment comprensibles i transportables.
+
+Al maig de 1966, Böhm i Jacopini van demostrar el teorema de la programació estructurada: qualsevol programa propi pot ser escrit utilitzant només tres tipus d'estructures de control: seqüencials, condicionals i iteratives. Un programa es defineix com a propi si té només un punt d'entrada i un de sortida o fi, si hi ha camins des de l'entrada fins a la sortida que passen per totes les parts del programa i totes les instruccions són executables i no hi ha bucles sense fi.
+
+Així, doncs, en el disseny dels nostres programes ens limitarem a aquestes estructures de control.
