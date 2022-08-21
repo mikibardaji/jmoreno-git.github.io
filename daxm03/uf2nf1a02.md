@@ -1,0 +1,1 @@
+# Àmbit, visibilitat i extensió de variables
