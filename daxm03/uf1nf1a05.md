@@ -1,4 +1,4 @@
-# Estructures seqüencials
+# Estructures iteratives
 
 [Code.org](http://www.code.org)
 
