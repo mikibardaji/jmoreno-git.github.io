@@ -1,5 +1,7 @@
 # Funcions i procediments
 
+## Introducció
+
 L'ús de subalgorismes o subprogrames permet dividir problemes complexos en problemes més petits que es poden tratar millor de manera separada i que permet fer proves unitàries del seu funcionament amb independència de la resta del codi.
 
 Han de tenir una interfície clara amb la resta del codi, és a dir, tenen un únic punt d'entrada, un únic punt de sortida, reben dades d'entrada preferiblement només com a paràmetres i poden retornar un valor.
@@ -59,3 +61,31 @@ Hi ha també diversos mètodes d'associació entre paràmetres i arguments:
 
   - **Pas per valor**: El valor de l'argument es copia directament al paràmetre (recordeu que els paràmetres funcionen com variables locals del mètode). El mètode no té, doncs, accés als arguments originals del subprograma invocant, sinó només a una còpia dels mateixos. Això implica que el mètode no pot modificar els valor de les variables usades com a arguments. Es diu que són **paràmetres d'entrada**, ja que només faciliten informació al mètode.
   - **Pas per referència**: Els paràmetres reben com a valor, no el valor dels arguments, sinó referències a les variables originals (una referència és un apuntador que permet accedir a la ubicació de la variable en memòria). Dintre del mètode, s'utilizen en general de la mateixa manera (pot dependre del llenguatge de programació), però cal tenir present que ara els canvis en els valor dels paràmetres afecten a les variables del programa principal usades com a arguments. En aquest cas, es diu que són **paràmetres d'entrara i sortida**.
+
+## Mètodes en Java
+
+La sintaxi de Java per definir mètodes consisteix en una primera línia amb la declaració del prototip del mètode, seguida del bloc de codi del mètode tancat entre {}.
+
+```
+/**
+	 * area()
+	 * calculates and returns area of sphere with radius passed as a parameter.
+	 * @param double radius the radius of the sphere.
+	 * @return calculated area of the sphere.
+	 */
+	 public double area(double radius) {
+		 return (4.0 * Math.PI *radius * radius);
+	 }
+```
+
+El prototip conté els següents elements:
+
+* modificador d'accés: public, protected, private
+* el tipus de dada que retorna
+* l'identificador del mètode
+* la llista ordenada dels paràmetres del mètode, especificant el tipus i el nom
+
+Per invocar el mètode des de la mateixa classe, la sintaxi és la següent:
+
+   double resultat = area(3.0);
+

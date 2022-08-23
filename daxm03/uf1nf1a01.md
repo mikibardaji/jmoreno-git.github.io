@@ -1,10 +1,5 @@
 # Conceptes bàsics de programació estructurada
 
-1. Programes i algorismes
-2. Cicle de vida d'una aplicació
-3. Elements d'un programa
-4. Representació de programes
-
 ## Programes i algorismes
 
 Un ordinador és una màquina electrònica dotada d'una memòria de gran capacitat i de mètodes de tractament de la informació, capaç de resoldre problemes matemàtics i lògics mitjançant la utilització automàtica de programes informàtics.
@@ -236,3 +231,5 @@ Per augmentar l'eficiència de la programació i del manteniment, cal dotar els 
 Al maig de 1966, Böhm i Jacopini van demostrar el teorema de la programació estructurada: qualsevol programa propi pot ser escrit utilitzant només tres tipus d'estructures de control: seqüencials, condicionals i iteratives. Un programa es defineix com a propi si té només un punt d'entrada i un de sortida o fi, si hi ha camins des de l'entrada fins a la sortida que passen per totes les parts del programa i totes les instruccions són executables i no hi ha bucles sense fi.
 
 Així, doncs, en el disseny dels nostres programes ens limitarem a aquestes estructures de control.
+
+**Pàgina on practicar els conceptes bàsics de l'algorísmica**: [Code.org](http://www.code.org)
