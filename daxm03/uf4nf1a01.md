@@ -8,11 +8,11 @@
 
 ## Videos introducció a la POO
 
-![Introducció a POO en Java](https://youtu.be/XmUz5WJmJVU)
-![Classes i objectes](https://www.youtube.com/watch?v=ZY5pwm92cWQ)
-![Modularització i encapsulació](https://www.youtube.com/watch?v=RZOSJ2zuxIs)
-![Getters i setters](https://youtu.be/7ALMZymOs_s)
-![Getters i setters: pas de paràmetres](https://youtu.be/YQinPQVpSd4)
+[Introducció a POO en Java](https://youtu.be/XmUz5WJmJVU)
+[Classes i objectes](https://www.youtube.com/watch?v=ZY5pwm92cWQ)
+[Modularització i encapsulació](https://www.youtube.com/watch?v=RZOSJ2zuxIs)
+[Getters i setters](https://youtu.be/7ALMZymOs_s)
+[Getters i setters: pas de paràmetres](https://youtu.be/YQinPQVpSd4)
 
-![Modificador static: variables i constants](https://youtu.be/QIV7FfXa-zY)
-![Modificador static: mètodes](https://youtu.be/V0wIZ-OglsY)
+[Modificador static: variables i constants](https://youtu.be/QIV7FfXa-zY)
+[Modificador static: mètodes](https://youtu.be/V0wIZ-OglsY)
