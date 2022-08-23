@@ -120,6 +120,8 @@ A les fases d'explotació i manteniment, el programa és utilitzat pel usuaris f
 
 Els errors són funcionaments anòmals o manca de funcionament absoluta del programa en determinades circumstàncies. Cal fer un procés de prova intensiu amb dades d'entrada prou diverses per detectar possibles errors i poder-los corregir.
 
+![](/images/mi_codigo_funciona_porque.jpg)
+
 Els errors es clasifiquen en:
 
 - de compilació
@@ -216,6 +218,8 @@ Per als noms s'utilitza la notació **CamelCase**:
 
 [Introducció a Java (ceedcv)](assets/1.1/ud4_Introduccion_a_Java.pdf)
 
+![](/images/definicion_programador.jpg)
+
 ## Paradigmes de programació
 
 ### Programació modular
@@ -233,3 +237,5 @@ Al maig de 1966, Böhm i Jacopini van demostrar el teorema de la programació es
 Així, doncs, en el disseny dels nostres programes ens limitarem a aquestes estructures de control.
 
 **Pàgina on practicar els conceptes bàsics de l'algorísmica**: [Code.org](http://www.code.org)
+
+![](/images/cuando_reviso_codigo_6_meses-despues.png)

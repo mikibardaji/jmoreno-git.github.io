@@ -1,6 +1,15 @@
 # Herència
 
+# Continguts
+
+  - Extensió de classes. Superclasse i subclasse.
+  - Herència simple i múltiple.
+  - Constructors i destructors.
+  - Modificadors i herència de propietats i mètodes.
+
 [Apunts d'Herència](assets/4.2/dax2_m03-a421-Herencia.pdf)
+
+[Exemples d'herència i ús dels constructors](assets/4.2/herencia-exemples.zip)
 
 ## Videos introducció a l'herència i el polimorfisme
 (videos de "Píldoras informáticas")

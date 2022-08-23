@@ -1,5 +1,10 @@
 # Connexió amb bases de dades relacionals en Java
 
+## Continguts
+
+* Connexioó, consulta i modificació sobre bases de dades
+* Models connectat i desconnectat
+
 ## Persistència i serialització
 
 La **persistència** és el mecanisme mitjançant el qual s’aconsegueix desar dades perquè no es perdin en finalitzar l’aplicació i posteriorment recuperar-les.
@@ -294,6 +299,9 @@ Convé encapsular dintre d'una classe els paràmetres de connexió a la base de 
         }
     }
 ```
+Per continuar cal repassar les consultes SQL apreses al mòdul de bases de dades.
+
+![](/images/sql-join-table.jpg)
 
 Ja només ens queda programar una classe principal **ShowCountriesJdbcMySql** que provi de fer les operacions habituals (CRUD) de consulta i modificació de dades.
 
@@ -474,3 +482,6 @@ Ja només ens queda programar una classe principal **ShowCountriesJdbcMySql** qu
 
 I ja podem compilar i provar l'aplicació.
 
+Sempre hem de vigilar les entrades de l'usuari i netejar-les abans d'enviar-les a una consulta sobre la base de dades, per tal d'evitar la [injecció de codi](https://es.wikipedia.org/wiki/Inyecci%C3%B3n_SQL).
+
+![](/images/sql_injection_son_name.png)
