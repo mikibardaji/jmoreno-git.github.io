@@ -31,13 +31,13 @@ Els streams es categoritzen en quatre grans blocs segons dues propietats:
 * Direcció: entrada o sortida
 * Codificació: orientats a byte o orientats a caràcter
 
-![Byte input streams](assets/5.1/5.1.3/inputstream.png)
+Byte input streams ![Byte input streams](assets/5.1/5.1.3/inputstream.png)
 
-![Byte output streams](assets/5.1/5.1.3/outputstream.png)
+Byte output streams ![Byte output streams](assets/5.1/5.1.3/outputstream.png)
 
-![Char input streams](assets/5.1/5.1.3/reader.png)
+Char input streams ![Char input streams](assets/5.1/5.1.3/reader.png)
 
-![Char output streams](assets/5.1/5.1.3/writer.png)
+Char output streams ![Char output streams](assets/5.1/5.1.3/writer.png)
 
 En primer lloc provem exemples d'escriptura i lectura senzilla de bytes i de caràcters. Més endavant provarem exemples per fer persistents dades primitives i objectes.
 
@@ -190,7 +190,7 @@ public class ReadChars {
 
 ### Serialització de tipus primitius
 
-Utilitzem les classes [***DataInputStream***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInputStream.html) i [***DataOutStream***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataOutputStream.html), les quals propeeixen mètodes per a la persistència de cada tipus primitiu.
+Utilitzem les classes [***DataInputStream***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInputStream.html) i [***DataOutStream***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataOutputStream.html), les quals proveeixen mètodes per a la persistència de cada tipus primitiu.
 
 ```
 import java.io.*;
