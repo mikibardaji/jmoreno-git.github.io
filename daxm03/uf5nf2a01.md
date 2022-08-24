@@ -138,3 +138,6 @@ public class BorderLayoutExample {
     }
 }
 ```
+### Layouts
+
+[Layouts swing (from www.jairogarciarincon.com)](https://www.jairogarciarincon.com/clase/interfaces-de-usuario-con-java-swing/layout-managers-o-gestores-de-composicion)
