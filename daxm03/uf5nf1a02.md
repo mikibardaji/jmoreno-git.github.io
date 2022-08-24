@@ -102,7 +102,7 @@ Declarem la llista amb el tipus de la interface [***List***](https://docs.oracle
 
 Instanciem un tipus concret de llista.
 
-La biblioteca de col·leccions de Java usa plantilles (*template*) per especificar el tipus d'objecte a emmagatzemar: *List<Integer>*.
+La biblioteca de col·leccions de Java usa plantilles (*template*) per especificar el tipus d'objecte a emmagatzemar: List<Integer>.
 
 Les dues implementacions són iguals i funcionen de la mateixa manera. La diferència està en la implementació de la llista en memòria. *ArrayList* implementa la llista amb un array, mentres que *LinkedList* utilitza una llista enllaçada. Els arrays permeten accessos ràpids i directes a la informació, donada la posició de l'element. En canvi, les llistes enllaçades són més eficients quan cal inserir i esborrar elements amb freqüència a la llista.
 
@@ -219,7 +219,7 @@ Un *Set* és una *Collection* on no pot haver-hi elements duplicats. El següent
 
 ## Ordenació d'elements de col·leccions
 
-La interface *List* proveeix el mètode ***sort()*** per ordenar els elements. El paràmetre del mètode és un objecte d'una classe que implementi l'interface ***Comparator<T>***, definint de forma adequada el mètode ***compare(T o1, T o2)***.
+La interface *List* proveeix el mètode ***sort()*** per ordenar els elements. El paràmetre del mètode és un objecte d'una classe que implementi l'interface Comparator<T>, definint de forma adequada el mètode compare(T o1, T o2).
 
 El retorn del mètode *compare()* és el següent:
 * enter negatiu si o1 < o2
@@ -318,9 +318,9 @@ public class ListSort {
 } 
 ```
 
-# Ús de mapes (Map<T>)
+# Ús de mapes (Map)
 
-La interface [***Map<T>***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html) relaciona dues col·leccions d'elements: claus (*key*) i valors (*value*), permeten cerques per les claus.
+La interface [***Map***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html) relaciona dues col·leccions d'elements: claus (*key*) i valors (*value*), permeten cerques per les claus.
 
 La interface proporciona tres vistes de les dades:
 * ***Set<K> keySet()***: proporciona un *Set* amb les *keys*
@@ -409,19 +409,19 @@ Desenvolupat guiat de l'aplicació per gestionar clients. Els client s'emmagatze
 
 ## Classe Properties
 
-La classe [***Properties***] (https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Properties.html) representa un conjunt persistent de propietats, les quals es poden desar i recuperar d'un *stream* (per exemple, un fitxer). Cada propietat ve definida per una clau (key) i un valor (value).
+La classe [***Properties***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Properties.html) representa un conjunt persistent de propietats, les quals es poden desar i recuperar d'un *stream* (per exemple, un fitxer). Cada propietat ve definida per una clau (key) i un valor (value).
 
 Alguns dels mètodes que proporciona són:
 
-  String getProperty(String key)
-  String getProperty(String key, String defaultValue)
-  void list(PrintStream out)
-  void list(PrintWriter out)
-  void load(InputStream inStream)
-  void load(Reader reader)
-  Enumeration<?> propertyNames()
-  Object setProperty(String key, String value)
-  void store(Writer writer, String comments)
+* String getProperty(String key)
+* String getProperty(String key, String defaultValue)
+* void list(PrintStream out)
+* void list(PrintWriter out)
+* void load(InputStream inStream)
+* void load(Reader reader)
+* Enumeration<?> propertyNames()
+* Object setProperty(String key, String value)
+* void store(Writer writer, String comments)
 
 Consulteu la documentació per a obtenir més detalls de l'us de cada mètode.
 
@@ -432,7 +432,7 @@ Utilitzar els fitxers de Properties per desar la configuració d'un programa i l
 
 ## Col·leccions i streams (java 8+)
 
-A partir de la versió 8 de Java, el tractament de seqüències de dades es potencia molt amb la [***interface java.util.Stream<T>***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html), els **interface funcionals** i les **expressions lambda**.
+A partir de la versió 8 de Java, el tractament de seqüències de dades es potencia molt amb la [interface java.util.Stream<T>](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html), els **interface funcionals** i les **expressions lambda**.
 
 L'ús combinat d'aquestes eines permet la manipulació àgil i la realització d'operacions complexes de filtrat, modificació i transformació de dades d'una manera molt potent i efectiva. 
 
