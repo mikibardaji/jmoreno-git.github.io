@@ -1,39 +1,38 @@
-# Desenvolupament Flight manager
+# Mapeig objecte relacional
+
+## Introducció
+Les aplicacions treballen amb objectes en memòria. En canvi, les bases de dades relacionals treballen amb taules i relacions. A les tècniques de processament de la informació dels objectes per fer-los persistents en forma d'entrades de taules i relacions se les anomena mapeig objecte relacional (***ORM: object relational mapping***).
+
+Anem a il·lustrar l'ORM amb un exemple d'aplicació: un gestor de vols.
 
 ## Objectius
 
   - Implementar l'arquitectura MVC.
   - Implementar el patró DAO per a accés a dades.
-  - Aplicar el patró Singleton a la classe que encapsula les dades de
+  - Aplicar el patró Singleton a la classe que encapsula les dades de 
     connexió a la base de dades.
   - Crear la base de dades definint correctament les relacions entre les
     entitats i les restriccions d'integritat.
   - Crear un joc de dades de prova adient.
 
-## Enunciat
+## Desenvolupament Flight manager: Enunciat
 
-Una empresa Japonesa ens ha demanat que desenvolupem un sistema per
-gestionar els seus vols virtuals. Com que no es pot viatjar i hi ha gent
-que ho troba faltar han reproduït una cabina d'avió i han implementat
-tot un sistema de realitat virtual per simular un viatge.
+Una empresa Japonesa ens ha demanat que desenvolupem un sistema per gestionar els seus vols virtuals. Com que no es pot viatjar i hi ha gent que ho troba faltar han reproduït una cabina d'avió i han implementat tot un sistema de realitat virtual per simular un viatge.
 
 <https://cnnespanol.cnn.com/video/simulacion-de-vuelo-realidad-virtual-avion-encuentro-propuesta-first-airlines-tokio-japon-tripulacion-guillermo-arduino-clix-cnne/>
 
 El que necessita gestionar aquesta empresa és el següent.
 
-**Passatgers**: Un passatger es caracteritza per un nom, un
-telèfon(únic) i un booleà per indicar si és menor d'edat.
+**Passatgers**: Un passatger es caracteritza per un nom, un telèfon(únic) i un booleà per indicar si és menor d'edat.
 
-**Vols**: Un vol es caracteritza per un codi de vol (únic), una
-capacitat, una data i una hora de sortida del vol.
+**Vols**: Un vol es caracteritza per un codi de vol (únic), una capacitat, una data i una hora de sortida del vol.
 
 Les funcionalitats que cal implementar son les següents:
 
   - Alta, baixa i modificació de passatgers.
   - Alta, baixa i modificació de vols.
   - Registrar un passatger en un vol fins al màxim de capacitat.
-  - Eliminar un passatger d'un vol. Aquesta operació no es podrà fer
-    efectiva si queda menys d'una hora per iniciar el vol.
+  - Eliminar un passatger d'un vol. Aquesta operació no es podrà fer efectiva si queda menys d'una hora per iniciar el vol.
   - Llistar tots els vols.
   - Llistar tots els passatgers.
   - Llistar els passatgers d'un vol.
@@ -68,6 +67,10 @@ public class Main {
     
 }
 ```
+
+D'acord amb l'arquitectura MVC, cal instanciar primer el model, després el controlador i passar-li el model.
+
+La vista s'instancia normalment al controlador, tot i que també es pot instanciar al principal i connectar-la amb el controlador.
 
 **Model**
 
@@ -124,6 +127,8 @@ public class Model {
     
 }
 ```
+
+El model és el servei de dades del controlador. Quan es requereixen dades, les proveeix algun mètode del model.
 
 **Controlador**
 
@@ -202,6 +207,8 @@ public class MainController {
 }
 ```
 
+El controlador rep les accions de la vista i actua sobre el model per canviar dades o recuperar-ne, segons sigui el cas.
+
 **Vista**
 
 ``` java
@@ -278,6 +285,8 @@ public class MainView {
 }
 ```
 
+La vista conté la interfície gràfica amb la qual interactua l'usuari. En aquest cas, per simplificar, es tracta d'una interfície de text per consola.
+
 **Menú**
 
 ``` java
@@ -310,8 +319,9 @@ public class MainMenu extends Menu {
 }
 ```
 
-Classes auxiliars Menu i Option. ![Classes auxiliars Menu i
-Option](/docencia/dam/m03/uf6/flightsmanager/menuoption.zip)
+La classe MainMenu defineix el menú d'opcions de l'aplicació. Utilitza les classes auxiliars Menu i Ooption.
+
+Classes auxiliars Menu i Option. ![Classes auxiliars Menu i Option](/docencia/dam/m03/uf6/flightsmanager/menuoption.zip)
 
 ## Base de dades
 
@@ -345,14 +355,13 @@ ALTER TABLE flightspassengers ADD FOREIGN KEY fk_flight (flight_id) REFERENCES f
 ALTER TABLE flightspassengers ADD FOREIGN KEY fk_passenger (passenger_id) REFERENCES passengers(id);
 ```
 
+La relació entre passatgers i vols és mxn. Per això hi ha una taula de connexió entre les dues entitats amb les respectives claus primàries actuant com a foranes
+
 ## Capa de persistència de dades
 
-La classe DbConnect encapsula les dades per a la connexió a la base de
-dades. Té aplicat el patró Singleton perquè només existeixi una
-instancia de la classe.
+La classe ***DbConnect*** encapsula les dades per a la connexió a la base de dades. Té aplicat el patró ***Singleton*** perquè només existeixi una instancia de la classe.
 
-La classe s'encarrega també de carregar el driver de la base de dades.
-Si no es troba el driver, es llança ClassNotFoundException.
+La classe s'encarrega també de carregar el *driver* de la base de dades. Si no es troba el *driver*, es llança ***ClassNotFoundException***.
 
 ``` java
 /**
@@ -404,11 +413,9 @@ public final class DbConnect {
 
 ### Classes DAO
 
-Les classes DAO (Data Access Object) encapsulen les consultes a la base
-de dades i la conversió entre les dades de la base de dades i els
-objectes del model.
+Les classes **DAO** (**Data Access Object**) encapsulen les consultes a la base de dades i la conversió entre les dades de la base de dades i els objectes del model.
 
-En aquest exemple, les consultes es defineixen i es desen en un Map.
+En aquest exemple, les consultes *SQL* es defineixen i es desen en un **Map**.
 Només es mostren alguns mètodes a títol d'exemple.
 
 ``` java
@@ -480,22 +487,17 @@ public class PassengerDao {
 }
 ```
 
-Cal escriure una classe DAO per a cada entitat que ha de fer-se
-persistent a la base de dades.
+Cal escriure una classe DAO per a cada entitat que ha de fer-se persistent a la base de dades.
 
-La pràctica consisteix en completar l'aplicació implementant totes les
-funcionalitats requerides i realitzant les proves pertinents que
+La pràctica consisteix en completar l'aplicació implementant totes les funcionalitats requerides i realitzant les proves pertinents que
 n'assegurin el correcte funcionament en totes les circumstàncies.
 
-Cal definir l'estratègia de tractament d'errors: codis d'error,
-llançament d'excepcions, ..., de manera que es pugui informar a
-l'usuari amb prou detall del resultat de les accions que s'han
-realitzat.
+Cal definir l'estratègia de tractament d'errors: codis d'error, llançament d'excepcions, ..., de manera que es pugui informar a
+l'usuari amb prou detall del resultat de les accions que s'han realitzat.
 
 ### Relació entre vols i passatgers
 
-Per implementar la relació mxn entre vols i passatgers crearem una
-classe amb les claus foranes que mapegen la taula de la relació.
+Per implementar la relació mxn entre vols i passatgers crearem una classe amb les claus foranes que mapegen la taula de la relació.
 
 ``` java
 /**
@@ -568,8 +570,7 @@ public class FlightPassenger {
 }
 ```
 
-I per a la persistència de la relació, crearem la classe
-*FlightPassengerDao*.
+I per a la persistència de la relació, crearem la classe *FlightPassengerDao*.
 
 ``` java
 /**
@@ -701,8 +702,7 @@ public class FlightPassengerDao {
 }
 ```
 
-Per fer les consultes creuades, crearem al Model mètodes que utilizin
-les classes anteriors.
+Per fer les consultes creuades, crearem al Model mètodes que utilizin les classes anteriors.
 
 ``` java
     /**
