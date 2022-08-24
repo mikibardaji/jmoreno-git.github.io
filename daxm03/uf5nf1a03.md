@@ -6,6 +6,8 @@
 * Fluxos d'informació. Jerarquia de classes.
 * Biblioteques de classes per a fitxers XML.
 
+![](/images/disk_padre_usb.jpg)
+
 [Apuns de fluxos d'informació](assets/5.1/5.1.3/dax2_m03-a513-Fluxos_informacio.pdf)
 
 ## Gestió del sistema de fitxers.
@@ -38,6 +40,14 @@ Els streams es categoritzen en quatre grans blocs segons dues propietats:
 ![Char output streams](assets/5.1/5.1.3/writer.png)
 
 En primer lloc provem exemples d'escriptura i lectura senzilla de bytes i de caràcters. Més endavant provarem exemples per fer persistents dades primitives i objectes.
+
+### Videos d'introducció a fitxers
+(de Píldoras informáticas)
+* [Lectura de text](https://youtu.be/etQN4EfYN7k)
+* [Escriptura de text](https://youtu.be/E0H4OzW2_1Y)
+* [Lectura i escriptura de text amb buffer](https://youtu.be/YCCE4sbmWrw)
+* [Lectura binària](https://youtu.be/38YBRnJtQEw)
+* [Escriptura binària](https://youtu.be/v6ctWhhTFrk)
 
 ### Byte output stream
 
@@ -178,7 +188,7 @@ public class ReadChars {
 }
 ```
 
-### Persistència de tipus primitius
+### Serialització de tipus primitius
 
 Utilitzem les classes [***DataInputStream***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInputStream.html) i [***DataOutStream***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataOutputStream.html), les quals propeeixen mètodes per a la persistència de cada tipus primitiu.
 
@@ -239,6 +249,28 @@ public class DataStreamExample01 {
 }
 ```
 
+### Serialització d'objectes
+
+La **seriació** (*serialization*) és el procés d'escriure un objecte a un stream de bytes. És útil quan es vol fer persistent l'estat d'un programa a un fitxer per exemple. El procés invers s'anomena **deseriació** (*deserialization*).
+
+Només els objectes que implementen l'interfície [***Serializable***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html) poden ser desats i restaurats usant la serialització. Si una classe és serialitzable, totes les seves subclasses també ho són.
+
+Nota: les variables ***transient*** i ***static*** no es guarden durant la serialització.
+Usarem les **interfícies** ***ObjectOutput*** i ***ObjectInput***, i les **classes** ***ObjectOutputStream*** i ***ObjectInputStream***, que les implementen.
+
+![](assets/5.1/5.1.3/object-serialization.png)
+
+La interfície [***ObjectOutput***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/ObjectOutput.html) extén les interfícies ***DataOutput*** i ***AutoCloseable*** i suporta serialització. Defineix els mètodes ***close()***, ***flush()***, ***write()*** i ***writeObject()***. Aquest últim s'invoca per serialitzar un objecte. Tots els mètodes llancen ***IOException*** si es produeix un error.
+
+La interfície [***ObjectInput***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/ObjectInput.html) extén les interfícies ***DataInput*** i ***AutoCloseable*** i suporta serialització. Defineix els mètodes ***close()***, ***available()***, ***read()*** i ***readObject()***. Aquest últim s'invoca per llegir un objecte serialitzat. Tots els mètodes llancen ***IOException*** si es produeix un error. El mètode ***readObject()*** pot llançar també l'excepció ***ClassNotFoundException***.
+
+La classe [***ObjectOutputStream***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/ObjectOutputStream.html) extén ***OutputStream*** i implementa la interfície ***ObjectOutput***. El seu constructor és: ***ObjectOutputStream(OutputStream outStream) throws IOException***
+La classe [***ObjectInputStream***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/ObjectInputStream.html) extén ***InputStream*** i implementa la interfície ***ObjectInput***. El seu constructor és: ***ObjectInputStream(InputStream inStream) throws IOException***.
+
+Consulteu la documentació online de Java per a la llista de mètodes que implementen les dues classes anteriors.
+
+[Exemple de seriació d'objectes a fitxer en binari](assets/5.1/5.1.3/exampleobjectstream.zip)
+
 ## Biblioteques de classes per a fitxers XML.
 
 Per treballar amb fitxers en format [XML](https://en.wikipedia.org/wiki/XML), Java proporciona dues biblioteques:
@@ -255,3 +287,4 @@ Per treballar amb fitxers en format [XML](https://en.wikipedia.org/wiki/XML), Ja
 
 ### DOM
 
+No el treballarem en aquest mòdul.

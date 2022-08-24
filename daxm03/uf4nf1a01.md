@@ -9,13 +9,13 @@
 4.  Propietats i mètodes de classe i d'instància.
 5.  Modificadors d'accés i visibilitat.
 
-[Presentació Introducció a la POO: classes i objectes](assets/4.1/dam-m03-uf4nf1-introd_poo_objectes-presentacio.pdf)
+[Presentació Introducció a la POO: Objectes](assets/4.1/dam-m03-uf4nf1-introd_poo_objectes-presentacio.pdf)
 
-[Presentació Introducció a la POO: classes i objectes](assets/4.1/dam-m03-uf4nf1-introd_poo_classes-presentacio.pdf)
+[Presentació Introducció a la POO: classes](assets/4.1/dam-m03-uf4nf1-introd_poo_classes-presentacio.pdf)
 
 [Apunts de classes, objectes i encapsulació](assets/4.1/dax2_m03-a412-Classes_i_encapsulacio.pdf)
 
-## Videos introducció a la POO
+## Videos d'introducció a la POO
 
 * [Introducció a POO en Java](https://youtu.be/XmUz5WJmJVU)
 * [Classes i objectes](https://youtu.be/ZY5pwm92cWQ)
