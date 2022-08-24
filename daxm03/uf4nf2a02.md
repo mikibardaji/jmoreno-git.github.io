@@ -11,7 +11,7 @@
 
 [Exemples de polimorfisme](assets/4.2/polimorfisme-exemples.zip)
 Els dos primers il·lustren el polimorfisme amb les classes Amfibi i Granota.
-Els alters il·lustren les conversions entre superclasse i subclasses.
+Els altres il·lustren les conversions entre superclasse i subclasses.
 
 [Exemple de formulari d'entrada d'objectes usant polimorfisme](assets/4.2/forms.zip)
 Il·lustra un procediment per implementar mitjançant polimorfisme formularis d'entrada de dades de diferents tipus d'objecte de forma transparent al programador.
