@@ -1,5 +1,9 @@
 # Qüestions generals
 
+## Apunts en general
+
+[Apunts de Java (Álex García)](assets/1.1/apuntes_java-alex_garcia.pdf) Introducció molt completa i amb exemples.
+
 ## Eines de desenvolupament
 
 [Pàgina oficial de Git](https://0.1/git-scm.com/)
