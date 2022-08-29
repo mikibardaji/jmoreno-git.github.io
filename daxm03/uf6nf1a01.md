@@ -2,7 +2,7 @@
 
 ## Continguts
 
-* Connexioó, consulta i modificació sobre bases de dades
+* Connexió, consulta i modificació sobre bases de dades
 * Models connectat i desconnectat
 
 ## Persistència i serialització
