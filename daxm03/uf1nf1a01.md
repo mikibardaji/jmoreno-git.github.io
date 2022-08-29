@@ -239,3 +239,5 @@ Així, doncs, en el disseny dels nostres programes ens limitarem a aquestes estr
 **Pàgina on practicar els conceptes bàsics de l'algorísmica**: [Code.org](http://www.code.org)
 
 ![](/images/cuando_reviso_codigo_6_meses-despues.png)
+
+[Apunts de Java (Álex García)](assets/1.1/apuntes_java-alex_garcia.pdf) Introducció molt completa i amb exemples.
