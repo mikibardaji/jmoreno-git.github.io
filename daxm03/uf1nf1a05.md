@@ -43,3 +43,6 @@ Els bucles *for* en llenguatge *Java* són molt potents i tenen moltes més poss
 ## Enniuament de bucles
 
 El codi de l'interior del bucle pot també contenir altres bucles, generant estructures per respondre a problemes complexos.
+
+[El algorisme de l'amistat - Sheldon Cooper (The Big Bang Theory)](https://www.youtube.com/watch?v=H3z3HDbl5QU)
+
