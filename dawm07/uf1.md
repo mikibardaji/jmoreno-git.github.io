@@ -19,8 +19,8 @@ Durada DAWBI: 26 hores
   - [Programació web en PHP mclibre.org](http://www.mclibre.org/consultar/php/index.html).
   - [Tutorial PHP w3schools](http://www.w3schools.com/php/default.asp)
   - [Tutorial PHP InformaticaPC](https://informaticapc.com/tutorial-php/) Recull de How-Tos.
-  - ![Programador PHP. tomo I (Eugenia Bahit)](/docencia/dawbi/m07/uf1/programador_php-eugenia_bahit.pdf)
-  - ![PHP, the right way](/docencia/dawbi/m07/uf1/php-the_right_way.pdf)
+  - [Programador PHP. tomo I (Eugenia Bahit)](/docencia/dawbi/m07/uf1/programador_php-eugenia_bahit.pdf)
+  - [PHP, the right way](/docencia/dawbi/m07/uf1/php-the_right_way.pdf)
 
 **Altres**
 
@@ -47,17 +47,16 @@ Durada DAWBI: 26 hores
 
 **Promptuaris**
 
-  - [Best HTML and CSS cheat
-    sheets](https://cssauthor.com/html-and-css-cheat-sheets/)
-  - ![html5-mega-cheat-sheet-a4-print-ready](/docencia/dawbi/m07/uf1/html5-mega-cheat-sheet-a4-print-ready.pdf)
-  - ![html5-visual-cheat-sheet\_-tag-refrence](/docencia/dawbi/m07/uf1/html5-visual-cheat-sheet_-tag-refrence.pdf)
-  - ![css3-cheat-sheet](/docencia/dawbi/m07/uf1/css3-cheat-sheet.pdf)
+  - [Best HTML and CSS cheat sheets](https://cssauthor.com/html-and-css-cheat-sheets/)
+  - [html5-mega-cheat-sheet-a4-print-ready](/docencia/dawbi/m07/uf1/html5-mega-cheat-sheet-a4-print-ready.pdf)
+  - [html5-visual-cheat-sheet\_-tag-refrence](/docencia/dawbi/m07/uf1/html5-visual-cheat-sheet_-tag-refrence.pdf)
+  - [css3-cheat-sheet](/docencia/dawbi/m07/uf1/css3-cheat-sheet.pdf)
 
 **Exemples html5**
 
-  - ![HTML5 general](/docencia/dawbi/m07/uf1/html5_template.zip)
-  - ![Menu amb nav](/docencia/dawbi/m07/uf1/menu.zip)
-  - ![Menu desplegable](/docencia/dawbi/m07/uf1/menu_desplegable.zip)
+  - [HTML5 general](/docencia/dawbi/m07/uf1/html5_template.zip)
+  - [Menu amb nav](/docencia/dawbi/m07/uf1/menu.zip)
+  - [Menu desplegable](/docencia/dawbi/m07/uf1/menu_desplegable.zip)
 
 **Exercicis proposats**
 
@@ -106,7 +105,7 @@ Codi encastat amb el llenguatge de marques.
 ## Formularis amb PHP (6 hores)
 
   - Formularis en html i html5. [Forms in html5 (from htmlreference)](https://htmlreference.io/forms/).
-  - Recollida i processat de dades de formularis: [variables superglobals](https://www.php.net/manual/es/language.variables.superglobals.php) $\_GET, $\_POST, $\_REQUEST, $\_SERVER.
+  - Recollida i processat de dades de formularis: [variables superglobals](https://www.php.net/manual/es/language.variables.superglobals.php) `$_GET, $_POST, $_REQUEST, $_SERVER`.
   - Validació de dades enviades per formularis: [funcions filter](https://www.php.net/manual/es/ref.filter.php), [tipus de filtres](https://www.php.net/manual/es/filter.filters.php).
   - Formularis d'[enviament de fitxers](https://www.php.net/manual/en/features.file-upload.php).
 
