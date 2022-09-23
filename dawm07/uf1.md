@@ -4,6 +4,13 @@ Durada DAW: 30+11 hores
 
 Durada DAWBI: 26 hores
 
+  - [Conceptes generals](uf1a00.md)
+  - [Introducció al llenguatge PHP](uf1a01.md)
+  - [Formularis amb PHP](uf1a02.md)
+  - [Fitxers](uf1a03.md)
+  - [Sessions i galetes](uf1a04.md)
+
+
 ## Materials generals
 
 **HTML+CSS**
@@ -105,7 +112,7 @@ Codi encastat amb el llenguatge de marques.
 ## Formularis amb PHP (6 hores)
 
   - Formularis en html i html5. [Forms in html5 (from htmlreference)](https://htmlreference.io/forms/).
-  - Recollida i processat de dades de formularis: [variables superglobals](https://www.php.net/manual/es/language.variables.superglobals.php) $_GET, $_POST, $_REQUEST, $_SERVER.
+  - Recollida i processat de dades de formularis: [variables superglobals](https://www.php.net/manual/es/language.variables.superglobals.php) $\_GET, $\_POST, $\_REQUEST, $\_SERVER.
   - Validació de dades enviades per formularis: [funcions filter](https://www.php.net/manual/es/ref.filter.php), [tipus de filtres](https://www.php.net/manual/es/filter.filters.php).
   - Formularis d'[enviament de fitxers](https://www.php.net/manual/en/features.file-upload.php).
 
@@ -126,8 +133,8 @@ Codi encastat amb el llenguatge de marques.
 
   - [Funcions de tractament de directoris](https://www.php.net/manual/es/ref.dir.php).
   - [Funcions de tractament de fitxers](https://www.php.net/manual/es/ref.filesystem.php).
-  - ![Exemple lectura fitxer de propietats](/docencia/dawbi/m07/uf1/properties_file.zip)
-  - ![Exemple amb fitxers Fasta](/docencia/dawbi/m07/uf1/fasta_split.zip)
+  - [Exemple lectura fitxer de propietats](/docencia/dawbi/m07/uf1/properties_file.zip)
+  - [Exemple amb fitxers Fasta](/docencia/dawbi/m07/uf1/fasta_split.zip)
 
 [Expressions regulars](/docencia/dawbi/m07/uf1/regexp)
 
