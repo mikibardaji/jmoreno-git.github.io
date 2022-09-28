@@ -49,6 +49,19 @@ Les estructures condicionals es poden **enniuar**, es a dir, que una de les bran
 
 ![Representació gràfica de l'enniuament de condicionals](assets/1.1/diag_flux-if_else-enniuat.jpg)
 
+```java
+String missatge;
+if (edat >= 0) {
+    if (edat >= 67) {
+        missatge = "estàs jubilat";
+    } else {
+        missatge = "no estàs jubilat";
+    }
+} else {
+    missatge = "edat no vàlida";
+}
+```
+
 ## Condicional múltiple
 
 Quan la condició a avaluar pot prendre més de dos valors, s'utilitza el condicional múltiple.
