@@ -72,7 +72,7 @@ El codi de l'interior del bucle pot també contenir altres bucles, generant estr
 
 [El algorisme de l'amistat - Sheldon Cooper (The Big Bang Theory)](https://www.youtube.com/watch?v=H3z3HDbl5QU)
 
-##Exemples
+## Exemples
 
 ```java
 import java.util.InputMismatchException;
