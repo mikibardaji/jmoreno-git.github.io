@@ -24,12 +24,12 @@ L'expressió de la condició pot utilitzar els operadors relacionals i lògics.
 
 |operador | significat  |
 |--- |---|
-|'''>'''	| Major que |
-|'''<'''	| Menor que |
-|'''=='''	| Igual a  |
-|'''>=	'''| Major que o igual a  |
-|'''<='''	| Menor que o igual a  |
-|'''!='''	| Diferent de  |
+|```>```	| Major que |
+|```<```	| Menor que |
+|```==```	| Igual a  |
+|```>=```   | Major que o igual a  |
+|```<=```	| Menor que o igual a  |
+|```!=```	| Diferent de  |
 
 **Operadores lògics**
 
@@ -210,5 +210,55 @@ public class CalculadoraSenzilla {
         //mostrar resultat
         System.out.println(missatge);      
     } 
+}
+```
+
+```java
+import java.util.Scanner;
+/**
+ * Llegeix de l'usuari el mes i imprimeix els dies d'aquest mes
+ * (suposant que l'any no és de traspàs)
+ * @author Jose
+ */
+public class Mesos {
+    public static void main(String[] args) {
+        Scanner lector = new Scanner(System.in);
+        //llegir el mes
+        System.out.print("Entra el mes: ");
+        String mes = lector.next();
+        //escriure el mes
+        System.out.println("Has escrit el mes: " + mes);
+        //imprimir els dies del mes
+        int dies=-1;  //dies que té el mes
+        switch (mes) {
+            case "gener":
+            case "març":
+            case "maig":
+            case "juliol":
+            case "agost":
+            case "octubre":
+            case "desembre":
+                dies = 31;
+                break;
+            case "febrer":
+                dies = 28;
+                break;
+            case "abril":
+            case "juny":
+            case "setembre":
+            case "novembre":
+                dies = 30;
+                break;
+            default:
+                dies =-1;
+                break;
+        }
+        //imprimir resposta a l'usuari
+        if ( dies<0 ) {
+            System.out.println("Invàlid nom de mes!");
+        } else {
+            System.out.println(mes + " té " + dies + " dies");
+        }
+    }  
 }
 ```

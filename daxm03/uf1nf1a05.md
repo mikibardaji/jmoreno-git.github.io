@@ -26,11 +26,25 @@ La condició s'avalua abans d'executar el bloc intern. Per tant, si la condició
 
 ![Representació gràfica bucle condicional provat a l'inici](assets/1.1/diag_flux-while.jpg)
 
+```java
+while (condicio) {
+  //bloc a executar mentre es compleixi la condicio
+  //si no es compleix la primera vegada, aquest bloc no s'executa mai
+}
+```
+
 ### Bucle condicional provat al final (do-while)
 
 La condició s'avalua al final del bloc intern (després de la seva execució). Per tant, sempre s'executa el bloc intern almenys una vegada.
 
 ![Representació gràfica bucle condicional provat al final](assets/1.1/diag_flux-do_while.png)
+
+```java
+do {
+  //bloc a executar mentre es compleixi la condicio
+  //encara que la condició sigui falsa la primera vegada, el bloc s'executa una vegada
+} while (condicio);
+```
 
 ## Bucles comptats (for)
 
@@ -40,9 +54,68 @@ S'utilitzen generalment quan es coneix el nombre de vegades que el bloc del bucl
 
 Els bucles *for* en llenguatge *Java* són molt potents i tenen moltes més possibilitats d´us que l'especificat per al recompte d'iteracions.
 
+```java
+for (inicialitzacio; condicio; actualitzacio) {
+  //bloc a executar mentre es compleixi la condicio
+  //si no es compleix la primera vegada, aquest bloc no s'executa mai
+}
+```
+La inicialització s'executa només la primera vegada, en entrar al bucle.
+
+La condició s'avalua i es comprova cada vegada que s'itera.
+
+L'actualització s'executa cada vegada que s'itera al bucle, al igual que el bloc intern.
+
 ## Enniuament de bucles
 
 El codi de l'interior del bucle pot també contenir altres bucles, generant estructures per respondre a problemes complexos.
 
 [El algorisme de l'amistat - Sheldon Cooper (The Big Bang Theory)](https://www.youtube.com/watch?v=H3z3HDbl5QU)
 
+##Exemples
+
+```java
+import java.util.InputMismatchException;
+import java.util.Scanner;
+/**
+ * Programa que llegeix un nombre enter positiu N
+ * i mostra els primers N nombres enters positius
+ * @author Jose
+ */
+public class PrimersNNaturals {
+    public static void main(String[] args) {
+        Scanner lector = new Scanner(System.in);
+        //llegir el número
+        System.out.print("Entra el número enter positiu: ");
+        try {
+            int limit = lector.nextInt();
+            if (limit > 0) {
+                //amb bucle for
+                System.out.println("\nAmb bucle for");
+                for (int num = 1; num <= limit; num++) {
+                    System.out.format("%d ", num);
+                }
+                //amb bucle while (provat a l'inici)
+                System.out.println("\nAmb bucle while (provat a l'inici)");
+                int iter1=1;
+                while (iter1 <= limit) {
+                    System.out.format("%d ", iter1);
+                    iter1++;
+                }
+                //amb bucle do while (provat al final)
+                System.out.println("\nAmb bucle do while (provat al final)");
+                int iter2=1;
+                do {
+                    System.out.format("%d ", iter2);
+                    iter2++;
+                } while (iter2 <= limit);
+            } else {
+                System.out.println("Has d'entrar un nombre positiu");
+            }            
+        } catch (InputMismatchException e) {
+            System.out.println("Has d'entrar un número enter positiu");
+        }
+    }
+}
+
+```
