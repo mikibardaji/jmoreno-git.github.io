@@ -21,15 +21,22 @@ Es un cas simplificat del condicional doble.
 L'expressió de la condició pot utilitzar els operadors relacionals i lògics.
 
 **Operadors relacionals**
-
->		Major que
-<		Menor que
-=		Igual a
-≥		Major que o igual a
-≤		Menor que o igual a
-≠		Diferent de
+|operador | significat  |
+|--- |---|
+|>	| Major que |
+|<	| Menor que |
+|==	| Igual a  |
+|>=	| Major que o igual a  |
+|<=	| Menor que o igual a  |
+|!=	| Diferent de  |
 
 **Operadores lògics**
+
+|operador | significat  |
+|--- |---|
+|&&	| AND  |
+|||	| OR  |
+|!	| NOT  |
 
 AND (Y), OR (O), NOT (NO)
 
@@ -140,6 +147,8 @@ public class Qualificacio {
                 break;
             case 'D':
                 System.out.println("Has aprovat");
+            case 'E':
+                System.out.println("Insuficient");
             case 'F':
                 System.out.println("Torna-ho a intentar");
                 break;
