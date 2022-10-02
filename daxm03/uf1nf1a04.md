@@ -21,21 +21,22 @@ Es un cas simplificat del condicional doble.
 L'expressió de la condició pot utilitzar els operadors relacionals i lògics.
 
 **Operadors relacionals**
+
 |operador | significat  |
 |--- |---|
-|>	| Major que |
-|<	| Menor que |
-|==	| Igual a  |
-|>=	| Major que o igual a  |
-|<=	| Menor que o igual a  |
-|!=	| Diferent de  |
+|'''>'''	| Major que |
+|'''<'''	| Menor que |
+|'''=='''	| Igual a  |
+|'''>=	'''| Major que o igual a  |
+|'''<='''	| Menor que o igual a  |
+|'''!='''	| Diferent de  |
 
 **Operadores lògics**
 
 |operador | significat  |
 |--- |---|
 |&&	| AND  |
-|||	| OR  |
+|```||```	| OR  |
 |!	| NOT  |
 
 AND (Y), OR (O), NOT (NO)
@@ -57,6 +58,8 @@ Les estructures condicionals es poden **enniuar**, es a dir, que una de les bran
 ![Representació gràfica de l'enniuament de condicionals](assets/1.1/diag_flux-if_else-enniuat.jpg)
 
 ```java
+int edat;
+...
 String missatge;
 if (edat >= 0) {
     if (edat >= 67) {
