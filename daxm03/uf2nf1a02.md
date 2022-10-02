@@ -4,7 +4,7 @@
 
 El pas de paràmetres als mètodes es fa mitjançant el **pas per valor**. Els valors que s’utilitzen en la invocació al mètode s’anomenen **arguments**, mentre que els que utilitza el mètode són els **paràmetres** (també anomenats paràmetres formals). Java fa una còpia dels arguments en els paràmetres formals. 
 
-_El comportament en la invocació és diferent segons que el paràmetre tingui un tipus primitiu o referenciat_. En el cas que els tipus del paràmetre sigui un tipus de dades **primitiu**, es passa una còpia del valor de l’argument. En canvi, si el tipus del paràmetre és un tipus de dades **referenciat**, el que es passa és una còpia d’una referència a l’objecte (apuntador).
+El comportament en la invocació és diferent segons que el paràmetre tingui un tipus primitiu o referenciat. En el cas que els tipus del paràmetre sigui un tipus de dades **primitiu**, es passa una còpia del valor de l’argument. En canvi, si el tipus del paràmetre és un tipus de dades **referenciat**, el que es passa és una còpia d’una referència a l’objecte (apuntador).
 
 Per il·lustrar aquesta qüestió, editem el programa PassTest.java i analitzem-ne la sortida.
 
@@ -90,7 +90,7 @@ L'ambit de definició d'una variable és la part del codi des d'on la variable �
 
 L'àmbit de les variables va des del punt en què són declarades fins al final del bloc que les conté (el bloc ve delimitat pels símbols {}).
 
-Els blocs interns de codi tenen accés a els variables dels blocs que els contenen, llevat que es tracti de mètodes.
+Els blocs interns de codi tenen accés a les variables dels blocs que els contenen, llevat que es tracti de mètodes.
 
 Totes les variables declarades dintre de mètodes són locals als mètodes. Els paràmetres dels mètodes també són locals. Per tant, no es poden utilitzar fora del mètode.
 

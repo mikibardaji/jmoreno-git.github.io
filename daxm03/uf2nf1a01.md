@@ -39,12 +39,18 @@ float resultat1 = mitjana(2.0, 3.0, 5.0);
 float a = 2.0;
 float b = 3.0;
 float c = 5.0;
-float resultat 2 = mitjana(a, b, c);
+float resultat2 = mitjana(a, b, c);
 ```
 
 ## Procediments
 
 S'utilizen com les funcions però no es poden usar en expressions ja que no retornen cap valor.
+
+```java
+void mostraSalutacio(String missatge) {
+  System.out.println(missatge);
+}
+```
 
 ## Pas de paràmetres
 
@@ -55,12 +61,12 @@ La correspondència entre paràmetres i arguments es pot establir de dues manere
   - Correspondència posicional: s'estableix tenint en compte l'ordre d'escriptura de paràmetres i arguments.
   - Correspondència per nom: en la invocació d'indica el nom del paràmetre i el seu valor (argument).
 
-El sistema més extès en la majoria de llenguatge és el posicional.
+El sistema més habitual en la majoria de llenguatge és el posicional.
 
 Hi ha també diversos mètodes d'associació entre paràmetres i arguments:
 
   - **Pas per valor**: El valor de l'argument es copia directament al paràmetre (recordeu que els paràmetres funcionen com variables locals del mètode). El mètode no té, doncs, accés als arguments originals del subprograma invocant, sinó només a una còpia dels mateixos. Això implica que el mètode no pot modificar els valor de les variables usades com a arguments. Es diu que són **paràmetres d'entrada**, ja que només faciliten informació al mètode.
-  - **Pas per referència**: Els paràmetres reben com a valor, no el valor dels arguments, sinó referències a les variables originals (una referència és un apuntador que permet accedir a la ubicació de la variable en memòria). Dintre del mètode, s'utilizen en general de la mateixa manera (pot dependre del llenguatge de programació), però cal tenir present que ara els canvis en els valor dels paràmetres afecten a les variables del programa principal usades com a arguments. En aquest cas, es diu que són **paràmetres d'entrara i sortida**.
+  - **Pas per referència**: Els paràmetres reben com a valor, no el valor dels arguments, sinó referències a les variables originals (una referència és un apuntador que permet accedir a la ubicació de la variable en memòria). Dintre del mètode, s'utilizen en general de la mateixa manera (pot dependre del llenguatge de programació), però cal tenir present que ara els canvis en els valor dels paràmetres afecten a les variables del programa principal usades com a arguments. En aquest cas, es diu que són **paràmetres d'entrada i sortida**.
 
 ## Mètodes en Java
 
