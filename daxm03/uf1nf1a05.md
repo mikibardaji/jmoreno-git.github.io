@@ -117,5 +117,33 @@ public class PrimersNNaturals {
         }
     }
 }
+```
 
+```java
+/**
+ * Imprimeix els primers 20 nombres naturals
+ * @author Jose
+ */
+public class Print20Enters {
+    public static void main(String[] args) {
+        final int LIMIT = 20;
+        //amb bucle while
+        //inicialitzar comptador
+//        int comptador = 1;
+//        while (comptador <= LIMIT) {
+//            System.out.println(comptador);
+//            comptador++;
+//        }  
+        //amb bucle for
+//        for (int i=1; i<=LIMIT; i++) {
+//            System.out.println(i);
+//        }
+        //amb bucle do while
+        int comptador = 1;
+        do {
+            System.out.println(comptador);
+            comptador++;
+        } while (comptador <= LIMIT);
+    }
+}
 ```
