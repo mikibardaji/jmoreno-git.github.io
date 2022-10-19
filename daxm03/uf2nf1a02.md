@@ -109,3 +109,53 @@ L'extensió d'una variable fa referència a la part de codi on la variable té a
 Les variables locals als mètodes i els seus paràmetres es creen en entrar al mètode i es destrueixen en sortir-ne. Per tant, la seva extensió és el cos del mètode.
 
 Els atributs dels objectes tenen extensió mentre el té l'objecte i la perden quan l'objecte és destruït.
+
+```java
+/**
+ * Exemples d'àmbits de variables
+ * @author Jose
+ */
+public class Ambits {
+
+    /**
+     * scope: the whole class
+     * visibility = scope except when being hidden by another variable with the same name and local scope 
+     * extension: since object instantiation until destruction.
+    */
+    private static String msg = "Class attribute"; //scope the whole class
+    
+    public static void main(String[] args) {
+        /**
+         * scope: since declaration to end of block
+         * visibility = scope except when being hidden by another variable with the same name and local scope 
+         * extension: since start of function execution until return
+        */
+        String msg = "Local in main"; //scope: main function. Hides visibility of msg class attribute.
+        f1("Function argument");
+        f1(msg);
+        f2();
+        f3();
+    }
+    
+    public static void f1(String msg) {
+        //msg parameter has local scope and hides visibility of msg class attribute in function
+        System.out.println(msg);
+    }
+    
+    public static void f2() {
+        /**
+         * scope: since declaration to end of block
+         * visibility = scope except when being hidden by another variable with the same name and local scope 
+         * extension: since start of function execution until return
+        */
+        String msg = "Local variable";
+        //msg local variable has local scope and hides visibility of msg class attribute in function
+        System.out.println(msg);
+    }
+    
+    public static void f3() {
+        //msg class attribute keeps visibility in function
+        System.out.println(msg);
+    }
+}
+```
