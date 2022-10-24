@@ -95,3 +95,56 @@ Per invocar el mètode des de la mateixa classe, la sintaxi és la següent:
 
    double resultat = area(3.0);
 
+## Exemples
+
+```java
+import java.util.Scanner;
+
+/**
+ * Entra dades d'un rectangle i en calcula el perímetre i l'àrea.
+ * @author ProvenSoft
+ */
+public class Geometria {
+
+    public static void main(String[] args) {
+        Scanner lector = new Scanner(System.in);
+        //entrada de dades
+        System.out.print("Entra la base: ");
+        double baseRect = lector.nextDouble();
+        System.out.print("Entra l'altura: ");
+        double alturaRect = lector.nextDouble();
+        //calcular el perímetre
+        double perimetreRect = 
+                calculaPerimetreRectangle(baseRect, alturaRect);
+        //calcular l'àrea
+        double areaRect = calculaAreaRectangle(baseRect, alturaRect);
+        //mostrar resultats
+        System.out.println("El perímetre del rectangle és: "+perimetreRect);
+        System.out.println("L'àrea del rectangle és: "+areaRect);
+    }
+    
+    /**
+     * calcula area rectangle amb la base i altura indicades
+     * @param base la base del rectangle
+     * @param altura l'altura del rectangle
+     * @return l'àrea del rectangle
+     */
+    public static double calculaAreaRectangle(double base, double altura) {
+        double area = base * altura;
+        return area;   //return base*altura;
+    }
+
+    /**
+     * calcula perímetre rectangle amb la base i l'altura indicades
+     * @param base la base del rectangle
+     * @param altura l'altura del rectangle
+     * @return el perímetre del rectangle
+     */
+    public static double calculaPerimetreRectangle(double base, double altura) {
+        double perimetre = 2.0 * (base + altura);
+        return perimetre;
+    }
+    
+}
+```
+
