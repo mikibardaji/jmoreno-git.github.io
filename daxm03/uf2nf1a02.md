@@ -8,7 +8,7 @@ El comportament en la invocació és diferent segons que el paràmetre tingui un
 
 Per il·lustrar aquesta qüestió, editem el programa PassTest.java i analitzem-ne la sortida.
 
-```
+```java
 /**
  * Classe PassTest: Comprovació que el pas de paràmetres és per valor
  */
