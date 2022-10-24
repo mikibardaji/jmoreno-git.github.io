@@ -207,10 +207,9 @@ public class ConversorMoneda {
                 case 1: //euros a dòllars
                     procConvEuroDollar();
                     break;
-                case 2: {//dòlars a euros
+                case 2: //dòlars a euros
                     procConvDollarEuro();
                     break;
-                }
                 default:
                     System.out.println("Opció no vàlida");
                     break;
