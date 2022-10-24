@@ -204,11 +204,11 @@ public class ConversorMoneda {
                 case 0: //sortir
                     sortir = true;
                     break;
-                case 1: //euros a dòllars
-                    procConvEuroDollar();
+                case 1: //euros a dòlars
+                    procConvEuroDolar();
                     break;
                 case 2: //dòlars a euros
-                    procConvDollarEuro();
+                    procConvDolarEuro();
                     break;
                 default:
                     System.out.println("Opció no vàlida");
@@ -221,9 +221,10 @@ public class ConversorMoneda {
     /**
      * mostra el menu del programa i llegeix l'opció escollida per l'usuari
      *
-     * @return el número de l'opció escollida per l'usuari
+     * @return el número de l'opció escollida per l'usuari o -1 si no vàlida
      */
     public static int mostraMenu() {
+        int opcio = -1;
         System.out.println("===Menú del programa de conversió euro-dòlar===");
         //mostrar opcions
         System.out.println("0. Sortir");
@@ -232,11 +233,15 @@ public class ConversorMoneda {
         //llegir opció
         System.out.print("> Selecciona una opció: ");
         Scanner lector = new Scanner(System.in);
-        int opcio = lector.nextInt();
+        try {
+            opcio = lector.nextInt();
+        } catch (InputMismatchException e ){
+            opcio = -1;
+        }
         return opcio;
     }
 
-    /* === Mètodes de càlcul === */
+    /* ====== Mètodes de càlcul ====== */
     
     /**
      * converteix euros a dòlars
@@ -260,12 +265,12 @@ public class ConversorMoneda {
         return dolars * DOLAR_EURO;
     }
 
-    /* === Mètodes de control === */
+    /* ====== Mètodes de control ====== */
     
     /**
      * llegeix euros, converteix a dòllars i imprimeix resultat
      */
-    private static void procConvEuroDollar() {
+    private static void procConvEuroDolar() {
         Scanner lector = new Scanner(System.in);
         try {
             double euros = lector.nextDouble();
@@ -279,7 +284,7 @@ public class ConversorMoneda {
     /**
      * llegeix dòllars, converteix a euros i imprimeix resultat
      */
-    private static void procConvDollarEuro() {
+    private static void procConvDolarEuro() {
         Scanner lector = new Scanner(System.in);
         try {
             double dolars = lector.nextDouble();
