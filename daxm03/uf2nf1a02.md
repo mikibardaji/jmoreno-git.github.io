@@ -268,7 +268,7 @@ public class ConversorMoneda {
     /* ====== Mètodes de control ====== */
     
     /**
-     * llegeix euros, converteix a dòllars i imprimeix resultat
+     * llegeix euros, converteix a dòlars i imprimeix resultat
      */
     private static void procConvEuroDolar() {
         Scanner lector = new Scanner(System.in);
@@ -282,7 +282,7 @@ public class ConversorMoneda {
     }
 
     /**
-     * llegeix dòllars, converteix a euros i imprimeix resultat
+     * llegeix dòlars, converteix a euros i imprimeix resultat
      */
     private static void procConvDolarEuro() {
         Scanner lector = new Scanner(System.in);
