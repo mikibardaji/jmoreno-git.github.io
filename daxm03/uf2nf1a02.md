@@ -199,7 +199,7 @@ public class ConversorMoneda {
         do {
             //mostrar menu i llegir opcio
             int opcioSel = mostraMenu();
-            //executar l'ocio escollida
+            //executar l'opció escollida
             switch (opcioSel) {
                 case 0: //sortir
                     sortir = true;
