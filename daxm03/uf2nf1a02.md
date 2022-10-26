@@ -178,6 +178,8 @@ public class Ambits {
 
 ## Exemples
 
+# Programa amb menú per a interactuar amb l'usuari
+
 Exemple d'un programa de conversió entre dues monedes usant un menú per interactuar amb l'usuari i mètodes de control per respondre a les seves accions.
 
 ```java
@@ -295,5 +297,20 @@ public class ConversorMoneda {
         }
     }
 
+}
+```
+
+# Mètode per preguntar informació a l'usuari
+
+```java
+/**
+ * mostra un missatge i llegeix una resposta de l'usuari
+ * @param missatge el missatge a mostrar a l'usuari
+ * @return la resposta de l'usuari
+ */
+public String entraString(String missatge) {
+	Scanner lector = new Scanner(System.in);
+	System.out.print(missatge);
+	return lector.next();
 }
 ```
