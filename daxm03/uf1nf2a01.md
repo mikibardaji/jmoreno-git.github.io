@@ -6,7 +6,7 @@
 
 ## Dates i temps
 
-Convé utilitzar les classes del paquet **java.time**, les quals estan basades en el calendari ISO, el qual segueix les regles del calendari Gragoripa introduit l'any 1582.
+Convé utilitzar les classes del paquet **java.time**, les quals estan basades en el calendari ISO, el qual segueix les regles del calendari Gregorià introduit l'any 1582.
 
 ```java
 //obtenir la data d'avui
