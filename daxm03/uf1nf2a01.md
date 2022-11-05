@@ -50,3 +50,10 @@ System.out.println(todayNowHere.format(dtFormat3));
 System.out.println(todayNowHere.format(DateTimeFormatter.ISO_DATE_TIME));
 //sortida: 2022-11-05T18:35:38.363622+01:00[Europe/Madrid]
 ```
+
+```java
+//esbrinar si un any és o no de traspàs
+int year = 2024, month=3, day=5;
+LocalDate date = LocalDate.of(year, month, day);
+System.out.format("Is %d leap year?: %s ", date.getYear(), date.isLeapYear()?"yes":"no");
+```
