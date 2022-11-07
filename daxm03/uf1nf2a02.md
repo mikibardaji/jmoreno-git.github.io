@@ -78,5 +78,18 @@ for (int i=0; i<intArray.length; i++) {
 }
 ```
 
+### ArrayIndexOutOfBounds
+
+Quan s'intenta accedir a un elements fora de l'array, es genera l'excepció ArrayIndexOutOfBounds.
+
+```java
+int intArray = new int[5];
+//...
+intArray[7]   //llança excepció
+```
+
 ### Arrays d'objectes
 
+Quan els elements de l'array són objectes, la intanciació de l'array només crea espai per a les referències als objectes. 
+
+Abans de llegir un element, cal instanciar l'objecte que conté.
