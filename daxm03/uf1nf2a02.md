@@ -1,9 +1,5 @@
 # Estructures unidimensionals
 
-[Arrays en Java](https://www.geeksforgeeks.org/arrays-in-java/)
-
-[Ús de la classe java.util.Arrays](https://www.geeksforgeeks.org/array-class-in-java/)
-
 ## Arrays en Java
 
 Un *array* és un grup de variables del mateix tipus referides amb un nom comú.
@@ -127,3 +123,4 @@ També podem assignar a un element un objecte prèviament construit:
 String name = "Peter";  //o String name = new String("Peter");
 names[1] = name;
 ```
+[Ús de la classe java.util.Arrays](https://www.geeksforgeeks.org/array-class-in-java/)
