@@ -159,3 +159,12 @@ for (int i=0; i<notes.length; i++) {
    System.out.println(notes[i]);
 }
 ```
+
+### Recorregut d'arrays amb bucle for-each
+
+```java
+int[] intArray = { 12, 32, 95, 11, 10 };
+for (int elem: intArray) {
+   System.out.println(elem);
+}
+```
