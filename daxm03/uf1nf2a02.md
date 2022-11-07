@@ -124,3 +124,27 @@ String name = "Peter";  //o String name = new String("Peter");
 names[1] = name;
 ```
 [Ús de la classe java.util.Arrays](https://www.geeksforgeeks.org/array-class-in-java/)
+
+### Arrays i mètodes
+
+Els arrays es poden passar com a paràmetres als mètodes i també poden ser retornats per ells.
+
+```java
+public void printNames(String [] names) {
+   for (int i=0; i<names.length; i++) {
+      System.out.println(names[i]);
+   }
+}
+```
+
+```java
+String [] listOfNames = {"John", "Martha", "Louis"};
+printNames(listOfNames);
+```
+
+```java
+public int [] getNotes() {
+   //obtenir les notes
+   return new int[] {3, 8, 5};
+}
+```
