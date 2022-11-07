@@ -6,7 +6,7 @@ El pas de paràmetres als mètodes es fa mitjançant el **pas per valor**. Els v
 
 El comportament en la invocació és diferent segons que el paràmetre tingui un tipus primitiu o referenciat. En el cas que els tipus del paràmetre sigui un tipus de dades **primitiu**, es passa una còpia del valor de l’argument. En canvi, si el tipus del paràmetre és un tipus de dades **referenciat**, el que es passa és una còpia d’una referència a l’objecte (apuntador).
 
-Per il·lustrar aquesta qüestió, editem el programa PassTest.java i analitzem-ne la sortida.
+Per il·lustrar aquesta qüestió, editem el programa *PassTest.java* i analitzem-ne la sortida.
 
 ```java
 /**
@@ -96,19 +96,21 @@ Totes les variables declarades dintre de mètodes són locals als mètodes. Els 
 
 Els atributs d'un objecte declarats publics poden ser accedits des de fora del bloc de la classe, sempre usant la variable de l'objecte com a referència. 
 
-# Visibilitat d'una variable
+## Visibilitat d'una variable
 
 La visibilitat d'una declaració de variable és la part del codi on la variable té àmbit i l'identificador referencia la variable. 
 
 La visibilitat acostuma a coincidir amb l'àmbit, però hi ha casos en què una declaració en un bloc intern usant el mateix identificador fa invisible la declaració feta al bloc exterior. En aquest cas, preval la declaració interna, i l'externa perd visibilitat al bloc intern, tot i que es manté l'ambit.
 
-# Extensió o temps de vida d'una variable
+## Extensió o temps de vida d'una variable
 
 L'extensió d'una variable fa referència a la part de codi on la variable té assignat emmagtzemament en memòria. 
 
 Les variables locals als mètodes i els seus paràmetres es creen en entrar al mètode i es destrueixen en sortir-ne. Per tant, la seva extensió és el cos del mètode.
 
 Els atributs dels objectes tenen extensió mentre el té l'objecte i la perden quan l'objecte és destruït.
+
+El següent exemple il·lustra els diferents àmbits de definició de variables.
 
 ```java
 /**
@@ -178,7 +180,22 @@ public class Ambits {
 
 ## Exemples
 
-# Programa amb menú per a interactuar amb l'usuari
+### Mètode per preguntar informació a l'usuari
+
+```java
+/**
+ * mostra un missatge i llegeix una resposta de l'usuari
+ * @param missatge el missatge a mostrar a l'usuari
+ * @return la resposta de l'usuari
+ */
+public String entraString(String missatge) {
+	Scanner lector = new Scanner(System.in);
+	System.out.print(missatge);
+	return lector.next();
+}
+```
+
+### Programa amb menú per a interactuar amb l'usuari
 
 Exemple d'un programa de conversió entre dues monedes usant un menú per interactuar amb l'usuari i mètodes de control per respondre a les seves accions.
 
@@ -300,17 +317,20 @@ public class ConversorMoneda {
 }
 ```
 
-# Mètode per preguntar informació a l'usuari
+## Exercici proposat: Joc de pedra, paper i tissora
 
-```java
-/**
- * mostra un missatge i llegeix una resposta de l'usuari
- * @param missatge el missatge a mostrar a l'usuari
- * @return la resposta de l'usuari
- */
-public String entraString(String missatge) {
-	Scanner lector = new Scanner(System.in);
-	System.out.print(missatge);
-	return lector.next();
-}
-```
+Implementar el [joc de pedra, paper i tissora](https://es.wikipedia.org/wiki/Piedra,_papel_o_tijera).
+
+Cal implementar el joc d'un jugador contra la màquina.
+
+Els  jugadors juguen simultàniament, es compara el resultat de les tirades i es decideix si hi ha empat o guanya un jugador. En aquest darrer cas s'incrementa el comptador del del jugador guanyador. 
+A cada torn s'imprimeix el resultat dels comptadors dels jugadors.
+Se imprime el resultado del contador en cada turno. 
+Finalitza el joc quan un jugador guanya tres tirades (configurable) o quan s'arriba a un màxim de 6 tirades (configurable).
+En finalitzar el joc es mostra el marcador final amb les puntuacions de cada jugador i s'indica quin és el guanyador o si hi ha empat.
+
+En iniciar-se el joc, l'usuari determina el nombre de tirades que cal guanyar per acabar el joc i el nombre de tirades màximes abans de finalitzar.
+
+Després s'inicia el bucle del joc, on l'ordinador fa la tirada escollint aleatòriament i pregunta la seva tirada a l'usuari. A continuació, es determina el resultat de la tirada i s'informa del resultat i dels marcadors.
+
+Aquí teniu el [javadoc de la proposta de solució](assets/1.2/PedraPaperTissores-Javadoc.pdf).

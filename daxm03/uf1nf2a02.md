@@ -6,13 +6,23 @@ Un *array* és un grup de variables del mateix tipus referides amb un nom comú.
 
 Són objectes, és a dir, són de tipus referencial. Això implica que s'emmagatzemen de forma dinàmica i cal instanciar-los. Els elements de l'array s'emmagatzemen en memòria de forma consecutiva.
 
+Poden ser unidimensionals o de més d'una dimensió.
+
+![](assets/1.2/n-dim_array.jpg)
+
 Com a objectes, tenen atributs i mètodes.
+
+En aquest apartat ens ocuparem dels arrays unidimensionals.
+
+Els elements de l'array s'organitzen seqüencialment. Cada element té en anterior (llevat del primer, amb índex 0) i un posterior (llevat del darrer).
 
 La seva longitud es pot llegir del seu atribut ***length***.
 
 L'accés als seus elements es fa de manera directa utilitzant l'índex de la posició.
 
 Un array pot contenir dades de qualsevol tipus primitiu o referencial, incloent-hi altres arrays.
+
+![](assets/1.2/unidim_arrays.jpg)
 
 ### Declaració d'arrays
 
@@ -24,12 +34,14 @@ type [] ident;
 ```
 
 Exemples
+
 ```java
 int intArray[];
 int [] intArray[]:
 float [] floatArray;
 String [] stringArray;
 ```
+
 La declaració no reserva espai en memòria per als elements de l'array. Com que l'array és un objecte, cal instanciar-lo definint a la vegada el nombre d'elements a emmagatzemar.
 
 ### Instanciació d'arrays
@@ -39,15 +51,18 @@ ident = new type[size];
 ```
 
 Exemples:
+
 ```java
 int [] intArray; //declaració
 intArray = new int[10];  //instanciació de l'array de 10 elements int.
 ```
 
 Es pot combinar la declaració i la instanciació:
+
 ```java
 int [] intArray = new int[10];
 ```
+
 ### Definició abreujada d'arrays amb constants
 
 Es pot declara, instanciar i inicialitzar els elements d'un array amb la següent notació abreujada:
@@ -68,6 +83,7 @@ intArray[2]=31;   //canvia el valor de l'element amb índex 2 (el 30 ara és 31)
 ```
 
 Podem utilitzar un bucle per recórrer els elements de l'array
+
 ```java
 for (int i=0; i<intArray.length; i++) {
    System.out.println("Element amb índex "+i+": "+intArray[i]);
@@ -86,7 +102,7 @@ intArray[7]   //llança excepció
 
 ### Arrays d'objectes
 
-Quan els elements de l'array són objectes, la instanciació de l'array només crea espai per a les referències als objectes. 
+Quan els elements de l'array són objectes, la instanciació de l'array només crea espai per a les referències als objectes.
 
 Abans de llegir un element, cal instanciar l'objecte que conté.
 
@@ -123,6 +139,7 @@ També podem assignar a un element un objecte prèviament construit:
 String name = "Peter";  //o String name = new String("Peter");
 names[1] = name;
 ```
+
 [Ús de la classe java.util.Arrays](https://www.geeksforgeeks.org/array-class-in-java/)
 
 ### Arrays i mètodes
@@ -168,4 +185,5 @@ for (int elem: intArray) {
    System.out.println(elem);
 }
 ```
+
 Aquests bucles són molt pràctics però no permeten modificar els elements (només la variable d'iteració) ni donen accés a l'índex de l'element.

@@ -152,8 +152,6 @@ public class Geometria {
 
 Utilitzar el depurarador (*debug*) de l'editor per executar línia a línia el programa, inspeccionant els valors de les variables i observant el flux d'execució. En particular, observar el salt des de la funció principal cap a les funcions invocades i el seu retorn. Observar també les variables que es poden inspeccionar en cada situació.
 
-
-
 ```java
 /**
  * Exemple de diferents tipus de funcions i procediments segons els paràmetres i retorn
