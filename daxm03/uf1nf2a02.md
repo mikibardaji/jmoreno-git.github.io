@@ -148,3 +148,10 @@ public int [] getNotes() {
    return new int[] {3, 8, 5};
 }
 ```
+
+```java
+int [] notes = getNotes();
+for (int i=0; i<notes.length; i++) {
+   System.out.println(notes[i]);
+}
+```
