@@ -129,6 +129,8 @@ names[1] = name;
 
 Els arrays es poden passar com a paràmetres als mètodes i també poden ser retornats per ells.
 
+**Passar array a mètode**
+
 ```java
 public void printNames(String [] names) {
    for (int i=0; i<names.length; i++) {
@@ -141,6 +143,8 @@ public void printNames(String [] names) {
 String [] listOfNames = {"John", "Martha", "Louis"};
 printNames(listOfNames);
 ```
+
+**Retornar arrays des d'un mètode**
 
 ```java
 public int [] getNotes() {
