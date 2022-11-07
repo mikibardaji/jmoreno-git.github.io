@@ -93,3 +93,37 @@ intArray[7]   //llança excepció
 Quan els elements de l'array són objectes, la intanciació de l'array només crea espai per a les referències als objectes. 
 
 Abans de llegir un element, cal instanciar l'objecte que conté.
+
+```java
+String [] names = new String[3];  //declaració de l'array de 5 elements String, els quals encara no s'ha creat (són nuls)
+System.out.println(names[0]);  //NullPointerException
+```
+
+```java
+String [] names = {"John", "Martha", "Louis"};   //declara, instancia i inicialitza
+System.out.println(names[0]);  //mostra "John"
+```
+
+```java
+String [] names = new String[3];  //declaració de l'array de 5 elements String, els quals encara no s'ha creat (són nuls)
+names[0] = "John";  //instancia i inicialitza String i copia referència la primera posició de l'array
+names[1] = "Martha";
+names[2] = "Louis";
+System.out.println(names[1]);  //mostra "Martha"
+```
+
+La sintaxi general per a qualsevol tipus d'objecte (substituir String pel nom de la classe):
+
+```java
+String [] names = new String[3];  //declaració de l'array de 5 elements String, els quals encara no s'ha creat (són nuls)
+names[0] = new String("John");
+names[2] = new String("Martha");
+names[2] = new String("Louis");
+```
+
+També podem assignar a un element un objecte prèviament construit:
+
+```java
+String name = "Peter";  //o String name = new String("Peter");
+names[1] = name;
+```
