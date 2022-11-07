@@ -58,7 +58,7 @@ int [] intArray = {10, 20, 30, 40, 50};  //array de 5 elements int
 
 ### Accés als elements d'un array
 
-L'accés als elements d'un array es fa de manera indexada amb els operadors []. Cal tenir en compte que el primer element té índex 0 i el darrer length-1.
+L'accés als elements d'un array es fa de manera indexada amb els operadors []. Cal tenir en compte que el primer element té índex **0** i el darrer **length-1**.
 
 ```java
 int [] intArray = {10, 20, 30, 40, 50};  //array de 5 elements int
@@ -86,7 +86,7 @@ intArray[7]   //llança excepció
 
 ### Arrays d'objectes
 
-Quan els elements de l'array són objectes, la intanciació de l'array només crea espai per a les referències als objectes. 
+Quan els elements de l'array són objectes, la instanciació de l'array només crea espai per a les referències als objectes. 
 
 Abans de llegir un element, cal instanciar l'objecte que conté.
 
