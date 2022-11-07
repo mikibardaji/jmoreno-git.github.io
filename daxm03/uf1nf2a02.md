@@ -168,3 +168,4 @@ for (int elem: intArray) {
    System.out.println(elem);
 }
 ```
+Aquests bucles són molt pràctics però no permeten modificar els elements (només la variable d'iteració) ni donen accés a l'índex de l'element.
