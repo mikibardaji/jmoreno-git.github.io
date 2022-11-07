@@ -76,7 +76,7 @@ for (int i=0; i<intArray.length; i++) {
 
 ### ArrayIndexOutOfBounds
 
-Quan s'intenta accedir a un elements fora de l'array, es genera l'excepció ArrayIndexOutOfBounds.
+Quan s'intenta accedir a un elements fora de l'array, es genera l'excepció ***ArrayIndexOutOfBounds***.
 
 ```java
 int intArray = new int[5];
