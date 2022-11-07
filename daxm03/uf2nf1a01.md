@@ -151,3 +151,51 @@ public class Geometria {
 **Activitat**
 
 Utilitzar el depurarador (*debug*) de l'editor per executar línia a línia el programa, inspeccionant els valors de les variables i observant el flux d'execució. En particular, observar el salt des de la funció principal cap a les funcions invocades i el seu retorn. Observar també les variables que es poden inspeccionar en cada situació.
+
+
+
+```java
+/**
+ * Exemple de diferents tipus de funcions i procediments segons els paràmetres i retorn
+ * @author ProvenSoft
+ */
+public class FuncProc {
+    
+    public static void main(String[] args) {
+        int a = doble(3);
+        System.out.println("Valor de a:"+a);
+        saluda("Peter");
+        avui();
+        String dia = dema();
+        System.out.println(dia);
+    }
+    
+    /**
+     * mètode 1 paràmetre i retorna 1 valor
+     */
+    public static int doble(int x) {
+        return 2*x;
+    }
+    
+    /**
+     * mètode 1 paràmetre i cap retorn
+     */
+    public static void saluda(String nom) {
+        System.out.println("Hola "+nom);
+    }
+    
+    /**
+     * mètode cap paràmetre i cap retorn
+     */
+    public static void avui() {
+        System.out.println("Avui és dimecres");
+    }
+    
+    /**
+     * mètode amb cap paràmetre i retorna 1 valor
+     */
+    public static String dema(){
+        return "dijous";
+    }
+}
+```
