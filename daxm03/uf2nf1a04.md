@@ -30,9 +30,40 @@ El flux habitual d’un mètode recursiu té el següent esquema:
 Quan s’escriu un algorisme per realitzar una tasca, una tècnica bàsica és dividir la tasca general en subtasques més petites. Quan alguna de les subtasques és una simplificació de la mateixa tasca general, és fàcil implementar un algorisme recursiu que invoqui al mateix procediment.
 
 Exemple:
+Escriure un programa que saludi amb Hip Hip Hurra, amb tants Hip com indiqui l'usuari.
+
+```java
+import java.util.Scanner;
+public class HipHurra {
+	
+	public static void main (String[] args) {
+		int numHips;
+		numHips = llegirEnter("Entra el nombre de hips: ");
+		salut(numHips);
+	}
+	
+	private static int llegirEnter(String missatge) {
+		System.out.print(missatge);
+		Scanner lector = new Scanner(System.in);
+		return lector.nextInt();
+	}
+	
+	private static void salut(int n) {
+		if (n==0) {  //cas base
+			System.out.println("Hurra");  //cas final
+		} else {  //recursió
+			System.out.print("Hip ");
+			salut(n-1);
+		}
+	}
+	
+}
+```
+
+Exemple:
 Escriure un programa que escrigui en vertical els dígits d’un nombre natural.
 
-```
+```java
 import java.util.Scanner;
 
 public class EscriureEnterVertical {
@@ -68,7 +99,7 @@ La recursivitat també es pot utilitzar amb funcions que retornen un valor.
 Exemple:
 Escriure un programa que calculi la suma dels n primers nombres naturals.
 
-```
+```java
 import java.util.Scanner;
 
 public class SumaNEnters {
@@ -93,7 +124,7 @@ public class SumaNEnters {
 }
 ```
 
-La verificació de la condició de sortida es fa amb n==1?. Aquest és el cas base, a partir del qual es construeix la recursió i es fan els càlculs. Si no es compleix, es fa la crida recursiva a la mateixa funció. Si es compleix la condició de sortida, s’aplica el cas final (retornar 1).
+La verificació de la condició de sortida es fa amb n==1. Aquest és el cas base, a partir del qual es construeix la recursió i es fan els càlculs. Si no es compleix, es fa la crida recursiva a la mateixa funció. Si es compleix la condició de sortida, s’aplica el cas final (retornar 1).
 
 ## Recursivitat indirecta
 
@@ -102,7 +133,7 @@ Es té recursivitat indirecta quan el mètode que invoca la recursivitat no és 
 Exemple:
 Escriure un programa i els subprogrames per determinar si un nombre natural és parell o senar.
 
-```
+```java
 import java.util.Scanner;
 
 public class Paritat {
