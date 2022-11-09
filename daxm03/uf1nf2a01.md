@@ -2,6 +2,10 @@
 
 [Apunts de Strings en Java](assets/1.2/Strings_in_Java.pdf)
 
+[Classe String](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html)
+
+[Classe StringBuilder](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html)
+
 [Apunts d'Expresions regulars en Java](assets/1.2/Expressions_regulars_en_Java.pdf)
 
 ## Dates i temps
