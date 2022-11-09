@@ -1,401 +1,101 @@
-# Mapeig objecte relacional
+# Mapeig objecte relacional i capa d'accés a dades
 
 ## Introducció
 Les aplicacions treballen amb objectes en memòria. En canvi, les bases de dades relacionals treballen amb taules i relacions. A les tècniques de processament de la informació dels objectes per fer-los persistents en forma d'entrades de taules i relacions se les anomena mapeig objecte relacional (***ORM: object relational mapping***).
 
-Anem a il·lustrar l'ORM amb un exemple d'aplicació: un gestor de vols.
+Un patró de disseny molt utilitzat i pràctic per a dissenyar la capa d'accés a dades és el patró ***DAO. Data Access Object***.
+
+Anem a il·lustrar l'ORM amb un exemple d'aplicació amb dues entitats amb una relació 1xn.
 
 ## Objectius
 
-  - Implementar l'arquitectura MVC.
   - Implementar el patró DAO per a accés a dades.
-  - Aplicar el patró Singleton a la classe que encapsula les dades de 
-    connexió a la base de dades.
   - Crear la base de dades definint correctament les relacions entre les
     entitats i les restriccions d'integritat.
   - Crear un joc de dades de prova adient.
 
-## Desenvolupament Flight manager: Enunciat
+## Desenvolupament de l'aplicació Store: Enunciat
 
-Una empresa Japonesa ens ha demanat que desenvolupem un sistema per gestionar els seus vols virtuals. Com que no es pot viatjar i hi ha gent que ho troba faltar han reproduït una cabina d'avió i han implementat tot un sistema de realitat virtual per simular un viatge.
-
-<https://cnnespanol.cnn.com/video/simulacion-de-vuelo-realidad-virtual-avion-encuentro-propuesta-first-airlines-tokio-japon-tripulacion-guillermo-arduino-clix-cnne/>
+Una empresa ens ha encarregat que desenvolupem una aplicació per gestionar els seus productes, els quals estan agrupats en categories. Una categoria pot tenir 0 o diversos productes. Cada producte només pot pertànyer a una categoria.
 
 El que necessita gestionar aquesta empresa és el següent.
 
-**Passatgers**: Un passatger es caracteritza per un nom, un telèfon(únic) i un booleà per indicar si és menor d'edat.
+Les funcionalitats que cal implementar son altes, baixes, modificacions i consultes de categories, productes i les que gestionen la relació entre categoria i producte
 
-**Vols**: Un vol es caracteritza per un codi de vol (únic), una capacitat, una data i una hora de sortida del vol.
-
-Les funcionalitats que cal implementar son les següents:
-
-  - Alta, baixa i modificació de passatgers.
-  - Alta, baixa i modificació de vols.
-  - Registrar un passatger en un vol fins al màxim de capacitat.
-  - Eliminar un passatger d'un vol. Aquesta operació no es podrà fer efectiva si queda menys d'una hora per iniciar el vol.
-  - Llistar tots els vols.
-  - Llistar tots els passatgers.
-  - Llistar els passatgers d'un vol.
-
-Evidentment, cap passatger es pot registrar dos cops en un mateix vol.
-Cal mantenir la integritat referencial entre vols i passatgers.
-
-## Arquitectura MVC
-
-L'arquitectura MVC ja ha estat explicada amb anterioritat. El punt de
-partida seria, doncs, el següent, on només es presenten alguns mètodes a
-títol d'exemple (cal completar la resta de funcionalitats):
-
-**Classe principal**
-
-``` java
-/**
- * Main class for Flights application.
- * @author ProvenSoft
- */
-public class Main {
-
-    public static void main(String[] args) {
-        try {
-            Model model = new Model();
-            MainController controller = new MainController(model);
-            controller.start();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-}
-```
-
-D'acord amb l'arquitectura MVC, cal instanciar primer el model, després el controlador i passar-li el model.
-
-La vista s'instancia normalment al controlador, tot i que també es pot instanciar al principal i connectar-la amb el controlador.
-
-**Model**
-
-``` java
-/**
- * Model service for flights application.
- * @author ProvenSoft
- */
-public class Model {
-    /**
-     * DAO object for Flight entity.
-     */
-    private final FlightDao flightDao;
-    /**
-     * DAO object for Passenger entity.
-     */
-    private final PassengerDao passengerDao;
-
-    public Model() throws ClassNotFoundException {
-        this.flightDao = new FlightDao();
-        this.passengerDao = new PassengerDao();
-    }
-    
-    /**
-     * searches all flights in database.
-     * @return list of all flights or null in case or error.
-     */
-    public List<Flight> searchAllFlights() {
-        List<Flight> result = null;
-        result = flightDao.selectAll();
-        return result;
-    }
-    
-    /**
-     * adds a flight to database, prevents code duplicates.
-     * @param flight the flight to add.
-     * @return 1 if succesfull, 0 if not, -1 in case of error.
-     */
-    public int addFlight(Flight flight) {
-        int result = 0;
-        result = flightDao.insert(flight);
-        return result;
-    }
-    
-    /**
-     * searches all passengers in database.
-     * @return list of all flights or null in case or error.
-     */
-    public List<Passenger> searchAllPassengers() {
-        List<Passenger> result = null;
-        result = passengerDao.selectAll();
-        return result;
-    }
-    
-}
-```
-
-El model és el servei de dades del controlador. Quan es requereixen dades, les proveeix algun mètode del model.
-
-**Controlador**
-
-``` java
-/**
- * Main controller for flights application.
- * @author ProvenSoft
- */
-public class MainController {
-    
-    private final Model model;
-    private final MainView view;
-
-    public MainController(Model model) {
-        this.model = model;
-        this.view = new MainView(this);
-    }
-
-    public Model getModel() {
-        return model;
-    }
-    
-    /**
-     * starts running controller.
-     */
-    public void start() {
-        view.show();
-    }
-    
-    /**
-     * processes actions received from view.
-     * @param action the action to process.
-     */
-    public void processAction(String action) {
-        if (action != null) {
-            switch (action) {
-                case "exit": //exit application.
-                    exitApplication();
-                    break;
-                case "listallflights": //list all flights.
-                    doListAllFlights();
-                    break;
-                default:
-                    view.showMessage("Unknown option");
-                    break;
-            }
-        }
-    }
-
-    /**
-     * exits application.
-     */
-    private void exitApplication() {
-        String answer = view.inputString("Exit. Are you sure (Y/N): ");
-        if (answer != null) {
-            if (answer.equalsIgnoreCase("y")) {
-              view.close();
-            }
-        }
-    }
-
-    /**
-     * lists all flights from the database.
-     */
-    private void doListAllFlights() {
-        //retrieve data from model.
-        List<Flight> result = model.searchAllFlights();
-        //display data to user.
-        if (result != null) { //successfull retrieval of data.
-            view.showFlightList(result);
-        } else { //error retrieving data.
-            view.showMessage("Error retrieving data");
-        }
-    }
-    
-}
-```
-
-El controlador rep les accions de la vista i actua sobre el model per canviar dades o recuperar-ne, segons sigui el cas.
-
-**Vista**
-
-``` java
-/**
- * Main view for flights application.
- * @author ProvenSoft
- */
-public class MainView {
-    
-    private final MainController controller;
-    private boolean exit; //flag to exit application.
-    private final MainMenu mainMenu;
-
-    public MainView(MainController controller) {
-        this.controller = controller;
-        this.mainMenu = new MainMenu();
-    }
-    
-    /**
-     * makes the view visible and starts interacting with user.
-     */
-    public void show() {
-        exit = false;
-        // control loop for user interaction.
-        do {
-            mainMenu.show();
-            String action = mainMenu.getSelectedOptionActionCommand();
-            if (action != null) {
-                controller.processAction(action);
-            }
-        } while (!exit);
-    }
-
-    /**
-     * displays a message to user.
-     */
-    public void showMessage(String message) {
-        System.out.println(message);
-    }
-
-    /**
-     * displays a message and gets user's answer.
-     * @param message the message to display.
-     * @return the user's answer or null in case of error.
-     */
-    public String inputString(String message) {
-        System.out.print(message);
-        Scanner scan = new Scanner(System.in);
-        return scan.next();   
-    }
-    
-    /**
-     * activates view closing.
-     */
-    public void close() {
-        this.exit = true;
-    }
-    
-    /**
-     * displays a list.
-     * @param data the list to display.
-     */
-    public void showFlightList(List<Flight> data) {
-        if (data != null) {
-            for (Flight elem: data) {
-                System.out.println(elem.toString());
-            } 
-            System.out.format("%d elements displayed\n", data.size());
-        } else {
-            showMessage("Null data");
-        }
-    }
-    
-}
-```
-
-La vista conté la interfície gràfica amb la qual interactua l'usuari. En aquest cas, per simplificar, es tracta d'una interfície de text per consola.
-
-**Menú**
-
-``` java
-/**
- * Main menu for flights application.
- * @author ProvenSoft
- */
-public class MainMenu extends Menu {
-
-    public MainMenu() {
-        super("Flight application main menu");
-        //
-        addOption( new Option("Exit application", "exit") );
-        //
-        addOption( new Option("List all flights", "listallflights") );
-        addOption( new Option("Add flight", "addflight") );
-        addOption( new Option("Modify flight", "modifyflight") );
-        addOption( new Option("Remove flight", "removeflight") );
-        //
-        addOption( new Option("List all passengers", "listallpassengers") );
-        addOption( new Option("Add passenger", "addpassenger") );
-        addOption( new Option("Modify passenger", "modifypassenger") );
-        addOption( new Option("Remove passenger", "removepassenger") );        
-        //
-        addOption( new Option("List passengers by flight", "listpassengersbyflight") );
-        addOption( new Option("Register passenger to flight", "registerpassengertoflight") ); 
-        addOption( new Option("Unregister passenger from flight", "unregisterpassengerfromflight") ); 
-    }
-    
-}
-```
-
-La classe MainMenu defineix el menú d'opcions de l'aplicació. Utilitza les classes auxiliars Menu i Ooption.
-
-Classes auxiliars Menu i Option. ![Classes auxiliars Menu i Option](/docencia/dam/m03/uf6/flightsmanager/menuoption.zip)
-
-## Base de dades
+## La base de dades
 
 ``` sql
-CREATE USER 'flightssusr'@'localhost' IDENTIFIED BY 'flightspwd';
-CREATE DATABASE flightsdb
+CREATE USER 'storeusr'@'localhost' IDENTIFIED BY 'storepsw';
+CREATE DATABASE storedb
   DEFAULT CHARACTER SET utf8
   DEFAULT COLLATE utf8_general_ci;
-GRANT SELECT, INSERT, UPDATE, DELETE ON flightsdb.* TO 'flightssusr'@'localhost';
-USE flightsdb;
-CREATE TABLE `flights` (
-`id` INT(4) NOT NULL AUTO_INCREMENT,
-`code` VARCHAR(10) NOT NULL UNIQUE,
-`capacity` INT(2) DEFAULT 0,
-`date` DATE NOT NULL,
-`time` TIME NOT NULL,
-PRIMARY KEY (`id`)
+GRANT SELECT, INSERT, UPDATE, DELETE ON storedb.* TO 'storeusr'@'localhost';
+USE storedb;
+CREATE TABLE `categories` (
+    `id` INT(4) NOT NULL AUTO_INCREMENT,
+    `code` VARCHAR(10) NOT NULL UNIQUE,
+    `name` VARCHAR(20) NOT NULL,
+    PRIMARY KEY (`id`)
 );
-CREATE TABLE `passengers` (
-`id` INT(4) NOT NULL AUTO_INCREMENT,
-`phone` VARCHAR(15) NOT NULL UNIQUE,
-`minor` BOOLEAN DEFAULT true,
-PRIMARY KEY (`id`)
+CREATE TABLE `products` (
+    `id` INT(4) NOT NULL AUTO_INCREMENT,
+    `code` VARCHAR(10) NOT NULL UNIQUE,
+    `name` VARCHAR(20) NOT NULL,
+    `stock` INT DEFAULT 0,
+    `price` DOUBLE DEFAULT 0.0,
+    `category_id` INT(4),
+    PRIMARY KEY (`id`)
 );
-CREATE TABLE `flightspassengers` (
-`flight_id` INT(4) NOT NULL,
-`passenger_id` INT(4) NOT NULL,
-PRIMARY KEY (`flight_id`, `passenger_id`)
-);
-ALTER TABLE flightspassengers ADD FOREIGN KEY fk_flight (flight_id) REFERENCES flights(id);
-ALTER TABLE flightspassengers ADD FOREIGN KEY fk_passenger (passenger_id) REFERENCES passengers(id);
+ALTER TABLE `products` 
+    ADD CONSTRAINT `fk_category` FOREIGN KEY (category_id) 
+    REFERENCES categories(id)
+    ON UPDATE CASCADE ON DELETE RESTRICT;
+INSERT INTO categories VALUES 
+    (1, "C01", "category01"),
+    (2, "C02", "category02"),
+    (3, "C03", "category03"),
+    (4, "C04", "category04"),
+    (5, "C05", "category05"),
+    (6, "C06", "category06");
+INSERT INTO products VALUES 
+    (1, "P01", "product01", 101, 1001.0, 1),
+    (2, "P02", "product02", 102, 1002.0, 2),
+    (3, "P03", "product03", 103, 1003.0, 3),
+    (4, "P04", "product04", 104, 1004.0, 4),
+    (5, "P05", "product05", 105, 1005.0, 5),
+    (6, "P06", "product06", 106, 1006.0, 1),
+    (7, "P07", "product07", 107, 1007.0, 1),
+    (8, "P08", "product08", 108, 1008.0, 2),
+    (9, "P09", "product09", 109, 1009.0, 3);
 ```
 
-La relació entre passatgers i vols és mxn. Per això hi ha una taula de connexió entre les dues entitats amb les respectives claus primàries actuant com a foranes
-
-## Capa de persistència de dades
-
-La classe ***DbConnect*** encapsula les dades per a la connexió a la base de dades. Té aplicat el patró ***Singleton*** perquè només existeixi una instancia de la classe.
-
-La classe s'encarrega també de carregar el *driver* de la base de dades. Si no es troba el *driver*, es llança ***ClassNotFoundException***.
+## La classe de connexió
 
 ``` java
+package cat.proven.categprods.model.persist;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 /**
  * encapsulates data for database connection.
  *
  * @author ProvenSoft
  */
 public final class DbConnect {
-    
-    private static DbConnect instance;
 
     static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     static final String PROTOCOL = "jdbc:mysql:";
     static final String HOST = "127.0.0.1";
-    static final String BD_NAME = "flightsdb";
-    static final String USER = "flightssusr";
-    static final String PASSWORD = "flightspwd";
-    static final String PARAMS = "useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    static final String BD_NAME = "storedb";
+    static final String USER = "storeusr";
+    static final String PASSWORD = "storepsw";
 
-    private DbConnect() throws ClassNotFoundException {
-        loadDriver();
-    }
-
-    public static DbConnect getInstance() throws ClassNotFoundException {
-        if (instance == null) {
-            instance = new DbConnect();
-        }
-        return instance;
-    }
-    
-    public void loadDriver() throws ClassNotFoundException {
+    public static void loadDriver() throws ClassNotFoundException {
+        //getConnectionProperties(); better if connection properties are read from a configuration file
         Class.forName(DRIVER);
     }
-
+    
     /**
      * gets and returns a connection to database
      *
@@ -403,137 +103,83 @@ public final class DbConnect {
      * @throws java.sql.SQLException
      */
     public Connection getConnection() throws SQLException {
-        final String BD_URL = String.format("%s//%s/%s?%s", PROTOCOL, HOST, BD_NAME, PARAMS);
-        Connection conn = null;
+        final String BD_URL = String.format("%s//%s/%s", PROTOCOL, HOST, BD_NAME);
+        Connection conn;
         conn = DriverManager.getConnection(BD_URL, USER, PASSWORD);
         return conn;
     }
 }
 ```
 
-### Classes DAO
+## Les classes del model de dades
 
-Les classes **DAO** (**Data Access Object**) encapsulen les consultes a la base de dades i la conversió entre les dades de la base de dades i els objectes del model.
+Són les classes que defineixen el tipus de dades (objectes) amb què
+treballa la nostra aplicació.
 
-En aquest exemple, les consultes *SQL* es defineixen i es desen en un **Map**.
-Només es mostren alguns mètodes a títol d'exemple.
-
-``` java
-/**
- * DAO for passenger entity.
- * @author ProvenSoft
- */
-public class PassengerDao {
-
-    protected final Map<String, String> queries;
-    protected final DbConnect dbConnect;
-    private final String TABLE_NAME;
-
-    public PassengerDao() throws ClassNotFoundException {
-        this.TABLE_NAME = "passengers";
-        this.dbConnect = DbConnect.getInstance();
-        this.queries = new HashMap<>();
-        initQueries();
-    }
-
-    /**
-     * converts resultset entry to entity object.
-     * @param rs resultset to get data from.
-     * @return object with data in current position of resultset.
-     */
-    private Passenger fromResultSet(ResultSet rs) throws SQLException {
-        Passenger p = null;
-        long id = rs.getLong("id");
-        String phone = rs.getString("phone");
-        boolean minor = rs.getBoolean("minor");
-        p = new Passenger(id, phone, minor);
-        return p;
-    }
-
-    /**
-     * selects all entities from database.
-     * @return list of entities of null in case of error.
-     */
-    public List<Passenger> selectAll() {
-        List<Passenger> result = new ArrayList<>();
-        try {
-            Connection conn = dbConnect.getConnection();
-            if (conn != null) {
-                String query = queries.get("sAll");
-                Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery(query);
-                while (rs.next()) {
-                    Passenger obj = fromResultSet(rs);
-                    if (obj != null) {
-                        result.add(obj);
-                    }
-                }
-            }
-        } catch (SQLException ex) {
-            //Logger.getLogger(ProductDao.class.getName()).log(Level.SEVERE, null, ex);
-            result = null;
-        }
-        return result;
-    }
-    
-    /**
-     * initiatizes queries to database.
-     */
-    private void initQueries() {
-        queries.put("sAll", String.format("select * from %s", TABLE_NAME));
-        queries.put("insert", String.format("insert into %s values (null, ?, ?)", TABLE_NAME));
-    }
-    
-}
-```
-
-Cal escriure una classe DAO per a cada entitat que ha de fer-se persistent a la base de dades.
-
-La pràctica consisteix en completar l'aplicació implementant totes les funcionalitats requerides i realitzant les proves pertinents que
-n'assegurin el correcte funcionament en totes les circumstàncies.
-
-Cal definir l'estratègia de tractament d'errors: codis d'error, llançament d'excepcions, ..., de manera que es pugui informar a
-l'usuari amb prou detall del resultat de les accions que s'han realitzat.
-
-### Relació entre vols i passatgers
-
-Per implementar la relació mxn entre vols i passatgers crearem una classe amb les claus foranes que mapegen la taula de la relació.
+S'acostuma a anomenar aquesta capa *business layer*.
 
 ``` java
+package cat.proven.categprods.model;
+
+import java.util.Objects;
+
 /**
- * Transport persistence class for flight-passenger mxn relationship.
+ *
  * @author ProvenSoft
  */
-public class FlightPassenger {
-    private long flightId;
-    private long passengerId;
+public class Category {
 
-    public FlightPassenger(long flightId, long passengerId) {
-        this.flightId = flightId;
-        this.passengerId = passengerId;
+    private long id;
+    private String code;
+    private String name;
+
+    public Category(long id, String code, String name) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
     }
 
-    public long getFlightId() {
-        return flightId;
+    public Category() {
     }
 
-    public void setFlightId(long flightId) {
-        this.flightId = flightId;
+    public Category(long id) {
+        this.id = id;
     }
 
-    public long getPassengerId() {
-        return passengerId;
+    public Category(Category other) {
+        this.id = other.id;
+        this.code = other.code;
+        this.name = other.name;
     }
 
-    public void setPassengerId(long passengerId) {
-        this.passengerId = passengerId;
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 37 * hash + (int) (this.flightId ^ (this.flightId >>> 32));
-        hash = 37 * hash + (int) (this.passengerId ^ (this.passengerId >>> 32));
+        int hash = 7;
+        hash = 73 * hash + Objects.hashCode(this.code);
         return hash;
     }
 
@@ -548,21 +194,146 @@ public class FlightPassenger {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final FlightPassenger other = (FlightPassenger) obj;
-        if (this.flightId != other.flightId) {
-            return false;
-        }
-        if (this.passengerId != other.passengerId) {
-            return false;
-        }
-        return true;
+        final Category other = (Category) obj;
+        return Objects.equals(this.code, other.code);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("FlightPassenger{flightId=").append(flightId);
-        sb.append(", passengerId=").append(passengerId);
+        sb.append("Category{");
+        sb.append("id=").append(id);
+        sb.append(", code=").append(code);
+        sb.append(", name=").append(name);
+        sb.append('}');
+        return sb.toString();
+    }
+
+}
+```
+
+``` java
+package cat.proven.categprods.model;
+
+import java.util.Objects;
+
+/**
+ *
+ * @author ProvenSoft
+ */
+public class Product {
+    private long id;
+    private String code;
+    private String name;
+    private int stock;
+    private double price;
+    private Category category;
+
+    public Product(long id, String code, String name, int stock, double price, Category category) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.stock = stock;
+        this.price = price;
+        this.category = category;
+    }
+
+    public Product() {
+    }
+
+    public Product(long id) {
+        this.id = id;
+    }
+
+    public Product(Product other) {
+        this.id = other.id;
+        this.code = other.code;
+        this.name = other.name;
+        this.stock = other.stock;
+        this.price = other.price;
+        this.category = other.category;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.code);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Product other = (Product) obj;
+        return Objects.equals(this.code, other.code);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Product{");
+        sb.append("id=").append(id);
+        sb.append(", code=").append(code);
+        sb.append(", name=").append(name);
+        sb.append(", stock=").append(stock);
+        sb.append(", price=").append(price);
+        sb.append(", category=").append(category);
         sb.append('}');
         return sb.toString();
     }
@@ -570,159 +341,776 @@ public class FlightPassenger {
 }
 ```
 
-I per a la persistència de la relació, crearem la classe *FlightPassengerDao*.
+## Capa d'accés a dades (DAL). Les classes DAO
+
+La capa d'accés a dades (***Data Access Layer***) s'encarrega de la
+persistència de les dades del model (capa de negoci).
+
+Apliquem el patró **DAO** (***Data Access Object***), el qual usa una
+classe per a encapsular les consultes a cada una de les taules de la
+base de dades.
+
+Aquestes classes implementen les funcionalitats del conegut **CRUD**
+(*Create*, *Read*, *Update*, *Delete*).
 
 ``` java
+package cat.proven.categprods.model.persist;
+
+import cat.proven.categprods.model.Category;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- * DAO for flight-passsenger relationship persistence.
+ * Data Access Object for category table
+ *
  * @author ProvenSoft
  */
-public class FlightPassengerDao {
-    protected final Map<String, String> queries;
-    protected final DbConnect dbConnect;
-    private final String TABLE_NAME;
+public class CategoryDao {
 
-    public FlightPassengerDao() throws ClassNotFoundException {
-        this.TABLE_NAME = "flightpassenger";
-        this.dbConnect = DbConnect.getInstance();
-        this.queries = new HashMap<>();
-        initQueries();
-    }    
+    private final DbConnect dbConnect;
 
-    /**
-     * converts resultset entry to entity object.
-     * @param rs resultset to get data from.
-     * @return object with data in current position of resultset.
-     */
-    private FlightPassenger fromResultSet(ResultSet rs) throws SQLException {
-        FlightPassenger p = null;
-        long flightId = rs.getLong("flight_id");
-        long passengerId = rs.getLong("passenger_id");
-        p = new FlightPassenger(flightId, passengerId);
-        return p;
+    public CategoryDao() {
+        this.dbConnect = new DbConnect();
     }
-    
-    /**
-     * selects all entities from database.
-     * @return list of entities of null in case of error.
-     */
-    public List<FlightPassenger> selectAll() {
-        List<FlightPassenger> result = new ArrayList<>();
-        try {
-            Connection conn = dbConnect.getConnection();
-            if (conn != null) {
-                String query = queries.get("sAll");
-                Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery(query);
-                while (rs.next()) {
-                    FlightPassenger obj = fromResultSet(rs);
-                    if (obj != null) {
-                        result.add(obj);
-                    }
-                }
-            }
-        } catch (SQLException ex) {
-            result = null;
-        }
-        return result;
+
+    private Category fromResultSet(ResultSet rs) throws SQLException {
+        Category cat;
+        long id = rs.getLong("id");
+        String code = rs.getString("code");
+        String name = rs.getString("name");
+        cat = new Category(id, code, name);
+        return cat;
     }
-     
-    /**
-     * inserts a flightpassenger in database.
-     * @param flightpassenger the flightpassenger to insert.
-     * @return number of rows affected.
-     */
-    public int insert(FlightPassenger flightpassenger) {
+
+    public int insert(Category category) {
         int result = 0;
-        try {
-            Connection conn = dbConnect.getConnection();
-            if (conn != null) {
-                String query = queries.get("insert");
-                PreparedStatement st = conn.prepareStatement(query);
-                st.setLong(1, flightpassenger.getFlightId());
-                st.setLong(2, flightpassenger.getPassengerId());
-                result = st.executeUpdate();
-            }
+        //get a connection and perform query
+        try ( Connection conn = dbConnect.getConnection()) {
+            String query = "insert into categories values (null, ?, ?)";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, category.getCode());
+            st.setString(2, category.getName());
+            result = st.executeUpdate();
         } catch (SQLException ex) {
-            result = -1;
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }        
         return result;
     }
+
+    public int update(Category actualCategory, Category updatedCategory) {
+        int result = 0;
+        //get a connection and perform query
+        try ( Connection conn = dbConnect.getConnection()) {
+            String query = """
+                           update categories set 
+                           code=?, name=?  
+                           where id=?
+                           """;
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, updatedCategory.getCode());
+            st.setString(2, updatedCategory.getName());
+            st.setLong(3, actualCategory.getId());
+            result = st.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        }        
+        return result;        
+    }
     
-    public List<FlightPassenger> selectWhereFlightId(long id) {
-        List<FlightPassenger> result = new ArrayList<>();
-        try {
-            Connection conn = dbConnect.getConnection();
-            if (conn != null) {
-                String query = queries.get("sWhereFlightId");
-                PreparedStatement st = conn.prepareStatement(query);
-                st.setLong(1, id);
-                ResultSet rs = st.executeQuery();
-                while (rs.next()) {
-                    FlightPassenger obj = fromResultSet(rs);
-                    if (obj != null) {
-                        result.add(obj);
-                    }
+    public Category select(Category category) {
+        Category cat = null;
+        //get a connection and perform query
+        try ( Connection conn = dbConnect.getConnection()) {
+            String query = "select * from categories where id=?";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setLong(1, category.getId());
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                cat = fromResultSet(rs);
+
+            } else {
+                cat = null;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+        return cat;
+    }
+
+    public Category selectWhereCode(String code) {
+        Category cat = null;
+        //get a connection and perform query
+        try ( Connection conn = dbConnect.getConnection()) {
+            String query = "select * from categories where code=?";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, code);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                cat = fromResultSet(rs);
+
+            } else {
+                cat = null;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+        return cat;
+    }
+
+    public List<Category> selectAll() {
+        List<Category> result = new ArrayList<>();
+        //get a connection and perform query
+        try ( Connection conn = dbConnect.getConnection()) {
+            String query = "select * from categories";
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                Category cat = fromResultSet(rs);
+                if (cat != null) {
+                    result.add(cat);
                 }
             }
         } catch (SQLException ex) {
-            result = null;
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
         return result;
     }
 
-    public List<FlightPassenger> selectWherePassengerId(long id) {
-        List<FlightPassenger> result = new ArrayList<>();
-        try {
-            Connection conn = dbConnect.getConnection();
-            if (conn != null) {
-                String query = queries.get("sWherePassengerId");
-                PreparedStatement st = conn.prepareStatement(query);
-                st.setLong(1, id);
-                ResultSet rs = st.executeQuery(query);
-                while (rs.next()) {
-                    FlightPassenger obj = fromResultSet(rs);
-                    if (obj != null) {
-                        result.add(obj);
-                    }
+}
+```
+
+``` java
+package cat.proven.categprods.model.persist;
+
+import cat.proven.categprods.model.Category;
+import cat.proven.categprods.model.Product;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * Data Access Object for product table
+ *
+ * @author ProvenSoft
+ */
+public class ProductDao {
+
+    private final DbConnect dbConnect;
+
+    public ProductDao() {
+        this.dbConnect = new DbConnect();
+    }
+
+    private Product fromResultSet(ResultSet rs) throws SQLException {
+        Product prod;
+        long id = rs.getLong("id");
+        String code = rs.getString("code");
+        String name = rs.getString("name");
+        int stock = rs.getInt("stock");
+        double price = rs.getDouble("price");
+        long categoryId = rs.getLong("category_id");
+        prod = new Product(id, code, name, stock, price, new Category(categoryId));
+        return prod;
+    }
+
+    public int insert(Product product) {
+        int result = 0;
+        //get a connection and perform query
+        try ( Connection conn = dbConnect.getConnection()) {
+            String query = "insert into products values (null, ?, ?, ?, ?, ?)";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, product.getCode());
+            st.setString(2, product.getName());
+            st.setInt(3, product.getStock());
+            st.setDouble(4, product.getPrice());
+            st.setLong(5, product.getCategory().getId());
+            result = st.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        }        
+        return result;
+    }    
+    
+    public Product select(Product product) {
+        Product prod = null;
+        //get a connection and perform query
+        try ( Connection conn = dbConnect.getConnection()) {
+            String query = "select * from products where id=?";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setLong(1, product.getId());
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                prod = fromResultSet(rs);
+
+            } else {
+                prod = null;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+        return prod;
+    }
+
+    public Product selectWhereCode(String code) {
+        Product prod = null;
+        //get a connection and perform query
+        try ( Connection conn = dbConnect.getConnection()) {
+            String query = "select * from products where code=?";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setString(1, code);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                prod = fromResultSet(rs);
+
+            } else {
+                prod = null;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+        return prod;
+    }
+
+    public List<Product> selectWhereMinStock(int minStock) {
+        List<Product> result = new ArrayList<>();
+        //get a connection and perform query
+        try ( Connection conn = dbConnect.getConnection()) {
+            String query = "select * from products where stock<?";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, minStock);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Product prod = fromResultSet(rs);
+                if (prod != null) {
+                    result.add(prod);
                 }
             }
         } catch (SQLException ex) {
-            result = null;
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+
+    public List<Product> selectAll() {
+        List<Product> result = new ArrayList<>();
+        //get a connection and perform query
+        try ( Connection conn = dbConnect.getConnection()) {
+            String query = "select * from products";
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                Product prod = fromResultSet(rs);
+                if (prod != null) {
+                    result.add(prod);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+
+    public List<Product> selectWhereCategory(Category category) {
+        List<Product> result = new ArrayList<>();
+        //get a connection and perform query
+        try ( Connection conn = dbConnect.getConnection()) {
+            String query = "select * from products where category_id=?";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setLong(1, category.getId());
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Product prod = fromResultSet(rs);
+                if (prod != null) {
+                    result.add(prod);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+
+}
+```
+
+## La classe principal de test
+
+``` java
+package cat.proven.categprods;
+
+import cat.proven.categprods.model.Category;
+import cat.proven.categprods.model.Product;
+import cat.proven.categprods.model.persist.CategoryDao;
+import cat.proven.categprods.model.persist.ProductDao;
+import java.util.List;
+import java.util.Scanner;
+
+/**
+ * Main class to test Category and Product persistence
+ * @author ProvenSoft
+ */
+public class Tester {
+
+    private final CategoryDao categoryDao;
+    private final ProductDao productDao;
+
+    public Tester() {
+        categoryDao = new CategoryDao();
+        productDao = new ProductDao();        
+    }
+
+    public <T> void printList(List<T> data) {
+        if (data != null) {
+            data.forEach(System.out::println);
+        } else {
+            System.out.println("Null data");
+        }   
+    }
+ 
+    public <T> void printSingle(T data) {
+        if (data != null) {
+            System.out.println(data.toString());
+        } else {
+            System.out.println("Null data");
+        }
+    }
+    
+    public static void main(String[] args) {
+        Tester main = new Tester();
+        main.runTests();
+    }
+
+    private void runTests() {
+        testRetrieveAllCategories();
+        testRetrieveAllProducts();
+        testRetrieveProductsByCategory();
+        testRetrieveProductWithCategory();
+        testInsertCategory();
+        testInsertProduct();
+        testUpdateCategory();
+    }
+
+    public void testRetrieveAllCategories() {
+        //test retrieve all categories
+        System.out.println("Retrieve all categories");
+        List<Category> allCategories = categoryDao.selectAll();
+        printList(allCategories);        
+    }
+
+    public void testRetrieveAllProducts() {
+        //test retrieve all products
+        System.out.println("Retrieve all products");
+        List<Product> allProducts = productDao.selectAll();
+        printList(allProducts);        
+    }
+
+    public void testRetrieveProductsByCategory() {
+        //test retrieve products by category
+        System.out.println("Retrieve products by category");
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Input category id: ");
+        long categoryId = scan.nextLong();
+        List<Product> products = productDao.selectWhereCategory(new Category(categoryId));
+        printList(products);
+    }
+    
+    public void testRetrieveProductWithCategory() {
+        //test retrieve product with category
+        System.out.println("Retrieve product with category");
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Input product id: ");
+        long productId = scan.nextLong();
+        Product product = productDao.select(new Product(productId));
+        printSingle(product); 
+        if (product != null) {
+            Category category = categoryDao.select(new Category(product.getId()));
+            product.setCategory(category);
+            printSingle(product);            
+        }
+    }
+    
+    public void testInsertCategory() {
+        //test insert a new category
+        System.out.println("Insert a new category");
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Category code: ");
+        String code = scan.next();
+        System.out.print("Category name: ");
+        String name = scan.next();
+        Category category = new Category(0, code, name);
+        int result = categoryDao.insert(category);
+        String resultMsg = (result==1)? "Category saved":"Category not saved";
+        System.out.println( resultMsg );
+    }
+
+    public void testInsertProduct() {
+        //test insert a new product
+        System.out.println("Insert a new product");
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Product code: ");
+        String code = scan.next();
+        System.out.print("Product name: ");
+        String name = scan.next();
+        System.out.print("Product stock: ");
+        int stock = scan.nextInt();
+        System.out.print("Product price: ");
+        double price = scan.nextDouble();
+        System.out.print("Product category id: ");
+        long categoryId = scan.nextLong();
+        Product product = new Product(0, code, name, stock, price, new Category(categoryId));
+        int result = productDao.insert(product);
+        String resultMsg = (result==1)? "Product saved":"Product not saved";
+        System.out.println( resultMsg );
+    }
+    
+    public void testUpdateCategory() {
+        //test update a category
+        System.out.println("Update a category");
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Category id (of category to be updated): ");
+        long id = scan.nextLong();
+        Category actualCategory = new Category(id);
+        System.out.print("New category code: ");
+        String code = scan.next();
+        System.out.print("New category name: ");
+        String name = scan.next();
+        Category updatedCategory = new Category(0, code, name);
+        int result = categoryDao.update(actualCategory, updatedCategory);
+        String resultMsg = (result==1)? "Category updated":"Category not updated";
+        System.out.println( resultMsg );
+    }
+    
+}
+```
+
+![Descàrrega del codi explicat fins
+aquí](/docencia/dam/m06/uf2/nf1/categproduct-sense_model.zip)
+
+Proposta d'exercici: Completar totes les consultes possibles i
+implementar els tests.
+
+## Encapsulant els serveis de dades: El model
+
+La lògica de l'aplicació (**capa de control**) i la interacció amb
+l'usuari (**vista**) constitueixen, si no estan separades, la **capa de
+presentació**.
+
+Cal encapsular els detalls del funcionament de la capa d'accés a dades
+per tal que la capa de presentació sigui totalment independent i es
+pugui desenvolupar per separat.
+
+Per aquest motiu, introduirem una classe (el **model**) que farà de
+servidor de dades per a la resta de l'aplicació.
+
+``` java
+package cat.proven.categprods.model;
+
+import cat.proven.categprods.model.persist.CategoryDao;
+import cat.proven.categprods.model.persist.ProductDao;
+import java.util.List;
+
+/**
+ * Model for store application. Provides data services.
+ * @author ProvenSoft
+ */
+public class StoreModel {
+    private final CategoryDao categoryDao;
+    private final ProductDao productDao;
+
+    public StoreModel() {
+        this.categoryDao = new CategoryDao();
+        this.productDao = new ProductDao();
+    }
+    
+    /**
+     * Data services related to category
+     */
+    
+    
+    /**
+     * adds a category to data source, 
+     * preventing duplicates in unique keys and null values
+     * @param category the category to add
+     * @return result code: 1 for success, 0 if fail (change as necessary)
+     */
+    public int addCategory(Category category) {
+        int result = 0;
+        if (category != null) { //perform proper validations before attempting insertion
+            result = categoryDao.insert(category);
         }
         return result;
     }
     
-    private void initQueries() {
-        queries.put("sAll", String.format("select * from %s", TABLE_NAME));
-        queries.put("insert", String.format("insert into %s values (?, ?)", TABLE_NAME));
-        queries.put("sWhereFlightId", String.format("select * from %s where flight_id = ?", TABLE_NAME));
-        queries.put("sWherePassengerId", String.format("select * from %s where passenger_id = ?", TABLE_NAME));
+    /**
+     * modifies a category in the data source, performing proper validations
+     * @param oldC the actual category to update
+     * @param newC the new values to update
+     * @return result code: 1 for success, 0 if fail (change as necessary)
+     */
+    public int modifyCategory(Category oldC, Category newC) {
+        int result = 0;
+        if ( (oldC != null) && (newC != null) ) { //perform proper validations before attempting insertion
+            result = categoryDao.update(oldC, newC);
+        }
+        return result;        
+    }
+
+    /**
+     * finds all categories in data source
+     * @return list with all categories or null in case of error
+     */
+    public List<Category> findAllCategories() {
+        return categoryDao.selectAll();
+    }
+    
+    /**
+     * finds a category with the given code
+     * @param code the code to find
+     * @return category found or null if not found or in case of error
+     */
+    public Category findCategoryByCode(String code) {
+        Category c = null;
+        if (code != null) {
+            c = categoryDao.selectWhereCode(code);
+        }
+        return c;
+    }
+    
+    /**
+     * Data services related to product
+     */  
+
+    /**
+     * adds a product to data source, 
+     * preventing duplicates in unique keys and null values
+     * @param product the category to add
+     * @return result code: 1 for success, 0 if fail (change as necessary)
+     */
+    public int addProduct(Product product) {
+        int result = 0;
+        if (product != null) { //perform proper validations before attempting insertion
+            result = productDao.insert(product);
+        }
+        return result;
+    }    
+    
+    /**
+     * finds all products in data sources 
+     * @return list of all products or null in case of error
+     */
+    public List<Product> findAllProducts() {
+        return productDao.selectAll();
+    }
+    
+    /**
+     * finds a product with the given code
+     * @param code the code to find
+     * @return category found or null if not found or in case of error
+     */
+    public Product findProductByCode(String code) {
+        Product c = null;
+        if (code != null) {
+            c = productDao.selectWhereCode(code);
+        }
+        return c;
+    }
+
+    /**
+     * Data services related to category-product relationship
+     */ 
+
+    /**
+     * finds all products belonging to given category
+     * @param category the category whose products are being searched
+     * @return list of products of given category or null in case of error
+     */
+    public List<Product> findProductsByCategory(Category category) {
+        List<Product> result = null;
+        if (category != null) {
+            result = productDao.selectWhereCategory(category);
+        }
+        return result;
+    }
+    
+    /**
+     * finds a product and retrieves all its information,
+     * including that corresponding to its category
+     * @param product the product to find
+     * @return product found or null in case of error
+     */
+    public Product findProductWithCategory(Product product) {
+        Product p = null;
+        if (product != null) {
+            p = productDao.select(product);
+            if (p != null) {
+                Category c = categoryDao.select(p.getCategory());
+                if (c != null) {
+                    p.setCategory(c);
+                }
+            }
+        }
+        return p;
     }
 }
 ```
 
-Per fer les consultes creuades, crearem al Model mètodes que utilizin les classes anteriors.
+I ara, la classe de test per provar-ne el funcionament serà la següent:
 
 ``` java
-    /**
-     * search passengers in given flight.
-     * @param flight the flight to search passengers in.
-     * @return list of passengers or null in case of error.
-     */
-    public List<Passenger> searchPassengersByFlight(Flight flight) {
-        List<Passenger> result = new ArrayList<>();
-        List<FlightPassenger> flightpassengerList = flightpassengerDao.selectWhereFlightId(flight.getId());
-        if (flightpassengerList != null) {
-            for (FlightPassenger fp: flightpassengerList) {
-                Passenger p = passengerDao.selectWhereId(fp.getPassengerId());
-                if (p != null) {
-                    result.add(p);
-                }
-            }            
-        }
-        return result;
+package cat.proven.categprods;
+
+import cat.proven.categprods.model.Category;
+import cat.proven.categprods.model.Product;
+import cat.proven.categprods.model.StoreModel;
+import java.util.List;
+import java.util.Scanner;
+
+/**
+ * Main class to test Category and Product persistence
+ * @author ProvenSoft
+ */
+public class Tester2 {
+
+    private final StoreModel model;
+
+    public Tester2() {
+        model = new StoreModel();
     }
+
+    public <T> void printList(List<T> data) {
+        if (data != null) {
+            data.forEach(System.out::println);
+        } else {
+            System.out.println("Null data");
+        }   
+    }
+ 
+    public <T> void printSingle(T data) {
+        if (data != null) {
+            System.out.println(data.toString());
+        } else {
+            System.out.println("Null data");
+        }
+    }
+    
+    public static void main(String[] args) {
+        Tester2 main = new Tester2();
+        main.runTests();
+    }
+
+    private void runTests() {
+        testRetrieveAllCategories();
+        testRetrieveAllProducts();
+        testRetrieveProductsByCategory();
+        testRetrieveProductWithCategory();
+        testInsertCategory();
+        testInsertProduct();
+        testUpdateCategory();
+    }
+
+    public void testRetrieveAllCategories() {
+        //test retrieve all categories
+        System.out.println("Retrieve all categories");
+        List<Category> allCategories = model.findAllCategories();
+        printList(allCategories);        
+    }
+
+    public void testRetrieveAllProducts() {
+        //test retrieve all products
+        System.out.println("Retrieve all products");
+        List<Product> allProducts = model.findAllProducts();
+        printList(allProducts);        
+    }
+
+    public void testRetrieveProductsByCategory() {
+        //test retrieve products by category
+        System.out.println("Retrieve products by category");
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Input category id: ");
+        long categoryId = scan.nextLong();
+        List<Product> products = model.findProductsByCategory(new Category(categoryId));
+        printList(products);
+    }
+    
+    public void testRetrieveProductWithCategory() {
+        //test retrieve product with category
+        System.out.println("Retrieve product with category");
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Input product id: ");
+        long productId = scan.nextLong();
+        Product product = model.findProductWithCategory(new Product(productId));
+        printSingle(product); 
+    }
+    
+    public void testInsertCategory() {
+        //test insert a new category
+        System.out.println("Insert a new category");
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Category code: ");
+        String code = scan.next();
+        System.out.print("Category name: ");
+        String name = scan.next();
+        Category category = new Category(0, code, name);
+        int result = model.addCategory(category);
+        String resultMsg = (result==1)? "Category saved":"Category not saved";
+        System.out.println( resultMsg );
+    }
+
+    public void testInsertProduct() {
+        //test insert a new product
+        System.out.println("Insert a new product");
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Product code: ");
+        String code = scan.next();
+        System.out.print("Product name: ");
+        String name = scan.next();
+        System.out.print("Product stock: ");
+        int stock = scan.nextInt();
+        System.out.print("Product price: ");
+        double price = scan.nextDouble();
+        System.out.print("Product category id: ");
+        long categoryId = scan.nextLong();
+        Product product = new Product(0, code, name, stock, price, new Category(categoryId));
+        int result = model.addProduct(product);
+        String resultMsg = (result==1)? "Product saved":"Product not saved";
+        System.out.println( resultMsg );
+    }
+    
+    public void testUpdateCategory() {
+        //test update a category
+        System.out.println("Update a category");
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Category id (of category to be updated): ");
+        long id = scan.nextLong();
+        Category actualCategory = new Category(id);
+        System.out.print("New category code: ");
+        String code = scan.next();
+        System.out.print("New category name: ");
+        String name = scan.next();
+        Category updatedCategory = new Category(0, code, name);
+        int result = model.modifyCategory(actualCategory, updatedCategory);
+        String resultMsg = (result==1)? "Category updated":"Category not updated";
+        System.out.println( resultMsg );
+    }
+    
+}
 ```
 
-Exercici: A partir del codi mostrat, cal completar les consultes que falten.
+Exercici: 
+
+1. Completar totes les consultes possibles i implementar els tests.
+2. Substituir la classe principal de test per una classe principal que implementi la interacció amb l'usuari a través d'un menú que li permeti executar totes les funcionalitats de l'aplicació.
+

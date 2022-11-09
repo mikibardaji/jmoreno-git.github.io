@@ -226,7 +226,7 @@ El retorn del mètode *compare()* és el següent:
 * 0 si o1 = o2
 * enter positiu si o1 > o2
 
-[ListSort.jav (descàrrega)](assets/5.1/5.1.2/ListSort.java)
+[ListSort.java (descàrrega)](assets/5.1/5.1.2/ListSort.java)
 ```
 /**Java program to demonstrate working of Comparator 
  * interface and Collections.sort() to sort according 

@@ -1,7 +1,7 @@
 # Introducció a la persistència en bases de dades
 
 * [Connexió a bases de dades](uf6nf1a01.md)
-* [Mapeig objecte relacional](uf6nf1a02.md)
-* [A613-Accés a bases de dades amb aplicacions gràfiques](https://docencia.proven.cat/jmoreno/wiki/doku.php?id=docencia:dam:m03:uf6:a613)
+* [Mapeig objecte relacional i capa d'accés a dades](uf6nf1a02.md)
+* [Accés a dades i arquitectura Model-Vista-Controlador](uf6nf1a02.md)
 
 Instal·lació MariaDB a distribucions Linux [Setting up MariaDB Repositories](https://downloads.mariadb.org/mariadb/repositories/#distro=Mint&distro_release=bionic--ubuntu_bionic&mirror=hs-esslingen&version=10.4)

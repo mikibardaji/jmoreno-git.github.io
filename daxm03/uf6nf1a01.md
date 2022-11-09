@@ -5,15 +5,16 @@
 * Connexió, consulta i modificació sobre bases de dades
 * Models connectat i desconnectat
 
-## Persistència i serialització
+## Persistència i seriaació
 
 La **persistència** és el mecanisme mitjançant el qual s’aconsegueix desar dades perquè no es perdin en finalitzar l’aplicació i posteriorment recuperar-les.
 
 Si l’aplicació gestiona petites quantitats de dades, pot ser suficient emmagatzemar-les en un fitxer de text en disc. Si, en canvi, és necessari manejar grans quantitats de dades, l’opció serà emmagatzemar-les en una base de dades.
 
-Podem convertir un objecte en bytes per poder enviar-lo a través de xarxa, desar-lo en un arxiu, reconstruir-lo a l’altra banda d’una xarxa, llegir-lo de fitxer, etc. Aquest procés de conversió a bytes s’anomena **seriació**. Per fer que un objecte es pugui serialitzar en Java només cal que implementi la interface **Serializable**, la qual no té mètodes. Els atributs de les classes que implementin Serializable han de ser dades primitives o bé classes que també implementin la interface.
+Podem convertir un objecte en bytes per poder enviar-lo a través de xarxa, desar-lo en un arxiu, reconstruir-lo a l’altra banda d’una xarxa, llegir-lo de fitxer, etc. Aquest procés de conversió a bytes s’anomena **seriació**. Per fer que un objecte es pugui seriar en Java només cal que implementi la interface **Serializable**, la qual no té mètodes. Els atributs de les classes que implementin Serializable han de ser dades primitives o bé classes que també implementin la interface.
 
-Si necessitem que la serialització es faci d’una manera especial, hem de definir els mètodes que java cridarà per convertir l’objecte a bytes i per recuperar-lo:
+Si necessitem que la seriació es faci d’una manera especial, hem de definir els mètodes que java cridarà per convertir l’objecte a bytes i per recuperar-lo:
+
 ```java
 private void readObject(java.io.ObjectInputStream stream)
 throws IOException, ClassNotFoundException
@@ -134,7 +135,9 @@ VALUES
 
 ### Creació del model de dades de l'aplicació
 
-En primer lloc, hem de descarregar el driver específic per a java del sistema gestor de bases de dades que anem a utilitzar. En el nostre cas, es tracta de MariaDb (o Mysql). Descarreguem el [driver](https://mariadb.com/download-confirmation/?group-name=Data%20Access&release-notes-uri=https%3A%2F%2Fmariadb.com%2Fdocs%2Frelease-notes%2Fmariadb-connector-j-3-0%2F3-0-5%2F&documentation-uri=https%3A%2F%2Fmariadb.com%2Fkb%2Fen%2Flibrary%2Fmariadb-connector-j%2F&download-uri=https%3A%2F%2Fdlm.mariadb.com%2F2325871%2FConnectors%2Fjava%2Fconnector-java-3.0.5%2Fmariadb-java-client-3.0.5.jar&product-name=Java%208%2B%20connector&download-size=570.40%20KB) i l'incorporem com a biblioteca del nostre projecte.
+En primer lloc, hem de descarregar el driver específic per a java del sistema gestor de bases de dades que anem a utilitzar. En el nostre cas, es tracta de MariaDb (o Mysql). 
+
+Descarreguem el [driver MySql Connector/J](https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-j-8.0.31.zip) de MySql per a Java i l'incorporem com a biblioteca del nostre projecte.
 
 Ara haurem de crear les classes que defineixen els tipus de dades que volem recuperar i desar a la base de dades.
 
@@ -142,162 +145,173 @@ En el nostre cas, definim la classe **Country**, amb els mateixos atributs que e
 
 ```java
 /**
-     * ADT for country.
-     * @author Jose
-     */
-    public class Country {
-        private int id;
-        private String name;
-        private String  capital;
-        private double surface;
-        private int inhabitants;
-        private double pib;
-        private int lifeexpectancy;
-     
-        public Country(int id, String name, String capital, double surface, int inhabitants, double pib, int lifeexpectancy) {
-            this.id = id;
-            this.name = name;
-            this.capital = capital;
-            this.surface = surface;
-            this.inhabitants = inhabitants;
-            this.pib = pib;
-            this.lifeexpectancy = lifeexpectancy;
-        }
-     
-        public Country() {
-        }
-     
-        public Country(int id) {
-            this.id = id;
-        }
-     
-        public int getId() {
-            return id;
-        }
-     
-        public void setId(int id) {
-            this.id = id;
-        }
-     
-        public String getName() {
-            return name;
-        }
-     
-        public void setName(String name) {
-            this.name = name;
-        }
-     
-        public String getCapital() {
-            return capital;
-        }
-     
-        public void setCapital(String capital) {
-            this.capital = capital;
-        }
-     
-        public double getSurface() {
-            return surface;
-        }
-     
-        public void setSurface(double surface) {
-            this.surface = surface;
-        }
-     
-        public int getInhabitants() {
-            return inhabitants;
-        }
-     
-        public void setInhabitants(int inhabitants) {
-            this.inhabitants = inhabitants;
-        }
-     
-        public double getPib() {
-            return pib;
-        }
-     
-        public void setPib(double pib) {
-            this.pib = pib;
-        }
-     
-        public int getLifeexpectancy() {
-            return lifeexpectancy;
-        }
-     
-        public void setLifeexpectancy(int lifeexpectancy) {
-            this.lifeexpectancy = lifeexpectancy;
-        }
-     
-        @Override
-        public int hashCode() {
-            int hash = 3;
-            hash = 13 * hash + this.id;
-            return hash;
-        }
-     
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj) {
-                return true;
-            }
-            if (obj == null) {
-                return false;
-            }
-            if (getClass() != obj.getClass()) {
-                return false;
-            }
-            final Country other = (Country) obj;
-            if (this.id != other.id) {
-                return false;
-            }
+ * ADT for country.
+ * @author Jose
+ */
+public class Country {
+    private int id;
+    private String name;
+    private String capital;
+    private double surface;
+    private int inhabitants;
+    private double pib;
+    private int lifeexpectancy;
+
+    public Country(int id, String name, String capital, double surface, int inhabitants, double pib, int lifeexpectancy) {
+        this.id = id;
+        this.name = name;
+        this.capital = capital;
+        this.surface = surface;
+        this.inhabitants = inhabitants;
+        this.pib = pib;
+        this.lifeexpectancy = lifeexpectancy;
+    }
+
+    public Country() {
+    }
+
+    public Country(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCapital() {
+        return capital;
+    }
+
+    public void setCapital(String capital) {
+        this.capital = capital;
+    }
+
+    public double getSurface() {
+        return surface;
+    }
+
+    public void setSurface(double surface) {
+        this.surface = surface;
+    }
+
+    public int getInhabitants() {
+        return inhabitants;
+    }
+
+    public void setInhabitants(int inhabitants) {
+        this.inhabitants = inhabitants;
+    }
+
+    public double getPib() {
+        return pib;
+    }
+
+    public void setPib(double pib) {
+        this.pib = pib;
+    }
+
+    public int getLifeexpectancy() {
+        return lifeexpectancy;
+    }
+
+    public void setLifeexpectancy(int lifeexpectancy) {
+        this.lifeexpectancy = lifeexpectancy;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 13 * hash + this.id;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-     
-        @Override
-        public String toString() {
-            return "Country{" + "id=" + id + ", name=" + name + ", capital=" + capital + ", surface=" + surface + ", inhabitants=" + inhabitants + ", pib=" + pib + ", lifeexpectancy=" + lifeexpectancy + '}';
+        if (obj == null) {
+            return false;
         }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Country other = (Country) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Country{");
+        sb.append("id=").append(id);
+        sb.append(", name=").append(name);
+        sb.append(", capital=").append(capital);
+        sb.append(", surface=").append(surface);
+        sb.append(", inhabitants=").append(inhabitants);
+        sb.append(", pib=").append(pib);
+        sb.append(", lifeexpectancy=").append(lifeexpectancy);
+        sb.append('}');
+        return sb.toString();
+    }
+
+}
 ```
 
 Convé encapsular dintre d'una classe els paràmetres de connexió a la base de dades i el mecanisme de connexió. Creemm la classe **DbConnect**:
 
 ```java
-    import java.sql.Connection;
-    import java.sql.DriverManager;
-    import java.sql.SQLException;
-     
-    /**
-     * encapsulates data for database connection.
-     *
-     * @author Jose
-     */
-    public final class DbConnect {
-     
-        static final String DRIVER = "com.mysql.jdbc.Driver";
-        static final String PROTOCOL = "jdbc:mysql:";
-        static final String HOST = "127.0.0.1";
-        static final String BD_NAME = "dbcountry";
-        static final String USER = "usrcountry";
-        static final String PASSWORD = "pswcountry";
-        static final String PARAMS = "useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-     
-        public static void loadDriver() throws ClassNotFoundException {
-            Class.forName(DRIVER);
-        }
-     
-        /**
-         * gets and returns a connection to database
-         *
-         * @return connection
-         * @throws java.sql.SQLException
-         */
-        public static Connection getConnection() throws SQLException {
-            final String BD_URL = String.format("%s//%s/%s?%s", PROTOCOL, HOST, BD_NAME, PARAMS);
-            Connection conn = null;
-            conn = DriverManager.getConnection(BD_URL, USER, PASSWORD);
-            return conn;
-        }
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+    
+/**
+    * encapsulates data for database connection.
+    *
+    * @author Jose
+    */
+public final class DbConnect {
+    
+    static final String DRIVER = "com.mysql.cj.jdbc.Driver";
+    static final String PROTOCOL = "jdbc:mysql:";
+    static final String HOST = "127.0.0.1";
+    static final String BD_NAME = "dbcountry";
+    static final String USER = "usrcountry";
+    static final String PASSWORD = "pswcountry";
+    static final String PARAMS = "useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    
+    public static void loadDriver() throws ClassNotFoundException {
+        Class.forName(DRIVER);
     }
+    
+    /**
+        * gets and returns a connection to database
+        *
+        * @return connection
+        * @throws java.sql.SQLException
+        */
+    public static Connection getConnection() throws SQLException {
+        final String BD_URL = String.format("%s//%s/%s?%s", PROTOCOL, HOST, BD_NAME, PARAMS);
+        Connection conn = null;
+        conn = DriverManager.getConnection(BD_URL, USER, PASSWORD);
+        return conn;
+    }
+}
 ```
 Per continuar cal repassar les consultes SQL apreses al mòdul de bases de dades.
 
@@ -306,178 +320,250 @@ Per continuar cal repassar les consultes SQL apreses al mòdul de bases de dades
 Ja només ens queda programar una classe principal **ShowCountriesJdbcMySql** que provi de fer les operacions habituals (CRUD) de consulta i modificació de dades.
 
 ```java
-    import java.sql.*;
-    import java.util.Scanner;
-    import java.util.logging.Level;
-    import java.util.logging.Logger;
-     
-    /**
-     * Example of connection to MySql database using Java JDBC bridge.
-     *
-     * @author Jose
-     */
-    public class ShowCountriesJdbcMySql {
-     
-        public static void main(String[] args) throws Exception {
-            ShowCountriesJdbcMySql ap = new ShowCountriesJdbcMySql();
-            ap.run();
-        }
-     
-        private void run() {
-            try {
-                //load the driver (only once).
-                DbConnect.loadDriver();
-                printCountriesAndMetadata();
-                pause();
-                insertANewCountry();
-                pause();
-                modifyACountry();
-                pause();
-                deleteACountry();
-            } catch (ClassNotFoundException ex) {
-                //Logger.getLogger(ShowCountriesJdbcMySql.class.getName()).log(Level.SEVERE, null, ex);
-                System.err.println(ex.getMessage());
-            }
-        }
-     
-        private void printCountriesAndMetadata() {
-            System.out.println("Executing: "+(new Exception()).getStackTrace()[0].getMethodName());
-            try {
-                //get a connection to database.
-                Connection conn = DbConnect.getConnection();
-                if (conn != null) {
-                    //create a statement to perform queries.
-                    Statement stmt = conn.createStatement();
-                    //execute the query and get a resultset.
-                    String query = "SELECT * FROM countries WHERE lifeexpectancy > 77";
-                    ResultSet res = stmt.executeQuery(query);
-                    //get and write metadata.
-                    ResultSetMetaData rsmd = res.getMetaData();
-                    int numCol = rsmd.getColumnCount();
-                    System.out.println("Number of columns: " + rsmd.getColumnCount());
-                    System.out.println("Label \t Name \t Type \t Type name \t Auto increment \t Null \t Precision");
-                    for (int i = 0; i < numCol; i++) {
-                        System.out.print(rsmd.getColumnLabel(i + 1) + " \t ");
-                        System.out.print(rsmd.getColumnName(i + 1) + " \t ");
-                        System.out.print(rsmd.getColumnType(i + 1) + " \t ");
-                        System.out.print(rsmd.getColumnTypeName(i + 1) + " \t ");
-                        System.out.print(rsmd.isAutoIncrement(i + 1) + " \t ");
-                        System.out.print(rsmd.isNullable(i + 1) + " \t ");
-                        System.out.print(rsmd.getPrecision(i + 1) + " \t ");
-                        System.out.println("");
-                    }
-                    //write headers.
-                    System.out.println("");
-                    for (int i = 0; i < numCol; i++) {
-                        System.out.print(rsmd.getColumnLabel(i + 1) + "\t");
-                    }
-                    System.out.println("");
-                    //iterate the resultset and write the rows.
-                    while (res.next()) {
-                        //convert data to java format.
-                        int id = res.getInt("id");
-                        String name = res.getString("name");
-                        String capital = res.getString("capital");
-                        double surface = res.getDouble("surface");
-                        int inhabitants = res.getInt("inhabitants");
-                        double pib = res.getDouble("pib");
-                        int lifeexpectancy = res.getInt("lifeexpectancy");
-                        //instantiate a country object.
-                        Country country = new Country(id, name, capital, surface, inhabitants, pib, lifeexpectancy);
-                        //write data.
-                        System.out.println(country.toString());
-    //                    System.out.println(
-    //                            id + " \t" + name + " \t " + capital + " \t " + surface
-    //                            + " \t " + inhabitants + " \t " + pib + " \t " + lifeexpectancy);
-                    }
-                    //close resources.
-                    res.close();
-                    stmt.close();
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                //Logger.getLogger(ShowCountriesJdbcMySql.class.getName()).log(Level.SEVERE, null, ex);
-                System.err.println(ex.getMessage());
-            }
-        }
-     
-        private void insertANewCountry() {
-            System.out.println("Executing: "+(new Exception()).getStackTrace()[0].getMethodName());
-            try {
-                //get a connection to database.
-                Connection conn = DbConnect.getConnection();
-                if (conn != null) {
-                    //create a statement to perform queries.
-                    Statement stmt = conn.createStatement();
-                    //execute the query.
-                    String query
-                            = "insert into countries values "
-                            + "(null, 'Wonderland', 'Capital', 1000.0, 100000, 2500.0, 90)";
-                    int numRowsAffected = stmt.executeUpdate(query);
-                    System.out.format("%d rows created\n", numRowsAffected);
-                    //close resources.
-                    stmt.close();
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                //Logger.getLogger(ShowCountriesJdbcMySql.class.getName()).log(Level.SEVERE, null, ex);
-                System.err.println(ex.getMessage());
-            }
-        }
-     
-        private void modifyACountry() {
-            System.out.println("Executing: "+(new Exception()).getStackTrace()[0].getMethodName());
-            try {
-                //get a connection to database.
-                Connection conn = DbConnect.getConnection();
-                if (conn != null) {
-                    //create a statement to perform queries.
-                    Statement stmt = conn.createStatement();
-                    //execute the query.
-                    String query
-                            = "update countries set pib = 50000.0 where id=41";
-                    int numRowsAffected = stmt.executeUpdate(query);
-                    System.out.format("%d rows updated\n", numRowsAffected);
-                    //close resources.
-                    stmt.close();
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                //Logger.getLogger(ShowCountriesJdbcMySql.class.getName()).log(Level.SEVERE, null, ex);
-                System.err.println(ex.getMessage());
-            }
-        }
-     
-        private void deleteACountry() {
-            System.out.println("Executing: "+(new Exception()).getStackTrace()[0].getMethodName());
-            try {
-                //get a connection to database.
-                Connection conn = DbConnect.getConnection();
-                if (conn != null) {
-                    //create a statement to perform queries.
-                    Statement stmt = conn.createStatement();
-                    //execute the query.
-                    String query
-                            = "delete from countries where id=41";
-                    int numRowsAffected = stmt.executeUpdate(query);
-                    System.out.format("%d rows deleted\n", numRowsAffected);
-                    //close resources.
-                    stmt.close();
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                //Logger.getLogger(ShowCountriesJdbcMySql.class.getName()).log(Level.SEVERE, null, ex);
-                System.err.println(ex.getMessage());
-            }
-        }
-     
-        private void pause() {
-            Scanner sc = new Scanner(System.in);
-            System.out.println("Press any key to continue...");
-            sc.nextLine();
-        }
-     
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * Example of connection to MySql database using Java JDBC bridge.
+ *
+ * @author Jose
+ */
+public class ShowCountriesJdbcMySql {
+
+    public static void main(String[] args) throws Exception {
+        ShowCountriesJdbcMySql ap = new ShowCountriesJdbcMySql();
+        ap.run();
     }
+
+    private void run() {
+        boolean exit = false;
+        try {
+            //load the driver (only once).
+            DbConnect.loadDriver();
+            do {
+                int optNumber = promptMenu();
+                switch (optNumber) {
+                    case 0 -> exit = true;
+                    case 1 -> printAllCountries();
+                    case 2 -> printAllCountriesAndMetadata();
+                    case 3 -> insertANewCountry();
+                    case 4 -> modifyACountry();
+                    case 5 -> deleteACountry();
+                    default -> System.out.println("Bad option!");
+                }
+            } while (!exit);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Displays menu and reads option from user.
+     *
+     * @return the option selected by user or -1 in case of error.
+     */
+    private static int promptMenu() {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String[] options = {
+            "Quit", "Print all countries", "Print all countries and metadata",
+            "Insert a new country", "Modify a country", "Delete a country",};
+        for (int i = 0; i < options.length; i++) {
+            System.out.format("[%d]. %s\n", i, options[i]);
+        }
+        System.out.print("Choose a test to execute: ");
+        int op;
+        try {
+            op = Integer.parseInt((reader.readLine()));
+        } catch (NumberFormatException | IOException e) {
+            op = -1;
+        }
+        return op;
+    }
+
+    private String inputString(String message) {
+        String answer = "";
+        try {
+            System.out.print(message);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            answer = reader.readLine();
+        } catch (IOException ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+        return answer;
+    }
+    
+    private void printAllCountriesAndMetadata() {
+        System.out.println("Executing: " + (new Exception()).getStackTrace()[0].getMethodName());
+        try ( Connection conn = DbConnect.getConnection() ) { //get a connection to database.
+            if (conn != null) {
+                //create a statement to perform queries.
+                Statement stmt = conn.createStatement();
+                //execute the query and get a resultset.
+                String query = "SELECT * FROM countries WHERE lifeexpectancy > 77";
+                ResultSet res = stmt.executeQuery(query);
+                //get and write metadata.
+                ResultSetMetaData rsmd = res.getMetaData();
+                int numCol = rsmd.getColumnCount();
+                System.out.println("Number of columns: " + rsmd.getColumnCount());
+                System.out.println("Label \t Name \t Type \t Type name \t Auto increment \t Null \t Precision");
+                for (int i = 0; i < numCol; i++) {
+                    System.out.print(rsmd.getColumnLabel(i + 1) + " \t ");
+                    System.out.print(rsmd.getColumnName(i + 1) + " \t ");
+                    System.out.print(rsmd.getColumnType(i + 1) + " \t ");
+                    System.out.print(rsmd.getColumnTypeName(i + 1) + " \t ");
+                    System.out.print(rsmd.isAutoIncrement(i + 1) + " \t ");
+                    System.out.print(rsmd.isNullable(i + 1) + " \t ");
+                    System.out.print(rsmd.getPrecision(i + 1) + " \t ");
+                    System.out.println("");
+                }
+                //write headers.
+                System.out.println("");
+                for (int i = 0; i < numCol; i++) {
+                    System.out.print(rsmd.getColumnLabel(i + 1) + "\t");
+                }
+                System.out.println("");
+                //iterate the resultset and write the rows.
+                while (res.next()) {
+                    //convert data to java format.
+                    int id = res.getInt("id");
+                    String name = res.getString("name");
+                    String capital = res.getString("capital");
+                    double surface = res.getDouble("surface");
+                    int inhabitants = res.getInt("inhabitants");
+                    double pib = res.getDouble("pib");
+                    int lifeexpectancy = res.getInt("lifeexpectancy");
+                    //instantiate a country object.
+                    Country country = new Country(id, name, capital, surface, inhabitants, pib, lifeexpectancy);
+                    //write data.
+                    System.out.format("%d\t%-15s\t%-15s\t%8.0f\t%10d\t%8.2f\t%d\n",
+                            country.getId(),
+                            country.getName(), country.getCapital(),
+                            country.getSurface(), country.getInhabitants(),
+                            country.getPib(), country.getLifeexpectancy());
+                }
+                System.out.println("");
+                //close resources.
+                res.close();
+                stmt.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void printAllCountries() {
+        System.out.println("Executing: " + (new Exception()).getStackTrace()[0].getMethodName());
+        try ( Connection conn = DbConnect.getConnection() ) { //get a connection to database.
+            if (conn != null) {
+                //create a statement to perform queries.
+                Statement stmt = conn.createStatement();
+                //execute the query and get a resultset.
+                String query = "SELECT * FROM countries WHERE lifeexpectancy > 77";
+                ResultSet res = stmt.executeQuery(query);
+                //write headers.
+                System.out.println("");
+                System.out.format("%s\t%-15s\t%-15s\t%-10s\t%-10s\t%-10s\t%s\n",
+                            "id",
+                            "name", "capital",
+                            "surface", "inhabitants",
+                            "pib", "life expectancy");
+                System.out.println("");
+                //iterate the resultset and write the rows.
+                while (res.next()) {
+                    //convert data to java format.
+                    int id = res.getInt("id");
+                    String name = res.getString("name");
+                    String capital = res.getString("capital");
+                    double surface = res.getDouble("surface");
+                    int inhabitants = res.getInt("inhabitants");
+                    double pib = res.getDouble("pib");
+                    int lifeexpectancy = res.getInt("lifeexpectancy");
+                    //instantiate a country object.
+                    Country country = new Country(id, name, capital, surface, inhabitants, pib, lifeexpectancy);
+                    //write data.
+                    //System.out.println(country.toString());
+                    System.out.format("%d\t%-15s\t%-15s\t%8.0f\t%10d\t%8.2f\t%d\n",
+                            country.getId(),
+                            country.getName(), country.getCapital(),
+                            country.getSurface(), country.getInhabitants(),
+                            country.getPib(), country.getLifeexpectancy());
+                }
+                System.out.println("");
+                //close resources.
+                res.close();
+                stmt.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void insertANewCountry() {
+        System.out.println("Executing: " + (new Exception()).getStackTrace()[0].getMethodName());
+        try ( Connection conn = DbConnect.getConnection() ) { //get a connection to database.
+            if (conn != null) {
+                //create a statement to perform queries.
+                Statement stmt = conn.createStatement();
+                //execute the query.
+                String query
+                        = "insert into countries values "
+                        + "(null, 'Wonderland', 'Capital', 1000.0, 100000, 2500.0, 90)";
+                int numRowsAffected = stmt.executeUpdate(query);
+                System.out.format("%d rows created\n", numRowsAffected);
+                //close resources.
+                stmt.close();
+            }
+            System.out.println("");
+        } catch (SQLException ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void modifyACountry() {
+        System.out.println("Executing: " + (new Exception()).getStackTrace()[0].getMethodName());
+        int id = Integer.parseInt(inputString("Input id: "));
+        try ( Connection conn = DbConnect.getConnection() ) { //get a connection to database.
+            if (conn != null) {
+                //create a statement to perform queries.
+                Statement stmt = conn.createStatement();
+                //execute the query.
+                String query
+                        = String.format("update countries set pib = 50000.0 where id=%d", id);
+                int numRowsAffected = stmt.executeUpdate(query);
+                System.out.format("%d rows updated\n", numRowsAffected);
+                //close resources.
+                stmt.close();
+            }
+            System.out.println("");
+        } catch (SQLException ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void deleteACountry() {
+        System.out.println("Executing: " + (new Exception()).getStackTrace()[0].getMethodName());
+        int id = Integer.parseInt(inputString("Input id: "));
+        try ( Connection conn = DbConnect.getConnection() ) { //get a connection to database.
+            if (conn != null) {
+                //execute the query.
+                //create a statement to perform queries.
+                Statement stmt = conn.createStatement();
+                //execute the query.
+                String query
+                        = String.format("delete from countries where id=%d", id);
+                int numRowsAffected = stmt.executeUpdate(query);
+                System.out.format("%d rows deleted\n", numRowsAffected);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+}
 ```
 
 I ja podem compilar i provar l'aplicació.

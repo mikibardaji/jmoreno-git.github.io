@@ -56,7 +56,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 /**
- * EscriureBytes.java
+ * WriteBytes.java
  * Example writing bytes to a file
  * @author ProvenSoft
  */
@@ -92,7 +92,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 /**
- * WriteBytes.java
+ * ReadBytes.java
  * Example reading bytes from file
  * @author ProvenSoft
  */
@@ -249,7 +249,7 @@ public class DataStreamExample01 {
 }
 ```
 
-### Serialització d'objectes
+### Seriació d'objectes
 
 La **seriació** (*serialization*) és el procés d'escriure un objecte a un stream de bytes. És útil quan es vol fer persistent l'estat d'un programa a un fitxer per exemple. El procés invers s'anomena **deseriació** (*deserialization*).
 
