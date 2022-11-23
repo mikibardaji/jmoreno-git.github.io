@@ -491,3 +491,6 @@ public class Estadistica {
 
 }
 ```
+
+Exercici proposat:
+Afegir a la classe *Estadistica.java* mètodes per calcular la mitjana aritmètica i la desviació estàndard. Provar-ne el funcionament invocant-les des de la classe principal.
