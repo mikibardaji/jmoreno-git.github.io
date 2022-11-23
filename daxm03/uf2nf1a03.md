@@ -184,3 +184,13 @@ public class GeomTester {
 
 }
 ```
+
+El resultat en pantalla seria:
+```
+El perímetre del quadrat de costat 5,00 és 20,00
+L'àrea del quadrat de costat 5,00 és 25,00
+El perímetre del rectangle de base 4,00 i altura 3,00 és 14,00
+L'àrea del rectangle de base 4,00 i altura 3,00 és 12,00
+El perímetre de la circumferència de radi 3,00 és 18,85
+L'àrea del cercle de radi 3,00 és 28,27
+```
