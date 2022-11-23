@@ -187,3 +187,307 @@ for (int elem: intArray) {
 ```
 
 Aquests bucles són molt pràctics però no permeten modificar els elements (només la variable d'iteració) ni donen accés a l'índex de l'element.
+
+## Exemples
+
+### Càlculs estadístics amb arrays
+
+Programa que entra un array d'enters, el mostra i calcula la suma dels seus elements, el valor mínim i el valor màxim.
+
+Primera versió amb tot el codi a la mateixa classe i al principal.
+
+```java
+import java.util.Scanner;
+
+/**
+ * Entra un array, el mostra i calcula suma, mínim i màxim
+ * Versió sense funcions
+ * @author Jose
+ */
+public class Ex01a {
+
+    public static void main(String[] args) {
+        Scanner lector = new Scanner(System.in);
+        //preguntar quants elements
+        System.out.print("Quants elements? ");
+        int numElements = lector.nextInt();
+        //declarar i instanciar l'array
+        int [] llista = new int[numElements];
+        //llegir els elements
+        for (int i=0; i<numElements; i++) {
+            //llegir element
+            System.out.print("Element "+i+": ");
+            int elem = lector.nextInt();
+            //posar-lo a la llista
+            llista[i] = elem;
+        }
+        //mostrar la llista
+        for (int i=0; i<numElements; i++) {
+            System.out.print(" "+llista[i]);
+        }
+        System.out.println("");
+        //calcular suma
+        int suma = 0;
+        for (int i=0; i<numElements; i++) {
+            suma += llista[i];
+        }
+        System.out.println("Suma: "+suma);
+        //calcular mínim
+        int minim = llista[0];
+        for (int i=0; i<numElements; i++) {
+            if (llista[i] < minim) {
+                minim = llista[i];
+            }
+        }
+        System.out.println("Mínim: "+minim);
+        //calcular màxim
+        int maxim = llista[0];
+        for (int i=0; i<numElements; i++) {
+            if (maxim < llista[i]) {
+                maxim = llista[i];
+            }
+        }
+        System.out.println("Màxim: "+maxim);
+        
+    }
+    
+}
+```
+
+Segona versió amb funcions a la classe principal
+
+```java
+import java.util.Scanner;
+
+/**
+ * Entra un array, el mostra i calcula suma, mínim i màxim
+ * Versió amb funcions a la mateixa classe
+ * @author Jose
+ */
+public class Ex01b {
+
+    public static void main(String[] args) {
+        Scanner lector = new Scanner(System.in);
+        //preguntar quants elements
+        System.out.print("Quants elements? ");
+        int numElements = lector.nextInt();
+        //declarar i llegir la llista
+        int [] llista = llegirLlista(numElements);
+        //mostrar la llista
+        mostrarLlista(llista);
+        //calcular suma
+        int suma = calcularSuma(llista);
+        System.out.println("Suma: "+suma);
+        //calcular mínim
+        int minim = calcularMinim(llista);
+        System.out.println("Mínim: "+minim);
+        //calcular màxim
+        int maxim = calcularMaxim(llista);
+        System.out.println("Màxim: "+maxim);
+        
+    }
+    
+    /**
+     * llegeix una llista d'enters de la longitud especificada
+     * @param longitud nombre d'elements a llegir
+     * @return array amb la llista
+     */
+    public static int [] llegirLlista(int longitud) {
+        Scanner lector = new Scanner(System.in);
+        //declarar i instanciar l'array
+        int [] dades = new int[longitud];
+        //llegir els elements
+        for (int i=0; i<longitud; i++) {
+            //llegir element
+            System.out.print("Element "+i+": ");
+            int elem = lector.nextInt();
+            //posar-lo a la llista
+            dades[i] = elem;
+        }
+        return dades;
+    }
+    
+    /**
+     * mostra per pantalla unaarray d'enters
+     * @param dades l'array a mostrar
+     */
+    public static void mostrarLlista(int [] dades) {
+        //mostrar la llista
+        for (int i=0; i<dades.length; i++) {
+            System.out.print(" "+dades[i]);
+        } 
+        System.out.println("");
+    }
+    
+    /**
+     * calcula la suma dels elements de l'array
+     * @param dades l'array els elements del qual cal sumar
+     * @return la suma dels elements de l'array
+     */
+    public static int calcularSuma(int [] dades) {
+        int suma = 0;
+        for (int i=0; i<dades.length; i++) {
+            suma += dades[i];
+        }  
+        return suma;
+    }
+    
+    /**
+     * calcula el mínim dels elements de l'array
+     * @param dades l'array del qual cal calcular el mínim
+     * @return el mínim dels elements de l'array
+     */
+    public static int calcularMinim(int [] dades) {
+        int minim = dades[0];
+        for (int i=0; i<dades.length; i++) {
+            if (dades[i] < minim) {
+                minim = dades[i];
+            }
+        }  
+        return minim;
+    }
+   
+    /**
+     * calcula el màxim dels elements de l'array
+     * @param dades l'array del qual cal calcular el màxim
+     * @return el màxim dels elements de l'array
+     */
+    public static int calcularMaxim(int [] dades) {
+        int maxim = dades[0];
+        for (int i=0; i<dades.length; i++) {
+            if (maxim < dades[i]) {
+                maxim = dades[i];
+            }
+        }  
+        return maxim;
+    }
+    
+}
+```
+
+Tercera versió amb els mètodes a una classe separada que fa de biblioteca de funcions.
+
+```java
+import java.util.Scanner;
+
+/**
+ * Entra un array, el mostra i calcula suma, mínim i màxim
+ * Versió amb funcions a una altra classe
+ * @author Jose
+ */
+public class Ex01c {
+
+    public static void main(String[] args) {
+        Scanner lector = new Scanner(System.in);
+        //preguntar quants elements
+        System.out.print("Quants elements? ");
+        int numElements = lector.nextInt();
+        //declarar i llegir la llista
+        int [] llista = llegirLlista(numElements);
+        //mostrar la llista
+        mostrarLlista(llista);
+        //calcular suma
+        int suma = Estadistica.calcularSuma(llista);
+        System.out.println("Suma: "+suma);
+        //calcular mínim
+        int minim = Estadistica.calcularMinim(llista);
+        System.out.println("Mínim: "+minim);
+        //calcular màxim
+        int maxim = Estadistica.calcularMaxim(llista);
+        System.out.println("Màxim: "+maxim);
+        
+    }
+    
+    /**
+     * llegeix una llista d'enters de la longitud especificada
+     * @param longitud nombre d'elements a llegir
+     * @return array amb la llista
+     */
+    public static int [] llegirLlista(int longitud) {
+        Scanner lector = new Scanner(System.in);
+        //declarar i instanciar l'array
+        int [] dades = new int[longitud];
+        //llegir els elements
+        for (int i=0; i<longitud; i++) {
+            //llegir element
+            System.out.print("Element "+i+": ");
+            int elem = lector.nextInt();
+            //posar-lo a la llista
+            dades[i] = elem;
+        }
+        return dades;
+    }
+    
+    /**
+     * mostra per pantalla unaarray d'enters
+     * @param dades l'array a mostrar
+     */
+    public static void mostrarLlista(int [] dades) {
+        //mostrar la llista
+        for (int i=0; i<dades.length; i++) {
+            System.out.print(" "+dades[i]);
+        } 
+        System.out.println("");
+    }
+    
+}
+```
+
+on la classe biblioteca és aquesta
+
+```java
+/**
+ * Classe per fer càlculs estadístics amb arrays
+ *
+ * @author Jose
+ */
+public class Estadistica {
+
+    /**
+     * calcula la suma dels elements de l'array
+     *
+     * @param dades l'array els elements del qual cal sumar
+     * @return la suma dels elements de l'array
+     */
+    public static int calcularSuma(int[] dades) {
+        int suma = 0;
+        for (int i = 0; i < dades.length; i++) {
+            suma += dades[i];
+        }
+        return suma;
+    }
+
+    /**
+     * calcula el mínim dels elements de l'array
+     *
+     * @param dades l'array del qual cal calcular el mínim
+     * @return el mínim dels elements de l'array
+     */
+    public static int calcularMinim(int[] dades) {
+        int minim = dades[0];
+        for (int i = 0; i < dades.length; i++) {
+            if (dades[i] < minim) {
+                minim = dades[i];
+            }
+        }
+        return minim;
+    }
+
+    /**
+     * calcula el màxim dels elements de l'array
+     *
+     * @param dades l'array del qual cal calcular el màxim
+     * @return el màxim dels elements de l'array
+     */
+    public static int calcularMaxim(int[] dades) {
+        int maxim = dades[0];
+        for (int i = 0; i < dades.length; i++) {
+            if (maxim < dades[i]) {
+                maxim = dades[i];
+            }
+        }
+        return maxim;
+    }
+
+}
+```
