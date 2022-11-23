@@ -140,8 +140,6 @@ String name = "Peter";  //o String name = new String("Peter");
 names[1] = name;
 ```
 
-[Ús de la classe java.util.Arrays](https://www.geeksforgeeks.org/array-class-in-java/)
-
 ### Arrays i mètodes
 
 Els arrays es poden passar com a paràmetres als mètodes i també poden ser retornats per ells.
@@ -494,3 +492,17 @@ public class Estadistica {
 
 Exercici proposat:
 Afegir a la classe *Estadistica.java* mètodes per calcular la mitjana aritmètica i la desviació estàndard. Provar-ne el funcionament invocant-les des de la classe principal.
+
+
+## La classe Arrays
+
+La classe [java.util.Arrays](https://www.geeksforgeeks.org/array-class-in-java/) conté nombrosos mètodes estàtics per manipular arrays.
+
+A tall d'exemple (T representa qualsevol tipus primitiu):
+
+```static String toString(T[] a)``` retorna una representació en format *String* de l'array.
+
+```static void sort(T[] a)``` ordena en ordre ascendent l'array.
+
+```static void fill(T[] a, T val)``` assigna el valor *val* a tots els elements de l'array.
+
