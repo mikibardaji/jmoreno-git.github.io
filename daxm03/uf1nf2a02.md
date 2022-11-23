@@ -496,7 +496,9 @@ Afegir a la classe *Estadistica.java* mètodes per calcular la mitjana aritmèti
 
 ## La classe Arrays
 
-La classe [java.util.Arrays](https://www.geeksforgeeks.org/array-class-in-java/) conté nombrosos mètodes estàtics per manipular arrays.
+La classe [java.util.Arrays]([https://www.geeksforgeeks.org/array-class-in-java/](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Arrays.html)) conté nombrosos mètodes estàtics per manipular arrays.
+
+[Tutorial d'ús de la classe Arrays](https://www.geeksforgeeks.org/array-class-in-java/)
 
 A tall d'exemple (T representa qualsevol tipus primitiu):
 
