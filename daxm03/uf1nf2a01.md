@@ -66,6 +66,29 @@ System.out.println(frase.toUpperCase());
 System.out.println(frase.toLowerCase());
 ```
 
+La sortida del codi anterior és:
+```
+Hola Lluis
+La longitud del missatge és 10
+Quin índex? 3
+El caràcter a la posició 3 és a
+-14
+HolaLluis
+Comença per En? true
+Acaba per rme? true
+Son iguals? false
+Son iguals (ignorant case)? true
+Lluis tens 22 anys i salari 1800,00
+
+La primera 'u' és a l'índex: 3
+La darrera 'u' és a l'índex: 44
+La primera 'de' és a l'índex: 12
+En un lugar d3 la Mancha d3 cuyo nombr3 no qui3ro acordarm3
+n lugar de la Ma
+EN UN LUGAR DE LA MANCHA DE CUYO NOMBRE NO QUIERO ACORDARME
+en un lugar de la mancha de cuyo nombre no quiero acordarme
+```
+
 ### Proposta d'exercici: El xifrat per desplaçament (xifrat Cèsar)
 
 El xifrat utilitzat per Juli Cèsar per comunicar-se sense que els missatges puguessin ser llegits per l'enemic aplicava l'algorisme de xifrat per desplaçament.
