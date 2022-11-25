@@ -95,7 +95,7 @@ public static String xifrarCesar(String missatge, int desp) {
  * @param desp el desplaçament a aplicar
  * @return el missatge desxifrat
  */    
-public static String desxifrarMissatge(String missatge, int desp) {
+public static String desxifrarCesar(String missatge, int desp) {
     String result="";
     //TODO
     return result;        
