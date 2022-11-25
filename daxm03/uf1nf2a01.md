@@ -10,6 +10,8 @@
 
 [Apunts d'Expresions regulars en Java](assets/1.2/Expressions_regulars_en_Java.pdf)
 
+### Exemples amb String
+
 ```java
 Scanner lector = new Scanner(System.in);
 //declarar i instanciar String (són objectes, cal invocar el constructor)
