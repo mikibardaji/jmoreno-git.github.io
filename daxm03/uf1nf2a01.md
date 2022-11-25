@@ -64,6 +64,42 @@ System.out.println(frase.toUpperCase());
 System.out.println(frase.toLowerCase());
 ```
 
+### Proposta d'exercici: El xifrat per desplaçament (xifrat Cèsar)
+
+El xifrat utilitzat per Juli Cèsar per comunicar-se sense que els missatges puguessin ser llegits per l'enemic aplicava l'algorisme de xifrat per desplaçament.
+
+Consulteu el seu funcionament [aquí](https://es.wikipedia.org/wiki/Cifrado_C%C3%A9sar).
+
+Codifiqueu un programa que demani a l'usuari un missatge (String) i un desplaçament (enter), codifiqui el missatge, el mostri codificat, després el decodifiqui i el mostri decodificat.
+
+Haurà de contenir dos mètodes: un per codificar i un altre per decodificar.
+
+```java
+/**
+ * xifra el missatge amb l'algorisme de desplaçament
+ * @param missatge el missatge a xifrar
+ * @param desp el desplaçament a aplicar
+ * @return el missatge xifrat
+ */
+public static String xifrarCesar(String missatge, int desp) {
+    String result="";
+    //TODO
+    return result;
+}
+
+/**
+ * desxifra el missatge amb l'algorisme de desplaçament
+ * @param missatge el missatge a desxifrar
+ * @param desp el desplaçament a aplicar
+ * @return el missatge desxifrat
+ */    
+public static String desxifrarMissatge(String missatge, int desp) {
+    String result="";
+    //TODO
+    return result;        
+}
+```
+
 ## Dates i temps
 
 Convé utilitzar les classes del paquet **java.time**, les quals estan basades en el calendari ISO, el qual segueix les regles del calendari Gregorià introduit l'any 1582.
