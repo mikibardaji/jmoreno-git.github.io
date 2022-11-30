@@ -6,8 +6,6 @@
 
 [Classe String](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html)
 
-[Classe StringBuilder](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html)
-
 [Apunts d'Expresions regulars en Java](assets/1.2/Expressions_regulars_en_Java.pdf)
 
 ### Exemples amb String
@@ -125,6 +123,8 @@ public static String desxifrarCesar(String missatge, int desp) {
 }
 ```
 
+Solució: [Xifrat César](./assets/1.2/XifratCesar.java)
+
 ## Dates i temps
 
 Convé utilitzar les classes del paquet **java.time**, les quals estan basades en el calendari ISO, el qual segueix les regles del calendari Gregorià introduit l'any 1582.
@@ -177,4 +177,62 @@ System.out.println(todayNowHere.format(DateTimeFormatter.ISO_DATE_TIME));
 int year = 2024, month=3, day=5;
 LocalDate date = LocalDate.of(year, month, day);
 System.out.format("Is %d leap year?: %s ", date.getYear(), date.isLeapYear()?"yes":"no");
+```
+## La classe StringBuilder
+
+[Classe StringBuilder](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html)
+
+```java
+/**
+ * Exemple d'ús de StringBuilder
+ * @author Jose
+ */
+public class StringBuilderExemple {
+
+    public static void main(String[] args) {
+        //instanciar un StringBuilder amb un String
+        StringBuilder sb = new StringBuilder("En un lugar de la Mancha");
+        //convertir a String i mostrar
+        System.out.println("=contingut inicial=");
+        System.out.println(sb.toString());
+        //append
+        System.out.println("=append=");
+        sb.append(" de cuyo nombre no quiero acordarme");
+        System.out.println(sb.toString());
+        //insert
+        System.out.println("=insert=");
+        sb.insert(12, "(esto es de El Quijote) " );
+        System.out.println(sb.toString());
+        //delete
+        System.out.println("=delete=");
+        int index = sb.indexOf("la");
+        sb.delete(index, index+13);
+        System.out.println(sb.toString());
+        //demostració d'encadenament d'accions
+        System.out.println("=encadenament d'accions=");
+        sb.append("aaaa").append("bbbb").insert(5, "cccc");
+        System.out.println(sb.toString());
+        //reverse
+        System.out.println("=reverse=");
+        sb.reverse();
+        System.out.println(sb.toString());
+    }
+    
+}
+```
+
+Sortida del codi d'exemple anterior:
+```
+=contingut inicial=
+En un lugar de la Mancha
+=append=
+En un lugar de la Mancha de cuyo nombre no quiero acordarme
+=insert=
+En un lugar (esto es de El Quijote) de la Mancha de cuyo nombre no quiero acordarme
+=delete=
+En un lugar (esto es de El Quijote) de cuyo nombre no quiero acordarme
+=encadenament d'accions=
+En uncccc lugar (esto es de El Quijote) de cuyo nombre no quiero acordarmeaaaabbbb
+=reverse=
+bbbbaaaaemradroca oreiuq on erbmon oyuc ed )etojiuQ lE ed se otse( ragul ccccnu nE
 ```
