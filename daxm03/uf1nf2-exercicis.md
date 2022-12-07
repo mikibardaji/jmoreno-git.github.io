@@ -5,6 +5,48 @@
 ## Exemples de solucions
 
 ```java
+import java.util.Scanner;
+
+/**
+ * Programa que entra dos valors i crea un array amb tots els valors enters
+ * compresos entre els dos valors entrats (ambdós inclosos)
+ *
+ * @author Jose
+ */
+public class Ex05 {
+
+    public static void main(String[] args) {
+        Scanner lector = new Scanner(System.in);
+        //llegir el nombre de números a entrar
+        System.out.print("Entra el primer valor: ");
+        int primer = lector.nextInt();
+        //llegir el valor a posar a l'array
+        System.out.print("Entra el segon valor: ");
+        int segon = lector.nextInt();
+        if (primer < segon) {  //comprovar que els valors entrats estan ordenats
+            //calcular longitud requerida per a l'array
+            int longitud = segon - primer + 1;
+            //declarar i instanciar array
+            int[] dades = new int[longitud];
+            //inicialitzar l'array amb enters entre el primer i el segon número
+            for (int i = 0; i < dades.length; i++) {
+                dades[i] = primer + i;
+            }
+            //mostrar l'array
+            for (int i = 0; i < dades.length; i++) {
+                System.out.format("dades[%d]=%d\n", i, dades[i]);
+            }
+        } else {  //informar error números no correctament ordenats
+            System.out.println("El primer ha de ser menor que el segon");
+        }
+
+    }
+
+}
+```
+
+
+```java
 import java.util.Random;
 import java.util.Scanner;
 
