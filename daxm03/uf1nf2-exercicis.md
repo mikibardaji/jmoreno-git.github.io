@@ -4,7 +4,7 @@
 
 ## Exemples de solucions
 
-<code java>
+```java
 import java.util.Random;
 import java.util.Scanner;
 
@@ -90,4 +90,4 @@ public class Ex06 {
     }
 
 }
-</code>
+```
