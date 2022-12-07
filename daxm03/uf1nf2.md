@@ -5,4 +5,4 @@
 * [Taules i estructures multidimensionals](uf1nf2a03.md)
 * [Estructures complexes](uf1nf2a04.md)
 
-[Exercicis d'estructures de dades](./assets/1.2/dam-m03-exerc-estruct_dades.pdf)
+[Exercicis d'estructures de dades](uf1nf2-exercicis.md)
