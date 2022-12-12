@@ -134,3 +134,123 @@ public class Ex06 {
 }
 ```
 Observeu que es poden modificar els valors d'un array passat a un mètode. Tot i que el mètode rep una còpia de la referència a l'array, a través d'aquesta referència pot accedir als seus elements i modificar-los. El que no es pot es modificar la referència original a l'array (la del mètode main que s'ha passat com a argument).
+
+### Creació i modificació d'arrays a funcions versus pas com a paràmetre i modificació
+
+```java
+import java.util.Scanner;
+
+/**
+ * Crear array amb dades de progressió aritmètica
+ * Creem l'array i l'inicialitzem amb les dades de la progressió,
+ * tot dintre d'una funció, la qual retorna l'array.
+ * @author José
+ */
+public class Ex07 {
+
+    public static void main(String[] args) {
+        Scanner lector = new Scanner(System.in);
+        //llegir dades
+        //llegir el nombre d'elements de la progressió
+        System.out.print("Entra la longitud: ");
+        int longitud = lector.nextInt();
+        //llegir el primer element
+        System.out.print("Entra el primer element: ");
+        double primer = lector.nextDouble();
+        //llegir la diferència
+        System.out.print("Entra la diferència: ");
+        double diferencia = lector.nextDouble();      
+        //generar progressió aritmètica
+        double [] progrArit = generarProgAritm(longitud, primer, diferencia);
+        //mostrar progressió aritmètica
+        imprimirProgressio(progrArit);
+    }
+    
+    /**
+     * instancia un array de la longitud especificada.
+     * i l'omple amb les dades d'una progressió aritmètica
+     * de valor inicial 'a0' i diferència 'dif'
+     * @param longitud el nombre d'elements a generar
+     * @param a0 el primer element
+     * @param dif la diferència
+     * @return array amb la progressió aritmètica
+     */
+    private static double [] generarProgAritm(int longitud, double a0, double dif) {
+        double [] pa = new double[longitud];
+        for (int i = 0; i < pa.length; i++) {
+            pa[i] = a0 + i*dif;
+        }
+        return pa;
+    }
+    
+    /**
+     * imprimeix una progressió
+     * @param dades la progressió a imprimir
+     */
+    private static void imprimirProgressio(double [] dades) {
+        for (int i = 0; i < dades.length; i++) {
+            System.out.format(" %.2f",dades[i]);
+        }
+        System.out.println("");
+    }
+    
+}
+```
+
+```java
+import java.util.Scanner;
+
+/**
+ * Crear array amb dades de progressió aritmètica
+ * Passem l'array a una funció (còpia de la referència)
+ * i omplir l'array amb les dades de la progressió a la funció
+ * @author José
+ */
+public class Ex07b {
+
+    public static void main(String[] args) {
+        Scanner lector = new Scanner(System.in);
+        //llegir dades
+        //llegir el nombre d'elements de la progressió
+        System.out.print("Entra la longitud: ");
+        int longitud = lector.nextInt();
+        //llegir el primer element
+        System.out.print("Entra el primer element: ");
+        double primer = lector.nextDouble();
+        //llegir la diferència
+        System.out.print("Entra la diferència: ");
+        double diferencia = lector.nextDouble();      
+        //generar progressió aritmètica
+        //crear array
+        double [] progrArit = new double[longitud];
+        omplirProgAritm(progrArit, primer, diferencia);
+        //mostrar progressió aritmètica
+        imprimirProgressio(progrArit);
+    }
+    
+    /**
+     * omple un array amb les dades d'una progressió aritmètica
+     * de valor inicial 'a0' i diferència 'dif'
+     * @param pa array a omplir
+     * @param a0 el primer element
+     * @param dif la diferència
+     */
+    private static void omplirProgAritm(double [] pa, double a0, double dif) {
+        for (int i = 0; i < pa.length; i++) {
+            pa[i] = a0 + i*dif;
+        }
+    }
+    
+    /**
+     * imprimeix una progressió
+     * @param dades la progressió a imprimir
+     */
+    private static void imprimirProgressio(double [] dades) {
+        for (int i = 0; i < dades.length; i++) {
+            System.out.format(" %.2f",dades[i]);
+        }
+        System.out.println("");
+    }
+    
+}
+```
