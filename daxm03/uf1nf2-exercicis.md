@@ -135,7 +135,7 @@ public class Ex06 {
 ```
 Observeu que es poden modificar els valors d'un array passat a un mètode. Tot i que el mètode rep una còpia de la referència a l'array, a través d'aquesta referència pot accedir als seus elements i modificar-los. El que no es pot es modificar la referència original a l'array (la del mètode main que s'ha passat com a argument).
 
-### Mètodes i arrays: creació a la funció versus pas com a paràmetre
+### Mètodes i arrays: creació i retorn des del mètode versus pas com a paràmetre
 
 ```java
 import java.util.Scanner;
