@@ -417,7 +417,7 @@ public class Ex01c {
     }
     
     /**
-     * mostra per pantalla unaarray d'enters
+     * mostra per pantalla un array d'enters
      * @param dades l'array a mostrar
      */
     public static void mostrarLlista(int [] dades) {
@@ -500,7 +500,7 @@ La classe [java.util.Arrays](https://docs.oracle.com/en/java/javase/17/docs/api/
 
 [Tutorial d'ús de la classe Arrays](https://www.geeksforgeeks.org/array-class-in-java/)
 
-A tall d'exemple (T representa qualsevol tipus primitiu):
+A tall d'exemple (T representa qualsevol tipus de dades):
 
 ```static String toString(T[] a)``` retorna una representació en format *String* de l'array.
 
@@ -508,3 +508,10 @@ A tall d'exemple (T representa qualsevol tipus primitiu):
 
 ```static void fill(T[] a, T val)``` assigna el valor *val* a tots els elements de l'array.
 
+```
+int [] dades = {10, 6, 2, 5, 7};
+System.out.println( Arrays.toString(dades) );  //mostra [10, 6, 2, 5, 7]
+Arrays.sort( dades );   //ordena l'array dades de menor a major
+System.out.println( Arrays.toString(dades) );  //mostra [2, 5, 6, 7, 10]
+dades = Arrays.fill( dades, 9 );  //omple l'array dades amb 9's
+System.out.println( Arrays.toString(dades) );  //mostra [9, 9, 9, 9, 9]
