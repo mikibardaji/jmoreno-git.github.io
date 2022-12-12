@@ -254,3 +254,4 @@ public class Ex07b {
     
 }
 ```
+El mètode '''void omplirProgAritm(double [] pa, double a0, double dif)''' rep al paràmetre ```double [] pa``` una còpia de la referència de l'array instanciat al main ```double [] progrArit```. Amb aquesta referència pot accedir a l'array i modificar els seus elements. El que no es pot modificar és la referència original progrArit, ja que el mètode només en té una còpia (el pas de paràmetres és per valor).
