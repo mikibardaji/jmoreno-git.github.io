@@ -14,3 +14,5 @@ L'**emmagatzematge dinàmic** es produeix segons les intruccions del programador
 L'*stack* i el *heap* compareixen un mateix segment de memòria. Mentre que l'stack creix cap avall, el heap ho fa cap amunt.
 
 ![memory_stack](https://user-images.githubusercontent.com/36074660/207142668-af3af744-a575-4fdc-9ee0-a9b738ee5fa5.png)
+![function_stack](https://user-images.githubusercontent.com/36074660/207143288-f19c0073-4606-4657-b86a-80f171bde05b.png)
+![stack_versus_heap](https://user-images.githubusercontent.com/36074660/207143384-cc0c8926-2858-4729-bb78-6b5086bb7bd9.png)
