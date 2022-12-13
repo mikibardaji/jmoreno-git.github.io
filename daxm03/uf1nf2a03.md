@@ -56,3 +56,103 @@ int [] arr1x2 = {1, 2};
 arr2D[0][0] = arr1x2;
 //el mateix amb les altres files (1 i 2)
 ```
+
+### Exemples amb arrays bidimensionals
+
+```java
+import java.util.Arrays;
+import java.util.Random;
+
+/**
+ *
+ * @author Jose
+ */
+public class Matrius {
+
+    public static void main(String[] args) {
+        //declarar matriu i generar-la i inicialitzar-la amb un mètode
+        int [][] matriu = generarMatriuAleatoria(3, 4);
+        //   mostrar matriu en format unilínia
+        System.out.println(matrixToString(matriu));
+        //declarar i instanciar matriu i inicialitzar-la amb un mètode
+        int [][] matriu2 = new int [3][4];
+        inicialitzarMatriuAleatoria(matriu2);
+        //   mostrar matriu en format unilínia
+        System.out.println(matrixToString(matriu2));
+        //mostrar matriu en format taula
+        System.out.println(matrixToTable(matriu));
+    }
+    
+    /**
+     * declara, instancia i inicialitza amb dades aleatòries
+     * una matriu amb les files i columnes especificades
+     * @param files el número de files de la matriu
+     * @param columnes el número de columnes de la matriu
+     * @return la matriu amb les dades
+     */
+    public static int [][] generarMatriuAleatoria(int files, int columnes) {
+        int [][] dades = new int[files][columnes];
+        final int MAX_VALOR = 100;
+        Random rnd = new Random();
+        for (int i = 0; i < dades.length; i++) {
+            for (int j = 0; j < dades[i].length; j++) {
+                dades[i][j] = rnd.nextInt(MAX_VALOR);
+            }
+        }
+        return dades;
+    }
+    
+    /**
+     * inicialitza una matriu amb dades aleatòries
+     * com que el paràmetre 'dades' és una referència,
+     * es pot usar per accedir als elements de la matriu 
+     * i canviar els seus valors.
+     * @param dades la matriu a omplir
+     */
+    public static void inicialitzarMatriuAleatoria(int [][] dades) {
+        final int MAX_VALOR = 100;
+        Random rnd = new Random();
+        for (int i = 0; i < dades.length; i++) {
+            for (int j = 0; j < dades[i].length; j++) {
+                dades[i][j] = rnd.nextInt(MAX_VALOR);
+            }
+        }        
+    }
+    
+    /**
+     * genera un format String unilínia de la matriu
+     * @param dades la matriu a representar
+     * @return String amb la matriu en format unilínia
+     */
+    public static String matrixToString(int [][] dades) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i = 0; i < dades.length; i++) {
+            sb.append(Arrays.toString(dades[i]));
+            sb.append(", ");
+        }
+        sb.replace(sb.lastIndexOf(","), sb.lastIndexOf(",")+2, "]");
+        return sb.toString();
+    }
+
+    /**
+     * genera un format tabular per a una matriu
+     * @param dades la matriu a tabular
+     * @return format String tabular de la matriu
+     */
+    public static String matrixToTable(int [][] dades) {
+        StringBuilder sb = new StringBuilder();
+        //sb.append("[");
+        for (int i = 0; i < dades.length; i++) {
+            for (int j = 0; j < dades[i].length; j++) {
+                sb.append(dades[i][j]);
+                if (j<dades[i].length-1) sb.append("\t");
+            }
+            if (i<dades.length-1) sb.append("\n");
+        }
+        //sb.append("]");
+        return sb.toString();
+    }
+    
+}
+```
