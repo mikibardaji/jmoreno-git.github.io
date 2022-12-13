@@ -129,9 +129,9 @@ public class Matrius {
         sb.append("[");
         for (int i = 0; i < dades.length; i++) {
             sb.append(Arrays.toString(dades[i]));
-            sb.append(", ");
+            if (i<dades.length-1) sb.append(", ");
         }
-        sb.replace(sb.lastIndexOf(","), sb.lastIndexOf(",")+2, "]");
+        sb.append("]");
         return sb.toString();
     }
 
@@ -153,6 +153,6 @@ public class Matrius {
         //sb.append("]");
         return sb.toString();
     }
-    
+ 
 }
 ```
