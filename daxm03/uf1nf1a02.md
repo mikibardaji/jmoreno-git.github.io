@@ -44,6 +44,7 @@ Per ser correcta, una expressió ha de tenir **correctesa sintàctica** (ordre c
 La manera natural d’especificar que una variable ha de tenir un valor donat és l’**operació d’assignació**, que en llenguatge Java realitza l'*operador =*. Es tracta d’una operació destructiva perquè es perd el valor que contenia prèviament la variable assignada. El valor assignat a la variable ha de ser del seu mateix tipus. Cas contrari, ha de fer-se prèviament una conversió de tipus (*type cast*). Cal tenir molta cura amb aquestes conversions, que molts llenguatges efectuen de manera silenciosa, perquè poden ocultar errors en temps d’execució difícils de detectar.
 
 El segon membre de l’assignació pot ser qualsevol expressió en què es tingui una combinació de variables, constants i operadors, el resultat de la qual serà el valor que s’assignarà a la variable indicada. La forma general de l’enunciat d’assignació és, doncs,
+
 ```
 variable = expressió;
 ```
@@ -91,7 +92,7 @@ final int NOMBRE_DE_COSTATS = 3;
 
 La conversió de tipus consisteix en la transformació d'una dada d'un tipus a un altre.
 
-La pot fer de forma **implícita** el propi compilador si es tracta de tipus i valor compatibles i es requereix per a l'avaluació d'una expressió.
+La conversió la pot fer de forma **implícita** el propi compilador si es tracta de tipus i valor compatibles i es requereix per a l'avaluació d'una expressió.
 
 ```java
 float a = 3.0;

@@ -4,8 +4,7 @@
 
 1.  Definició de classes.
 2.  Atributs o propietats.
-3.  Mètodes: constructors i destructors, accessors de lectura i
-    escriptura.
+3.  Mètodes: constructors i destructors, accessors de lectura i escriptura.
 4.  Propietats i mètodes de classe i d'instància.
 5.  Modificadors d'accés i visibilitat.
 

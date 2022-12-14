@@ -5,7 +5,7 @@
 * Connexió, consulta i modificació sobre bases de dades
 * Models connectat i desconnectat
 
-## Persistència i seriaació
+## Persistència i seriació
 
 La **persistència** és el mecanisme mitjançant el qual s’aconsegueix desar dades perquè no es perdin en finalitzar l’aplicació i posteriorment recuperar-les.
 

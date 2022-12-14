@@ -29,9 +29,9 @@ sudo apt-get install default-jdk
 
 ```
 
-Instal·lar OpenJDK 16 (canviar 16 per la versió requerida)
+Instal·lar OpenJDK 16 (canviar 17 per la versió requerida)
 
-    sudo apt install openjdk-16-jdk
+    sudo apt install openjdk-17-jdk
 
 Convé tenir instal·lades la versió 8 i la darrera.
 
@@ -108,7 +108,7 @@ automàtic al engegar la màquina). Per comprovar-ho
 
     sudo systemctl is-enabled apache2.service
 
-Si estigués disabled, configureu el servei **apache2** perquè s'activi
+Si estigués *disabled*, configureu el servei **apache2** perquè s'activi
 automàtic al engegar la màquina
 
     sudo systemctl enable apache2
