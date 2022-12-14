@@ -87,6 +87,37 @@ EN UN LUGAR DE LA MANCHA DE CUYO NOMBRE NO QUIERO ACORDARME
 en un lugar de la mancha de cuyo nombre no quiero acordarme
 ```
 
+### Conversió entre String i Number
+
+Java proveeix tota una sèria de classes envolupants (***wrappers***) dels tipus de dades primitives (int, long, ...).
+
+Totes aquestes classes són subclasses de la classe [***Number***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Number.html):
+
+* Integer
+* Short
+* Long
+* Float
+* Double
+etc.
+
+Per convertir números a format string i viceversa, utilitzem aquestes classes envolupants i la classe String.
+
+```java
+//donat un text que conté un número
+String intText = "23";
+//s'obté el valor numèric amb el mètode estàtic parseXXX de la classe envolupant del tipus primitiu corresponent
+int intValue = Integer.parseInt(intText);
+```
+
+```java
+//donat un valor numèric
+int intValue = 23;
+//s'obté la representació en format String amb el mètode toString de la classe envolupant del tipus primitiu corresponent
+String intText = Integer.toString(intValue);
+//alternativament, la classe String proveeix els mètodes valueOf, els quals fan el mateix que toString del la classe envolupant
+String intText = String.valueOf(intValue);
+```
+
 ### Proposta d'exercici: El xifrat per desplaçament (xifrat Cèsar)
 
 El xifrat utilitzat per Juli Cèsar per comunicar-se sense que els missatges puguessin ser llegits per l'enemic aplicava l'algorisme de xifrat per desplaçament.

@@ -2,17 +2,17 @@
 
 ## Arrays amb diferents dimensions (arrays en dent de serra)
 
-Com que cada element d'un array bidimensional és a la seva vegada un altre array, pot passar que cada array-element tingui diferent nombre d'elements, és a dir, que cada fila tingui un nombre de columnes diferent.
+Com que cada element d'un array bidimensional és a la seva vegada un altre array, pot passar que cada array-element tingui diferent nombre d'elements, és a dir, que cada fila tingui un nombre d'elements diferent.
 
 ```java
-int[][] arr_name = {
+int[][] arrName = {
     {10, 20, 30},
     {40, 50, 60, 70, 80},
     {90, 100}
 };
 ```
 
-Per recórrer aquests arrays podem fer servir l'atribut length de cada element array.
+Per recórrer aquests arrays podem fer servir l'atribut ***length*** de cada element array.
 
 ```java
 // declaració d'un array 2D amb 2 files

@@ -508,10 +508,11 @@ A tall d'exemple (T representa qualsevol tipus de dades):
 
 ```static void fill(T[] a, T val)``` assigna el valor *val* a tots els elements de l'array.
 
-```
+```java
 int [] dades = {10, 6, 2, 5, 7};
 System.out.println( Arrays.toString(dades) );  //mostra [10, 6, 2, 5, 7]
 Arrays.sort( dades );   //ordena l'array dades de menor a major
 System.out.println( Arrays.toString(dades) );  //mostra [2, 5, 6, 7, 10]
 dades = Arrays.fill( dades, 9 );  //omple l'array dades amb 9's
 System.out.println( Arrays.toString(dades) );  //mostra [9, 9, 9, 9, 9]
+```
