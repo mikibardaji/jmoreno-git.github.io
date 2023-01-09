@@ -265,7 +265,8 @@ import java.util.Arrays;
 import java.util.Random;
 
 /**
- *
+ * generar 3 vectors, copiar-los en una matriu
+ * i afegir una columna amb la suma de cada vector
  * @author Jose
  */
 public class Ex01 {
