@@ -156,3 +156,21 @@ public class Matrius {
  
 }
 ```
+
+```java
+//llegir array bidimensional de teclat
+Scanner lector = new Scanner(System.in);
+System.out.print("Nombre de files: ");
+int numFiles = lector.nextInt();
+System.out.print("Nombre de columnes: ");
+int numColumnes = lector.nextInt();
+//declarar i instanciar la matriu de dades
+int [][] dades = new int[numFiles][numColumnes];
+//llegir dades de l'usuari
+for (int i = 0; i < numFiles; i++) {  //bucle per recórrer les files
+    for (int j = 0; j < numColumnes; j++) {  //bucle per recórrer les columnes (cel·les de cada fila)
+        System.out.format("dades[%d][%d]: ", i, j);
+        dades[i][j] = lector.nextInt();
+    }
+}
+```
