@@ -33,7 +33,7 @@ Es poden inicialitzar amb la notació abreujada {}.
 int[][] arr2D = { {1, 2}, {3, 4}, {5, 6} };
 for (int i=0; i<3; i++) {  //i recorre les files (primera dimensió)
     for (int j=0; j<2; j++) {  //j recorre les columnes (segona dimensió)
-        System.out.format("arr[%d][%d]=%d", i, j, arr[i][j]);
+        System.out.format("arr[%d][%d]=%d", i, j, arr2D[i][j]);
     }
 }
 ```
