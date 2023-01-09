@@ -260,6 +260,7 @@ El mètode ```void omplirProgAritm(double [] pa, double a0, double dif)``` rep a
 ## Exemples de solucions als exercicis d'arrays bidimensionals
 
 ```java
+
 import java.util.Arrays;
 import java.util.Random;
 
@@ -267,93 +268,77 @@ import java.util.Random;
  *
  * @author Jose
  */
-public class Matrius {
+public class Ex01 {
 
     public static void main(String[] args) {
-        //declarar matriu i generar-la i inicialitzar-la amb un mètode
-        int [][] matriu = generarMatriuAleatoria(3, 4);
-        //   mostrar matriu en format unilínia
-        System.out.println(matrixToString(matriu));
-        //declarar i instanciar matriu i inicialitzar-la amb un mètode
-        int [][] matriu2 = new int [3][4];
-        inicialitzarMatriuAleatoria(matriu2);
-        //   mostrar matriu en format unilínia
-        System.out.println(matrixToString(matriu2));
-        //mostrar matriu en format taula
-        System.out.println(matrixToTable(matriu));
+        //definir dimensió
+        final int N = 10;
+        //declarar vectors d'enters (i instanciar-los)
+        int [] v1 = new int[N];
+        int [] v2 = new int[N];
+        int [] v3 = new int[N];
+        //inicialitzar dades als vectors
+        inicialitzarVectorAleatori(v1);
+        inicialitzarVectorAleatori(v2);
+        inicialitzarVectorAleatori(v3);
+        //mostrar dades generades
+        System.out.println("v1: "+Arrays.toString(v1));
+        System.out.println("v2: "+Arrays.toString(v2));
+        System.out.println("v3: "+Arrays.toString(v3));
+        //generar matriu de dimensions 3x(N+1)
+        int [][] m = new int[3][N+1];
+        //declarar variable acumulador per a les sumes
+        int suma;
+        //omplir fila 0 de la matriu amb vector v1
+        suma = 0;  //inicialitzar acumulador a 0
+        for (int i = 0; i < N; i++) {
+            m[0][i] = v1[i];  //copiar vector a matriu
+            suma += v1[i];  //acumular suma elements vector
+        }
+        m[0][N] = suma;
+        //omplir fila 1 de la matriu amb vector v2
+        suma = 0;  //inicialitzar acumulador a 0
+        for (int i = 0; i < N; i++) {
+            m[1][i] = v2[i];
+            suma += v2[i]; 
+        }
+        m[1][N] = suma;        
+        //omplir fila 2 de la matriu amb vector v3
+        suma = 0;  //inicialitzar acumulador a 0
+        for (int i = 0; i < N; i++) {
+            m[2][i] = v3[i];
+            suma += v3[i]; 
+        }
+        m[2][N] = suma; 
+        //mostrar resultat
+        imprimirMatriu(m);
     }
     
     /**
-     * declara, instancia i inicialitza amb dades aleatòries
-     * una matriu amb les files i columnes especificades
-     * @param files el número de files de la matriu
-     * @param columnes el número de columnes de la matriu
-     * @return la matriu amb les dades
+     * inicialitza array amb dades aleatòries
+     * @param v array a inicialitzar
      */
-    public static int [][] generarMatriuAleatoria(int files, int columnes) {
-        int [][] dades = new int[files][columnes];
-        final int MAX_VALOR = 100;
+    public static void inicialitzarVectorAleatori(int [] v) {
         Random rnd = new Random();
-        for (int i = 0; i < dades.length; i++) {
-            for (int j = 0; j < dades[i].length; j++) {
-                dades[i][j] = rnd.nextInt(MAX_VALOR);
-            }
+        final int MAXIM = 100;  //valor màxim a generar aleatóriament
+        for (int i = 0; i < v.length; i++) {
+            v[i] = rnd.nextInt(MAXIM);
         }
-        return dades;
     }
     
     /**
-     * inicialitza una matriu amb dades aleatòries
-     * com que el paràmetre 'dades' és una referència,
-     * es pot usar per accedir als elements de la matriu 
-     * i canviar els seus valors.
-     * @param dades la matriu a omplir
+     * imprimeix una taula bidimensional 
+     * @param dades la taula a imprimir
      */
-    public static void inicialitzarMatriuAleatoria(int [][] dades) {
-        final int MAX_VALOR = 100;
-        Random rnd = new Random();
-        for (int i = 0; i < dades.length; i++) {
-            for (int j = 0; j < dades[i].length; j++) {
-                dades[i][j] = rnd.nextInt(MAX_VALOR);
+    public static void imprimirMatriu(int [][] dades) {
+        for (int i = 0; i < dades.length; i++) { //files
+            for (int j = 0; j < dades[i].length; j++) { //columnes
+                System.out.print("\t"+dades[i][j]);
             }
-        }        
+            System.out.println("");
+        }
     }
     
-    /**
-     * genera un format String unilínia de la matriu
-     * @param dades la matriu a representar
-     * @return String amb la matriu en format unilínia
-     */
-    public static String matrixToString(int [][] dades) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        for (int i = 0; i < dades.length; i++) {
-            sb.append(Arrays.toString(dades[i]));
-            if (i<dades.length-1) sb.append(", ");
-        }
-        sb.append("]");
-        return sb.toString();
-    }
-
-    /**
-     * genera un format tabular per a una matriu
-     * @param dades la matriu a tabular
-     * @return format String tabular de la matriu
-     */
-    public static String matrixToTable(int [][] dades) {
-        StringBuilder sb = new StringBuilder();
-        //sb.append("[");
-        for (int i = 0; i < dades.length; i++) {
-            for (int j = 0; j < dades[i].length; j++) {
-                sb.append(dades[i][j]);
-                if (j<dades[i].length-1) sb.append("\t");
-            }
-            if (i<dades.length-1) sb.append("\n");
-        }
-        //sb.append("]");
-        return sb.toString();
-    }
- 
 }
 ```
 
