@@ -188,7 +188,7 @@ public class ReadChars {
 }
 ```
 
-### Serialització de tipus primitius
+### Seriació de tipus primitius
 
 Utilitzem les classes [***DataInputStream***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInputStream.html) i [***DataOutStream***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataOutputStream.html), les quals proveeixen mètodes per a la persistència de cada tipus primitiu.
 

@@ -425,7 +425,7 @@ Alguns dels mètodes que proporciona són:
 
 Consulteu la documentació per a obtenir més detalls de l'us de cada mètode.
 
-[Exemple d'ús de Properties per mantenir usuari i paraula de pas: properties_example.zip](assets/5.1/5.1.2/properties_example.zip))
+[Exemple d'ús de Properties per mantenir usuari i paraula de pas: properties_example.zip](assets/5.1/5.1.2/properties_example.zip)
 
 Exercici proposat:
 Utilitzar els fitxers de Properties per desar la configuració d'un programa i les traduccions dels missatges. Caldrà un fitxer de propietats per desar l'idioma escollit i un fitxer de propietat per a cadascun dels idiomes.
