@@ -1,8 +1,11 @@
-# Exercicis d'estructures de dades
+# Exercicis d'estructures de dades (arrays)
 
-[Enunciats dels exercicis](assets/1.2/dam-m03-exerc-estruct_dades.pdf)
 
-## Exemples de solucions als exercicis d'arrays unidimensionals
+## Exercicis d'arrays unidimensionals
+
+[Enunciats dels exercicis](assets/1.2/dam-m03-exerc-estruct_dades-arrays_1d.pdf)
+
+### Exemples de solucions als exercicis d'arrays unidimensionals
 
 ```java
 import java.util.Scanner;
@@ -256,11 +259,13 @@ public class Ex07b {
 ```
 El mètode ```void omplirProgAritm(double [] pa, double a0, double dif)``` rep al paràmetre ```double [] pa``` una còpia de la referència de l'array instanciat al main ```double [] progrArit```. Amb aquesta referència pot accedir a l'array i modificar els seus elements. El que no es pot modificar és la referència original progrArit, ja que el mètode només en té una còpia (el pas de paràmetres és per valor).
 
+## Exercicis d'arrays bidimensionals
 
-## Exemples de solucions als exercicis d'arrays bidimensionals
+[Enunciats dels exercicis](assets/1.2/dam-m03-exerc-estruct_dades-arrays_2d.pdf)
+
+### Exemples de solucions als exercicis d'arrays bidimensionals
 
 ```java
-
 import java.util.Arrays;
 import java.util.Random;
 
@@ -343,3 +348,289 @@ public class Ex01 {
 }
 ```
 
+```java
+
+import java.util.InputMismatchException;
+import java.util.Random;
+import java.util.Scanner;
+
+/**
+ * Manages student grades for a subject
+ * Interacts with user through a menu
+ * Stores student's names in an array 
+ * and student grades in a bidimensional array
+ * @author Jose
+ */
+public class GradeManager1 {
+    
+    /* CLASS ATTRIBUTES */
+
+    //list of student's names
+    public static String [] studentNames;
+    //table of student's grades (one student per row, columns are uf grades)
+    public static int [][] studentGrades;
+    //current number of students
+    public static int numStudents;
+    
+    /* METHODS */
+
+    public static void main(String[] args) {
+        /*    DATA DEFINITION    */
+        //màximum number of students
+        final int maxStudents = 30;
+        //current number of students
+        numStudents = 0;
+        //màximum number of grades to manage (one per UF)
+        final int numGrades = 6;
+        //program menu
+        final String [] menuOptions = {
+            "Exit", 
+            "List name of all students",
+            "List all grades of a student (given their name)",
+            "List all student's grades for a given UF",
+            "List all grades of all students",
+            "Set grade for a student and UF"
+        };
+        //array of student's names
+        studentNames = new String[maxStudents];
+        //array of grades
+        studentGrades = new int[maxStudents][numGrades];
+        //exit flag
+        boolean exit = false;
+        //load data (student's names and grades)
+        /*    PROGRAM EXECUTION    */
+        loadData();  //set initial test data
+        //control loop
+        do {
+            //display menu and read user's option
+            int optionSelected = displayMenuAndReadUserChoice(menuOptions);
+            //execute option selected by user
+            switch (optionSelected) {
+                case 0:  //exit program
+                    exit = true;
+                    break;
+                case 1: //list name of all students
+                    listAllStudentNames();
+                    break;
+                case 2: //list all grades of a student (given their name)
+                    listAllGradesOfAStudent();
+                    break;
+                case 3: //list all student's grades for a given UF
+                    listAllGradesByUf();
+                    break;
+                case 4: //list all grades of all students
+                    listAllGradesOfAllStudents();
+                    break;
+                case 5: //Set grade for a student and UF
+                    gradeForStudentAndUF();
+                    break;
+                default:
+                    System.out.println("Bad option");
+                    break;
+            }
+        } while (!exit);
+        System.out.println("Closing program");
+    }
+    
+    /**
+     * displays options of program menu
+     * and inputs user's choice
+     * @param options the array of options of the menu
+     * @return index of selected option
+     */
+    private static int displayMenuAndReadUserChoice(String [] options) {
+        //display menu title
+        System.out.println("===== Grade manager menu =====");
+        //display options
+        for (int i = 0; i < options.length; i++) {
+            System.out.format("[%d]. %s\n", i, options[i]);
+        }
+        //read user's choice
+        Scanner scan = new Scanner(System.in);
+        int choice = -1;
+        while (choice < 0) {
+            try {
+                //ask user's choice
+                System.out.print("Select an option: ");
+                choice = scan.nextInt();
+                //validate choice
+                if ((choice<0) || (choice>=options.length)) {
+                    choice = -1;
+                }
+            } catch (InputMismatchException e) {
+                scan.nextLine();
+                choice = -1;
+            }
+        }
+        return choice;
+    }
+
+    /*    CONTROL METHODS    */    
+    
+    /**
+     * lists names of all students
+     */
+    private static void listAllStudentNames() {
+        System.out.println("Student's names");
+        for (int i = 0; i < numStudents; i++) {
+            System.out.println(studentNames[i]);
+        }
+    }
+
+    /**
+     * inputs student's name and lists all studentGrades of that student
+     */
+    private static void listAllGradesOfAStudent() {
+        Scanner scan = new Scanner(System.in);
+        //input student's name
+        System.out.print("Student's name: ");
+        String name = scan.nextLine();
+        //find student index (row)
+        int studentRow = indexOfStudentName(name);
+        if (studentRow < 0) {  //not found
+            System.out.format("There is no student with name '%s'\n", name);
+        } else {
+            //list studentGrades of found student
+            System.out.println("Grades of student: "+name);
+            for (int i = 0; i < getNumCols(studentGrades); i++) {
+                System.out.format("%d ", studentGrades[studentRow][i]);
+            }
+            System.out.println("");
+        }
+    }
+    
+    /**
+     * lists all studentGrades of all students
+     */
+    private static void listAllGradesOfAllStudents() {
+        for (int i = 0; i < numStudents; i++) {
+            System.out.println("Grades of student: "+studentNames[i]);
+            for (int j = 0; j < getNumCols(studentGrades); j++) {
+                System.out.format("%d ", studentGrades[i][j]);
+            }
+            System.out.println("");
+        }
+    }
+    
+    /*     USEFUL METHODS     */
+    
+    /**
+     * searches a student by name
+     * @param name the name to search
+     * @return index of student or -1 if not found
+     */
+    private static int indexOfStudentName(String name) {
+        int index = -1;
+        for (int i = 0; i < numStudents; i++) {
+            if (studentNames[i].equals(name)) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+    
+    /**
+     * gets the number of rows of a bidimensional array
+     * @param data the array
+     * @return number of rows
+     */
+    private static int getNumRows(int [][] data) {
+        return data.length;
+    }
+    
+    /**
+     * gets the number of columns of a bidimensional array
+     * assuming there is at least one row
+     * @param data the array
+     * @return number of columns
+     */
+    private static int getNumCols(int [][] data) {
+        return data[0].length;
+    }
+    
+    /**
+     * loads initial data to test the program
+     * @return the actual number of students after operation
+     */
+    private static void loadData() {
+        addStudent("StudName01");
+        addStudent("StudName02");
+        addStudent("StudName03");
+        addStudent("StudName04");
+        addStudent("StudName05");
+        addStudent("StudName06");
+        addStudent("StudName07");
+        addStudent("StudName08");
+        addStudent("StudName09");
+        addStudent("StudName10");
+        addStudent("StudName11");
+        addStudent("StudName12");
+    }
+
+    /**
+     * adds a new student and set random grades (for testing)
+     * @param name the name of the student to set
+     */
+    private static void addStudent(String name) {
+        if (numStudents<studentNames.length) {
+            studentNames[numStudents] = name;
+            Random rnd = new Random();
+            for (int i = 0; i < getNumCols(studentGrades); i++) {
+                studentGrades[numStudents][i] = rnd.nextInt(1, 10);
+            }
+            numStudents++;
+        }
+    }    
+
+    /**
+     * inputs the index of the grade to list (UF),
+     * and lists the name of each student 
+     * with their grade for that UF
+     */
+    private static void listAllGradesByUf() {
+        //input index of grade (column of studentGrades array to display)
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Index of grade to list: ");
+        int gradeIndex = scan.nextInt();
+        //TODO validate 'gradeIndex'
+        //display name and grade for each student
+        for (int i = 0; i < numStudents; i++) {  //for each row (student)
+            //display name and grade
+            System.out.format("%s\t%d\n", studentNames[i], studentGrades[i][gradeIndex]);
+        }
+        
+    }
+
+    /**
+     * input name of student, UF to grade and grade to set,
+     * find student's name index;
+     * if found, it sets the given grade to given value,
+     * if not found, it reports that to user.
+     * Finally,it reports result of action to user
+     */
+    private static void gradeForStudentAndUF() {
+        Scanner scan = new Scanner(System.in);
+        //input student's name
+        System.out.print("Student's name: ");
+        String name = scan.nextLine();
+        //input grade index (UF)
+        System.out.print("UF: ");
+        int uf = scan.nextInt();
+        //input grade value
+        System.out.print("Grade value :");
+        int grade = scan.nextInt();
+        //search student's name in students list
+        int row = indexOfStudentName(name);
+        if (row == -1) {  //not found
+            System.out.println("There is no student with name "+name);
+        } else {
+            //set grade
+            studentGrades[row][uf] = grade;
+            //report result to user
+            System.out.println("Grade successfully set!");
+        }
+    }
+    
+}
+```

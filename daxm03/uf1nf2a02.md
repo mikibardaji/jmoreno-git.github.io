@@ -516,3 +516,4 @@ System.out.println( Arrays.toString(dades) );  //mostra [2, 5, 6, 7, 10]
 dades = Arrays.fill( dades, 9 );  //omple l'array dades amb 9's
 System.out.println( Arrays.toString(dades) );  //mostra [9, 9, 9, 9, 9]
 ```
+
