@@ -154,4 +154,108 @@ public class Quadrat {
     }
 }
 ```
+Com veiem, el mètode constructor té el mateix nom que la classe i no té tipus de retorn. Rep un valor, el qual copiem en l'atribut 'costat'. Com que li hem donat el mateix nom al paràmetre del constructor que a l'atribut, i les declaracions locals tenen prioritat sobre les generals, si escrivim 'costat' dintre del mètode ens estem referint al paràmetre. Per accedir a l'atribut disposem de la referència **this**, la qual apunta a l'objecte dintre del qual estem.
+
+Al mètode area() no ens cal usar this, ja que la visibilitat de l'atribut 'costat' no es veu afectada per cap variable local ni paràmetre del mètode.
+
+Ara podem crear objectes quadrat des d'una altra classe.
+
+```java
+Quadrat q1 = new Quadrat(3.0);   //instanciem un objecte quadrat amb costat=3.0
+double areaQ1 = q1.area();  //demanem a l'objecte q1 que calculi la seva àrea
+//podem llegir el valor del costat, ja que està declarat public
+double costatQ1 = q1.costat;
+//i podem canviar el valor del costat (és públic)
+q1.costat = 5.0;
+```
+
+L'operador '.' permet accedir als membres (atributs i mètodes) accessibles de l'objecte.
+
+## Encapsulació de dades
+
+La definició d'atributs amb el modificador ***public*** no és la solució més convenient. És millor encapsular la informació dintre dels objectes i només publicar (donar accés a altres classes) aquelles propietats que sigui necessari, mantenint privada la resta de la informació i també els mètodes que siguin només per a ús intern de la classe.
+
+Per tant, el que farem generalment és declarar els atributs amb el modificador d'accés ***private***. D'aquesta manera, no seran accessibles des d'altres classes.
+
+```java
+public class Quadrat {
+    //atribut 'costat'
+    private double costat;
+    //constructor per inicialitzar l'atribut
+    public Quadrat(double costat) {
+        this.costat = costat;
+    }
+    //mètode per obtenir l'àrea del quadrat
+    public double area() {
+        return costat*costat;
+    }
+}
+```
+
+Amb aquesta declaració, ja no serà possible accedir de manera directa des d'altres classes.
+
+```java
+double costatQ1 = q1.costat;  //error: l'atribut costat és privat
+q1.costat = 5.0;   //error: l'atribut costat és privat
+```
+
+Els mètodes, en canvi, en general seran públics per poder usar-los des d'altres classes.
+
+```java
+double areaQ1 = q1.area();
+```
+
+Si volem donar accés de lectura o escriptura d'algun atribut a altres classes, ho farem definint mètodes d'accés públics:
+
+```java
+public double getCostat() {
+    return costat;
+}
+public void setCostat(double costat) {
+    this.costat = costat;
+}
+``` 
+
+Els mètodes d'accés reben noms getXX i setXX, on XX és el nom de l'atribut.
+
+El mètode get retorna el valor de l'atribut. El mètode set no retorna res, rep com a paràmetre un valor del mateix tipus que l'atribut i copia aquest valor a l'atribut.
+
+La definició de la classe quedaria així:
+
+```java
+public class Quadrat {
+    //atribut 'costat'
+    private double costat;
+    //constructor per inicialitzar l'atribut
+    public Quadrat(double costat) {
+        this.costat = costat;
+    }
+    //accessors
+    public double getCostat() {
+        return costat;
+    }
+    public void setCostat(double costat) {
+        this.costat = costat;
+    }
+    //mètode per obtenir l'àrea del quadrat
+    public double area() {
+        return costat*costat;
+    }
+}
+```
+
+Ara podem accedir a l'atribut des d'altres classes:
+
+```java
+int costatQ1 = q1.getCostat();  //llegim el valor del costat de l'objecte quadrat q1
+q1.setCostat(5.0);  //canviem el valor del costat de l'objecte quadrat q1
+```
+
+L'avantatge d'aquest plantejament és que ara podem controlar l'accés als atributs a través dels mètodes d'accés. Per exemple, podem validar els valors abans d'assignar-los als atributs.
+
+```java
+public void setCostat(double costat) {
+    if (costat > 0.0) this.costat = costat;  //evitem assignar valors negatius
+}
+```
 
