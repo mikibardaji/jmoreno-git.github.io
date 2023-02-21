@@ -156,7 +156,7 @@ public class Quadrat {
 ```
 Com veiem, el mètode constructor té el mateix nom que la classe i no té tipus de retorn. Rep un valor, el qual copiem en l'atribut 'costat'. Com que li hem donat el mateix nom al paràmetre del constructor que a l'atribut, i les declaracions locals tenen prioritat sobre les generals, si escrivim 'costat' dintre del mètode ens estem referint al paràmetre. Per accedir a l'atribut disposem de la referència **this**, la qual apunta a l'objecte dintre del qual estem.
 
-Al mètode area() no ens cal usar this, ja que la visibilitat de l'atribut 'costat' no es veu afectada per cap variable local ni paràmetre del mètode.
+Al mètode *area()* no ens cal usar ***this***, ja que la visibilitat de l'atribut 'costat' no es veu afectada per cap variable local ni paràmetre del mètode.
 
 Ara podem crear objectes quadrat des d'una altra classe.
 
@@ -169,7 +169,7 @@ double costatQ1 = q1.costat;
 q1.costat = 5.0;
 ```
 
-L'operador '.' permet accedir als membres (atributs i mètodes) accessibles de l'objecte.
+L'operador **'.'** permet accedir als membres (atributs i mètodes) accessibles de l'objecte.
 
 ## Encapsulació de dades
 
@@ -199,13 +199,13 @@ double costatQ1 = q1.costat;  //error: l'atribut costat és privat
 q1.costat = 5.0;   //error: l'atribut costat és privat
 ```
 
-Els mètodes, en canvi, en general seran públics per poder usar-los des d'altres classes.
+Els mètodes, en canvi, els declararem com a norma general públics per poder usar-los des d'altres classes.
 
 ```java
 double areaQ1 = q1.area();
 ```
 
-Si volem donar accés de lectura o escriptura d'algun atribut a altres classes, ho farem definint mètodes d'accés públics:
+Si volem donar accés de lectura o escriptura d'algun atribut des d'altres classes, ho farem definint mètodes d'accés públics:
 
 ```java
 public double getCostat() {
@@ -216,9 +216,9 @@ public void setCostat(double costat) {
 }
 ``` 
 
-Els mètodes d'accés reben noms getXX i setXX, on XX és el nom de l'atribut.
+Els mètodes d'accés reben noms **getXX** i **setXX**, on XX és el nom de l'atribut.
 
-El mètode get retorna el valor de l'atribut. El mètode set no retorna res, rep com a paràmetre un valor del mateix tipus que l'atribut i copia aquest valor a l'atribut.
+El mètode *get* retorna el valor de l'atribut. El mètode *set* no retorna res, rep com a paràmetre un valor del mateix tipus que l'atribut i copia aquest valor a l'atribut.
 
 La definició de la classe quedaria així:
 
@@ -259,3 +259,75 @@ public void setCostat(double costat) {
 }
 ```
 
+## Còpia d'objectes
+
+Com que les variables de tipus objecte són referències, assignar el seu valor a una altra no realitza una còpia completa (***deep copy***) de l'objecte, sinó que només assigna el valor de la referència (l'adreça en memòria de l'objecte) (***shallow copy***).
+
+Amb tipus primitius:
+
+```java
+int a = 3;
+int b = a;  //tenim dues variables 'int' en memòria, amb el mateix valor
+if (a==b) {  //compara els valors de les dues variables (resultat: true)
+    //...
+}
+```
+
+En canvi, amb tipus referencials:
+
+```java
+Quadrat q1 = new Quadrat(3.0);
+Quadrat q2 = q1;  //dues referències que apunten a un únic objecte en memòria
+if (q1==q2) {  //compara el valor de les referències (resultat: true, són el mateix objecte)
+    //...
+}
+Quadrat s3 = new Quadrat(3.0);  //nou objecte (instància) en memòria, amb el mateix valor que 'q1'
+if (q1==q3) {  //compara el valor de les referències (resultat: false, no són el mateix objecte)
+    //...
+}
+if (q1.equals(q3)) {  //compara el contingut d'acord amb el que s'ha definit al mètode equals (resultat: true, si es equals els compara amb el valor del costat)
+    //...
+}
+```
+
+Perquè funcioni la comparació, cal redefinir el mètode **equals()** que totes les classes hereten de la classe [Object](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html).
+
+```java
+public boolean toString(Object obj) {
+    boolean result = false;
+    if (obj == null) {  //null object
+        result = false;
+    } else {
+        if (this == obj) {  //same object
+            result = true;
+        } else {
+            if (obj instanceOf Quadrat other) {  //same class of subclass
+                //compare 'costat'
+                result = (this.costat == other.costat);
+            } else {  //not same class
+                result = false;
+            }
+        }
+    }
+    return result;
+}
+```
+
+Per facilitar la còpia completa d'un objecte convé definir un constructor de còpia, el qual crea un nou objecte i li copia la informació del que rep com a paràmetre:
+
+```java
+public Quadrat(Quadrat other) {
+    this.costat = other.costat;
+}
+```
+
+```java
+Quadrat q1 = new Quadrat(3.0);
+Quadrat q2 = new Quadrat(q1);  //construir una còpia del quadrat 'q1'
+if (q1==q2) {  //false, no és el mateix objecte
+
+}
+if (q1.equals(q2)) {  //true, les dues instàncies tenen la mateixa informació
+
+}
+```
