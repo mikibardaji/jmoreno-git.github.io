@@ -331,3 +331,39 @@ if (q1.equals(q2)) {  //true, les dues instàncies tenen la mateixa informació
 
 }
 ```
+## Els tipus Enum
+
+Els ***Enum*** són un tipus especial de classe que serveixen per declarar un conjunt de constants per a ús del programador.
+
+Tots estenen [java.lang.Enum](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html).
+
+```java
+enum Size { 
+   SMALL, MEDIUM, LARGE, EXTRALARGE 
+}
+```
+
+```java
+Size s = Size.MEDIUM;
+```
+
+Els valors enum es poden usar en estructures switch-case.
+
+Exemple per definir constants per als dies de la setmana.
+
+```java
+public enum WeekDay {
+    MONDAY, TUESDAY, WEDNESDAY,
+    THURSDAY, FRIDAY, SATURDAY, SUNDAY
+}
+```
+
+```java
+WeekDay today = WeekDay.SATURDAY;
+if (today.equals(WeekDay.SATURDAY))  System.out.println("Hurra!");
+```
+
+Mètodes útils dels Enum:
+   final String name() : retorna el nom de la constant, tal com va ser declarada
+   final int ordinal() : retorna la posició de la declaració (el primer és 0)
+
