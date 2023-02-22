@@ -15,3 +15,77 @@ Els altres il·lustren les conversions entre superclasse i subclasses.
 
 [Exemple de formulari d'entrada d'objectes usant polimorfisme](assets/4.2/forms.zip)
 Il·lustra un procediment per implementar mitjançant polimorfisme formularis d'entrada de dades de diferents tipus d'objecte de forma transparent al programador.
+
+## Sobrecàrrega de mètodes
+
+És un tipus de polimorfisme que té lloc amb mètodes que pertanyen al mateix àmbit. Per tant, es troben a la mateixa classe. Els mètodes tenen el mateix nom, però difereixen en el tipus i nombre de paràmetres.
+
+```java
+/**
+ *
+ * @author dax
+ */
+public class ProvesPolim {
+
+    public static void main(String[] args) {
+        ProvesPolim ap = new ProvesPolim();
+        ap.run();
+    }
+    
+    private void run() {
+        //suma de int
+        int a=2, b=3;
+        int c = suma(a, b); 
+        System.out.format("%d+%d=%d\n", a, b, c);
+        //suma de double
+        double d=1.5, e=2.3;
+        double f = suma(d, e);
+        System.out.format("%f+%f=%f\n", d, e, f);
+        //suma de string
+        String s1 = "Hola", s2 = "món";
+        String s3 = suma(s1, s2);
+        System.out.format("%s+%s=%s\n", s1, s2, s3);
+        //suma de arrays
+        int[] ar1 = {2, 4, 1, 8, 9};
+        int[] ar2 = {7, 3, 0, 6};
+        try {
+            int[] ar3 = suma(ar1, ar2);
+            System.out.format("%s+%s=%s\n", 
+                    Arrays.toString(ar1), 
+                    Arrays.toString(ar2), 
+                    Arrays.toString(ar3));            
+        } catch(RuntimeException ex) {
+            System.err.println(ex.getMessage());
+            System.out.println("Els arrays no tenen la mateixa longitud");
+        }
+
+    }
+    
+    public int suma(int x, int y) {
+        System.out.println("Suma de int");
+        return x+y;
+    }
+    
+    public double suma(double x, double y) {
+        System.out.println("Suma de double");
+        return x+y;
+    }
+    
+    public String suma(String x, String y){
+        return x+y;
+    }
+    
+    public int[] suma(int[] x, int[] y) {
+        if (x.length != y.length) {
+            throw new RuntimeException("Arrays differ in length");
+        }
+        int length = x.length;
+        int[] result = new int[length];
+        for (int i = 0; i < length; i++) {
+            result[i] = x[i]+y[i];
+        }
+        return result;
+    }
+}
+```
+
