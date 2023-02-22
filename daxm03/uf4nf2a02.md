@@ -5,30 +5,21 @@
   - Classes abstractes i interficies.
   - Polimorfisme en temps de compilació i en temps d'execució.
 
-[Apunts de polimorfisme](assets/4.2/dax2_m03-a422-Polimorfisme.pdf)
-
-[Apunts de classes abstractes i interfaces](assets/4.2/dax2_m03-a422-Classes_abstractes_i_interfaces.pdf)
-
-[Exemples de polimorfisme](assets/4.2/polimorfisme-exemples.zip)
-Els dos primers il·lustren el polimorfisme amb les classes Amfibi i Granota.
-Els altres il·lustren les conversions entre superclasse i subclasses.
-
-[Exemple de formulari d'entrada d'objectes usant polimorfisme](assets/4.2/forms.zip)
-Il·lustra un procediment per implementar mitjançant polimorfisme formularis d'entrada de dades de diferents tipus d'objecte de forma transparent al programador.
+# Tipus de polimorfisme
 
 ## Sobrecàrrega de mètodes
 
-És un tipus de polimorfisme que té lloc amb mètodes que pertanyen al mateix àmbit. Per tant, es troben a la mateixa classe. Els mètodes tenen el mateix nom, però difereixen en el tipus i nombre de paràmetres.
+La sobrecàrrega (***overload***) és un tipus de polimorfisme que té lloc amb mètodes que pertanyen al mateix àmbit. Per tant, es troben a la mateixa classe. Els mètodes tenen el mateix nom, però difereixen en el tipus i nombre de paràmetres.
 
 ```java
 /**
  *
- * @author dax
+ * @author Jose
  */
-public class ProvesPolim {
+public class Sobrecarrega {
 
     public static void main(String[] args) {
-        ProvesPolim ap = new ProvesPolim();
+        Sobrecarrega ap = new Sobrecarrega();
         ap.run();
     }
     
@@ -89,3 +80,29 @@ public class ProvesPolim {
 }
 ```
 
+## Redefinició de mètodes
+
+La redefinició de mètodes (***override***) es produeix quan un mètode definit o declarat en una classe o interface és redefinit, és a dir, es canvia el comportament, en una subclasse o classe que implementi l'interface. El mètode manté el mateix nom i signatura (paràmetres), només es modifica la implementació (el codi).
+
+El polimorfisma assegura que el mètode que s'executarà serà sempre el de l'objecte del qual és membre. La identificació de la classe a la qual pertany es pot fer en temps de compilació o en temps d'execució.
+
+## Polimorfisme d'objectes
+
+El polimorfisme d'objectes es produeix quan objectes de subclasses apareixen amb referències de superclasses. La substitució contrària, no obstant, no és possible.
+
+[Apunts de polimorfisme](assets/4.2/dax2_m03-a422-Polimorfisme.pdf)
+
+[Apunts de classes abstractes i interfaces](assets/4.2/dax2_m03-a422-Classes_abstractes_i_interfaces.pdf)
+
+[Exemples de polimorfisme](assets/4.2/polimorfisme-exemples.zip)
+Els dos primers il·lustren el polimorfisme amb les classes Amfibi i Granota.
+Els altres il·lustren les conversions entre superclasse i subclasses.
+
+Exemple d'ús d'interface Parlador i herència independent (Animal i Rellotge) [parlador.zip](assets/4.2/parlador.zip)
+
+Exemple de figures planes, herència i implementació de dos interfaces [figures2.zip](assets/4.2/figures2.zip)
+
+Exemple d'herència amb classe base abstracta (Digimon i Pokemon) [pokedigi.zip](assets/4.2/pokedigi.zip)
+
+[Exemple de formulari d'entrada d'objectes usant polimorfisme](assets/4.2/forms.zip)
+Il·lustra un procediment per implementar mitjançant polimorfisme formularis d'entrada de dades de diferents tipus d'objecte de forma transparent al programador.

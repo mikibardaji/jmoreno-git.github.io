@@ -367,3 +367,85 @@ Mètodes útils dels Enum:
    final String name() : retorna el nom de la constant, tal com va ser declarada
    final int ordinal() : retorna la posició de la declaració (el primer és 0)
 
+Els tipus Enum també són classes i poden tenir atributs i constructors.
+
+```java
+package grades;
+/**
+ *
+ * @author Jose
+ */
+public enum Grade {
+    
+    EXC("Excel·lent", 9.0),
+    NOT("Notable", 7.5),
+    BE("Bé", 6.0),
+    SUF("Suficient", 5.0),
+    INS("Insuficient", 4.0),
+    DEF("Deficient", 2.5),
+    MD("Molt deficient", 1.0);
+    
+    private final String text;
+    private final double value;
+    
+    Grade(String text, double value) {
+        this.text = text;
+        this.value = value;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Grade{");
+        sb.append("text=").append(text);
+        sb.append(", value=").append(value);
+        sb.append('}');
+        return sb.toString();
+    }
+    
+}
+```
+
+```java
+package grades;
+/**
+ *
+ * @author Jose
+ */
+public class GradeTest {
+    public static void main(String[] args) {
+        GradeTest ap = new GradeTest();
+        ap.run();
+    }
+    private void run() {
+        Grade grade1 = Grade.BE;
+        System.out.println("grade1.text:"+grade1.getText());
+        System.out.println("grade1.value:"+grade1.getValue());
+        System.out.println("grade1.toString:"+grade1.toString());
+        if (grade1.equals(Grade.BE)) {
+            System.out.println("Your grade is Bé");
+        }
+        String message;
+        switch (grade1) {
+            case BE:
+            case EXC:
+            case NOT:
+            case SUF:
+                message = "You passed";
+                break;
+            default:
+                message = "You failed";
+        }
+        System.out.println(message);
+    }
+    
+}
+```

@@ -11,6 +11,8 @@
 
 [Exemples d'herència i ús dels constructors](assets/4.2/herencia-exemples.zip)
 
+Exemple d'herència amb Person i Employee [person.zip](assets/4.2/person.zip)
+
 ## Videos introducció a l'herència i el polimorfisme
 (videos de "Píldoras informáticas")
 * [L'herència (I)](https://youtu.be/wqoyQ3BxK4A)
@@ -25,3 +27,4 @@
 * [Interfaces (II)](https://youtu.be/59Tpg7XbIEo)
 * [Interfaces (II)](https://youtu.be/MTdly6e-jPU)
 * [Interfaces (IV)](https://youtu.be/0fifCsOYbXw)
+
