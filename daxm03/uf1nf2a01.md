@@ -158,7 +158,7 @@ Solució: [Xifrat César](./assets/1.2/XifratCesar.java)
 
 ## Dates i temps
 
-Convé utilitzar les classes del paquet **java.time**, les quals estan basades en el calendari ISO, el qual segueix les regles del calendari Gregorià introduit l'any 1582.
+Convé utilitzar les classes del paquet [**java.time**](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/package-summary.html), les quals estan basades en el calendari ISO, el qual segueix les regles del calendari Gregorià introduit l'any 1582.
 
 Les classes més destacades del paquet java.time són:
 
