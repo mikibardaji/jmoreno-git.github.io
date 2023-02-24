@@ -281,7 +281,7 @@ Quadrat q2 = q1;  //dues referències que apunten a un únic objecte en memòria
 if (q1==q2) {  //compara el valor de les referències (resultat: true, són el mateix objecte)
     //...
 }
-Quadrat s3 = new Quadrat(3.0);  //nou objecte (instància) en memòria, amb el mateix valor que 'q1'
+Quadrat q3 = new Quadrat(3.0);  //nou objecte (instància) en memòria, amb el mateix valor que 'q1'
 if (q1==q3) {  //compara el valor de les referències (resultat: false, no són el mateix objecte)
     //...
 }
@@ -293,7 +293,7 @@ if (q1.equals(q3)) {  //compara el contingut d'acord amb el que s'ha definit al 
 Perquè funcioni la comparació, cal redefinir el mètode **equals()** que totes les classes hereten de la classe [Object](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html).
 
 ```java
-public boolean toString(Object obj) {
+public boolean equals(Object obj) {
     boolean result = false;
     if (obj == null) {  //null object
         result = false;
@@ -360,53 +360,79 @@ public enum WeekDay {
 
 ```java
 WeekDay today = WeekDay.SATURDAY;
-if (today.equals(WeekDay.SATURDAY))  System.out.println("Hurra!");
+if (today.equals(WeekDay.SATURDAY))  System.out.println("Hoorray!");
 ```
 
 Mètodes útils dels Enum:
-   final String name() : retorna el nom de la constant, tal com va ser declarada
-   final int ordinal() : retorna la posició de la declaració (el primer és 0)
 
-Els tipus Enum també són classes i poden tenir atributs i constructors.
+  * final String name() : retorna el nom de la constant, tal com va ser declarada
+  * final int ordinal() : retorna la posició de la declaració (el primer és 0)
+  * final int compareTo(E o): retorna -, 0, + segons l'ordenació respecte del paràmetre
+  * static T valueOf(String name): retorna la constant del *enum* que coincideix amb el paràmetre
+  * static T[] values(): retorna un array amb totes les constants del *enum*
+
+Els tipus **Enum** també són classes i poden tenir atributs i constructors.
 
 ```java
-package grades;
+package enums;
 /**
  *
  * @author Jose
  */
 public enum Grade {
     
-    EXC("Excel·lent", 9.0),
-    NOT("Notable", 7.5),
-    BE("Bé", 6.0),
-    SUF("Suficient", 5.0),
-    INS("Insuficient", 4.0),
-    DEF("Deficient", 2.5),
-    MD("Molt deficient", 1.0);
+    MD("Very deficient", 0.0, 2.0),
+    DEF("Deficient", 2.0, 4.0),
+    INS("Poor", 4.0, 5.0),
+    SUF("Sufficient", 5.0, 6.0),
+    BE("Good", 6.0, 7.0),
+    NOT("Notable", 7.0, 9.0),
+    EXC("Excellent", 9.0, 10.0);    
     
     private final String text;
-    private final double value;
+    private final double lower;
+    private final double upper;
     
-    Grade(String text, double value) {
+    Grade(String text, double lower, double upper) {
         this.text = text;
-        this.value = value;
+        this.lower = lower;
+        this.upper = upper;
     }
 
     public String getText() {
         return text;
     }
 
-    public double getValue() {
-        return value;
+    public double getLower() {
+        return lower;
     }
 
+    public double getUpper() {
+        return upper;
+    }
+
+    public static Grade getGrade(double value) {
+        Grade result = Grade.MD;
+        if (value == 10.0) {
+            result = Grade.EXC;
+        } else {
+            for (Grade g : values()) {
+                if ( (g.lower <= value) && (value < g.upper) ) {
+                    result = g;
+                    break;
+                }
+            }            
+        }
+        return result;
+    }
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Grade{");
         sb.append("text=").append(text);
-        sb.append(", value=").append(value);
+        sb.append(", lower=").append(lower);
+        sb.append(", upper=").append(upper);
         sb.append('}');
         return sb.toString();
     }
@@ -415,7 +441,10 @@ public enum Grade {
 ```
 
 ```java
-package grades;
+package enums;
+
+import java.util.Arrays;
+
 /**
  *
  * @author Jose
@@ -426,13 +455,18 @@ public class GradeTest {
         ap.run();
     }
     private void run() {
-        Grade grade1 = Grade.BE;
+        Grade grade1 = Grade.NOT;
         System.out.println("grade1.text:"+grade1.getText());
-        System.out.println("grade1.value:"+grade1.getValue());
+        System.out.println("grade1.lower:"+grade1.getLower());
+        System.out.println("grade1.upper:"+grade1.getUpper());
         System.out.println("grade1.toString:"+grade1.toString());
-        if (grade1.equals(Grade.BE)) {
-            System.out.println("Your grade is Bé");
+        //get Grade values
+        Grade[] gradeValues = Grade.values();
+        System.out.println("Grade values: "+Arrays.toString(gradeValues));
+        if (grade1.equals(Grade.NOT)) {
+            System.out.println("Congratulations: Your grade is 'Notable'");
         }
+        //use of enum in a switch-case structure
         String message;
         switch (grade1) {
             case BE:
@@ -445,6 +479,12 @@ public class GradeTest {
                 message = "You failed";
         }
         System.out.println(message);
+        //creation of Grade given its name
+        Grade grade2 = Grade.valueOf("SUF");
+        System.out.println("grade2:"+ grade2.toString());
+        //get grade by numeric value
+        Grade grade3 = Grade.getGrade(4.5);
+        System.out.println("grade3:"+ grade3.toString());
     }
     
 }
