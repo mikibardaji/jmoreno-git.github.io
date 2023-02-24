@@ -160,6 +160,26 @@ Solució: [Xifrat César](./assets/1.2/XifratCesar.java)
 
 Convé utilitzar les classes del paquet **java.time**, les quals estan basades en el calendari ISO, el qual segueix les regles del calendari Gregorià introduit l'any 1582.
 
+Les classes més destacades del paquet java.time són:
+
+  * **LocalDate**: representa dates sense hora i permet declarar-les, sumar-les, restar-les i comparar-les.
+  * **LocalTime**: l'equivalent a l'anterior, però per representar hores sense data.
+  * **LocalDateTime**: combinació de les dues anteriors, representa data i hora.
+  * **Instant**: emmagatzema un moment determinat en el temps amb data i hora com un timestamp.
+  * **ZonedDateTime**: Com LocalDateTime però tenint en consideració la zona horària.
+  * **Period**: representa diferències entre moments en el temps.
+  * **Duration**: similar a l'anterior, però només per a hores.
+
+Totes aquestes classes produeixen instàncies immutables i no tenen constructors públics, sinó que es construeixen a partir de mètodes ***factory***.
+
+Els mètodes més importants són:
+
+  * **now()**: crea instàncies noves a partir de la data i hora actuals.
+  * **of()**: construeix dates i hores a partir de les seves parts.
+  * **with()**: modifica la data o hora actual segons el paràmetre.
+
+Per a obtenir les parts d'una data o d'una hora disposen de mètodes **getHour()**, **getMinute()**, **getMonth()**, etc.
+
 ```java
 //get current data
 LocalDate today = LocalDate.now();
@@ -209,6 +229,16 @@ int year = 2024, month=3, day=5;
 LocalDate date = LocalDate.of(year, month, day);
 System.out.format("Is %d leap year?: %s ", date.getYear(), date.isLeapYear()?"yes":"no");
 ```
+
+Per a analitzar (*parse*) dates disposen del mètode ***parse()***.
+```java
+LocalDate hoy = LocalDate.parse("2023-10-25");
+LocalDate seisNov = LocalDate.parse("25/10/2023", DateTimeFormatter.ofPattern("d/M/yyyy") );
+```
+
+Per a més exemples: [Cómo manejar correctamente fechas en Java: el paquete java.time](https://www.campusmvp.es/recursos/post/como-manejar-correctamente-fechas-en-java-el-paquete-java-time.aspx)
+
+
 ## La classe StringBuilder
 
 [Classe StringBuilder](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html)
