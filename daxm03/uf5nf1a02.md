@@ -96,7 +96,19 @@ public class Colec {
 
 }
 ```
-La interface que ocupa la posició més alta a la jerarquia d'herència (i per tant la més general) és [***Collection***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html). Per poder il·lustrar també mètodes que proporcionen les llistes però no les col·leccions, a l'exemple usarem classes que implementin llistes.
+La interface que ocupa la posició més alta a la jerarquia d'herència (i per tant la més general) és [***Collection***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html). 
+
+La interface collections ofereix aquests mètodes.
+
+| Mètode | Descripció | 
+|:----------:|----------|
+| **add(T)**    | Afegeix un element |
+| **iterator()**   | Obté un iterador que permet recórrer la col·lecció visitant cada element una vegada |
+| **size()**     | Obté la quantitat d'elements que aquesta col·lecció emmagatzema  |
+| **contains(t)**  | Pregunta si l'element t ja està dintre de la col·lecció |
+
+
+Per poder il·lustrar també mètodes que proporcionen les llistes però no les col·leccions, a l'exemple usarem classes que implementin llistes.
 
 Declarem la llista amb el tipus de la interface [***List***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html), la qual ens permet gestionar per polimorfisme tots els tipus de llistes. Disposem de dues classes implementades a la biblioteca (paquet java.util): [***ArrayList***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html) i [***LinkedList***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/LinkedList.html).
 
