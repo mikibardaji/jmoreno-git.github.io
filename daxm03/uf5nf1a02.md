@@ -444,7 +444,7 @@ Utilitzar els fitxers de Properties per desar la configuració d'un programa i l
 
 ## Col·leccions i streams (java 8+)
 
-A partir de la versió 8 de Java, el tractament de seqüències de dades es potencia molt amb la [interface java.util.Stream<T>](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html), els **interface funcionals** i les **expressions lambda**.
+A partir de la versió 8 de Java, el tractament de seqüències de dades es potencia molt amb la [interface java.util.Stream](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html), els **interface funcionals** i les **expressions lambda**.
 
 L'ús combinat d'aquestes eines permet la manipulació àgil i la realització d'operacions complexes de filtrat, modificació i transformació de dades d'una manera molt potent i efectiva. 
 
