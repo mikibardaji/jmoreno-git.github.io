@@ -10,7 +10,45 @@
 
 [Documentació de referència](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/doc-files/coll-overview.html)
 
-## Ús de llistes 
+## Ús de col·leccions i llistes 
+
+La interface que ocupa la posició més alta a la jerarquia d'herència (i per tant la més general) és [***Collection***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html). 
+
+La interface ***Collection*** ofereix aquests mètodes.
+
+| Mètode | Descripció | 
+|:----------:|----------|
+| **add(T)**    | Afegeix un element |
+| **iterator()**   | Obté un iterador que permet recórrer la col·lecció visitant cada element una vegada |
+| **size()**     | Obté la quantitat d'elements que aquesta col·lecció emmagatzema  |
+| **contains(t)**  | Pregunta si l'element t ja està dintre de la col·lecció |
+| **remove(t)**  | Suprimeix un únic element de la col·lecció|
+| **clear()**  | Suprimeix tots els elements de la col·lecció|
+| **iterator()**  | Retorna un iterador per recórrer els elements de la col·lecció|
+| **isEmpty()**  | Retorna *true* si la col·lecció és buida|
+| **toArray()**  | Retorna un array amb tots els elements de la col·leccióH|
+
+Per poder il·lustrar també mètodes que proporcionen les llistes però no les col·leccions, a l'exemple usarem classes que implementin llistes.
+
+La interface ***List*** ofereix a més a més aquests mètodes.
+
+| Mètode | Descripció | 
+|:----------:|----------|
+| **get(int)**    | Retorna l'objecte a la posició indicada |
+| **indexOf(T)**    | Retorna l'index de la primera aparició de l'objecte |
+| **lastIndexOf(T)**    | Retorna l'index de la darrera aparició de l'objecte |
+| **listIterator()**    | Retorna un iterador de llista per recórrer tots els elements de la llista |
+| **remove(int)**  | Suprimeix l'element de la col·lecció a la posició indicada|
+| **set(int, T)**  | Reemplaça l'element a la posició indicada amb l'element donat|
+| **add(int, T)**  | Insereix a la posició indicada l'element donat|
+
+Hem de declarar la llista amb el tipus genèric de la interface [***List***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html), la qual ens permet gestionar per polimorfisme tots els tipus de llistes. Disposem de dues classes implementades a la biblioteca (paquet java.util): [***ArrayList***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html) i [***LinkedList***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/LinkedList.html).
+
+La instanciació la fem amb un tipus concret de llista.
+
+La biblioteca de col·leccions de Java usa plantilles (*template*) per especificar el tipus d'objecte a emmagatzemar: List<Integer>.
+
+Les dues implementacions són iguals i funcionen de la mateixa manera. La diferència està en la implementació de la llista en memòria. *ArrayList* implementa la llista amb un array, mentres que *LinkedList* utilitza una llista enllaçada. Els arrays permeten accessos ràpids i directes a la informació, donada la posició de l'element. En canvi, les llistes enllaçades són més eficients quan cal inserir i esborrar elements amb freqüència a la llista.
 
 [Colec.java (descàrrega)](assets/5.1/5.1.2/Colec.java)
 ```
@@ -96,31 +134,6 @@ public class Colec {
 
 }
 ```
-La interface que ocupa la posició més alta a la jerarquia d'herència (i per tant la més general) és [***Collection***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html). 
-
-La interface collections ofereix aquests mètodes.
-
-| Mètode | Descripció | 
-|:----------:|----------|
-| **add(T)**    | Afegeix un element |
-| **iterator()**   | Obté un iterador que permet recórrer la col·lecció visitant cada element una vegada |
-| **size()**     | Obté la quantitat d'elements que aquesta col·lecció emmagatzema  |
-| **contains(t)**  | Pregunta si l'element t ja està dintre de la col·lecció |
-
-
-Per poder il·lustrar també mètodes que proporcionen les llistes però no les col·leccions, a l'exemple usarem classes que implementin llistes.
-
-Declarem la llista amb el tipus de la interface [***List***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html), la qual ens permet gestionar per polimorfisme tots els tipus de llistes. Disposem de dues classes implementades a la biblioteca (paquet java.util): [***ArrayList***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html) i [***LinkedList***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/LinkedList.html).
-
-Instanciem un tipus concret de llista.
-
-La biblioteca de col·leccions de Java usa plantilles (*template*) per especificar el tipus d'objecte a emmagatzemar: List<Integer>.
-
-Les dues implementacions són iguals i funcionen de la mateixa manera. La diferència està en la implementació de la llista en memòria. *ArrayList* implementa la llista amb un array, mentres que *LinkedList* utilitza una llista enllaçada. Els arrays permeten accessos ràpids i directes a la informació, donada la posició de l'element. En canvi, les llistes enllaçades són més eficients quan cal inserir i esborrar elements amb freqüència a la llista.
-
-Per afegir elements al final de la llista utilitzem el mètode ***add()***.
-
-Obtenim el nombre d'elements que hi ha a la llista amb el mètode ***size()***.
 
 Per recórrer la llista es poden utilitzar diversos procediments.
 
@@ -162,9 +175,9 @@ import java.util.*;
 public class LinkedListTester {
 
     public static void main(String[] args) {
-
+		//declare and instantiate the list
         List <Integer> list1 = new LinkedList <> ();
-        
+        //populate the list with some data
         list1.add(1);
         list1.add(2);
         list1.add(3);
@@ -180,8 +193,7 @@ public class LinkedListTester {
         System.out.println ("Test get method");
         Integer elem = list1.get(3);
         System.out.println ("Element at index 3  is = " +elem);
-        
-                        
+            
         System.out.println ("\nTest get method  --> exception");
         try { Integer elem2 = list1.get(99);}
              
@@ -234,9 +246,9 @@ Un *Set* és una *Collection* on no pot haver-hi elements duplicats. El següent
 La interface *List* proveeix el mètode ***sort()*** per ordenar els elements. El paràmetre del mètode és un objecte d'una classe que implementi l'interface Comparator<T>, definint de forma adequada el mètode compare(T o1, T o2).
 
 El retorn del mètode *compare()* és el següent:
-* enter negatiu si o1 < o2
-* 0 si o1 = o2
-* enter positiu si o1 > o2
+  * enter negatiu si o1 < o2
+  * 0 si o1 = o2
+  * enter positiu si o1 > o2
 
 [ListSort.java (descàrrega)](assets/5.1/5.1.2/ListSort.java)
 ```
@@ -252,8 +264,7 @@ import java.io.*;
 // A class to represent a student. 
 class Student { 
 	private int 	id; 
-	private String 	name, 
-					address; 
+	private String 	name, address; 
 
 	// Constructor 
 	public Student(int id, String name, String address) { 
@@ -348,7 +359,7 @@ import java.util.*;
 
 /**
  * MapExample.java
- * This example illustrates the use of Map interface and how to iterate it
+ * This example illustrates the use of Map interface and how to iterate over it
  * @author José Moreno
  */
 public class MapExample {
@@ -386,7 +397,6 @@ public class MapExample {
 				Integer value = items.get(key);
 				System.out.println("[ Key: "+key+" ] [ Value: "+value+" ]");
 		}
-		
 		
 		//Using for loop
 		System.out.println("Iterating a Map using a foreach loop:");
