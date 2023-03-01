@@ -14,6 +14,8 @@
 
 La interface que ocupa la posició més alta a la jerarquia d'herència (i per tant la més general) és [***Collection***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html). 
 
+![](assets/5.1/5.1.2/collectionsframeworkoverview.png)
+
 La interface ***Collection*** ofereix aquests mètodes.
 
 | Mètode | Descripció | 
