@@ -522,7 +522,7 @@ public class MapExample {
 
 [Classes Menu i MenuItem per programar menús d'usuari](assets/5.1/5.1.2/generic_menu.zip)
 
-Desenvolupat guiat de l'aplicació per gestionar clients. Els client s'emmagatzemen en una llista [ClientManager_with_ArrayList.zip](assets/5.1/5.1.2/ClientManager_with_ArrayList.zip).
+Desenvolupat guiat de l'aplicació per gestionar clients. Els client s'emmagatzemen en una llista [ClientManager_with_ArrayList.zip](assets/5.1/5.1.2/ClientManagerWithList.zip).
 
 ## Classe Properties
 
