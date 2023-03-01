@@ -86,8 +86,7 @@ try {
 
 ## Excepcions verificades (checked) i no verificades (unchecked)
 
-Les excepcions que poden ser llançades en temps de compilació s'anomenen ***checked exceptions***. Han de ser obligatòriament gestionades pel codi,la qual cosa implica que cal escriure blocs try-cath que continguin l'execució on poden ser llançades i cal declarar-les al prototip dels mètodes a l'interior dels quals es puguin produir i que no les capturin. Totes hereten de ***Exception***.
-
+Les excepcions que poden ser llançades en temps de compilació s'anomenen ***checked exceptions***. Han de ser obligatòriament gestionades pel codi, la qual cosa implica que cal escriure blocs try-cath que continguin l'execució on poden ser llançades i cal declarar-les al prototip dels mètodes a l'interior dels quals es puguin produir i que no les capturin. Totes hereten de ***Exception***. 
 Les excepcions que es poden produir en qualsevol moment en temps d'execució es diuen ***unchecked exceptions***. Els mètodes no estan obligats a capturar-les ni declarar explícitament que les llancen. Totes hereten de ***RuntimeException***.
 
 [Jerarquia de les excepcions en Java](assets/5.1/5.1.1/exception-call_stack.png)
@@ -114,16 +113,16 @@ Exception(String message, Throwable cause)
 Exception(Throwable cause)
 ```
 
-### Exemple de definició d'excepcions per al càlcul de les solucions d'una equació de 2n grau
+### Exemples de definició d'excepcions específiques
 
-El següent exemple il·lustra el procediment per calcular les solucions d'una equació de 2n grau *ax2+bx+c=0*, la qual s'encapsula amb la classe *Eq2nGrau*.
+El primer exemple il·lustra el procediment per calcular les solucions d'una equació de 2n grau *ax2+bx+c=0*, la qual s'encapsula amb la classe *Eq2nGrau*.
 
-El mètode solucionar(), de la classe Eq2nGrau, pot llançar dues excepcions específiques del càlcul: 
+El mètode *solucionar()*, de la classe *Eq2nGrau*, pot llançar dues excepcions específiques del càlcul: 
 
-  * PrimerGrauException: quan a=0, no es pot aplicar la fórmula de 2n grau
-  * CapSolucioException: quan el discriminant és negatiu i no hi ha solucions reals
+  * *PrimerGrauException*: quan a=0, no es pot aplicar la fórmula de 2n grau
+  * *CapSolucioException*: quan el discriminant és negatiu i no hi ha solucions reals
 
-La definició de les excepcions específiques es fa estenent de la classe Exception.
+La definició de les excepcions específiques es fa estenent de la classe *Exception*.
 
 ```java
 public class PrimerGrauException extends Exception {
@@ -144,18 +143,20 @@ public class CapSolucioException extends Exception {
 Ara ja podem utilitzar les noves excepcions quan calgui llançar-les:
 
 ```java
-if (a=0) {
+if (a==0) {
     throw new PrimerGrauException("a=0. L'equació és de primer grau");
 }
 ```
 
-Com que el mètode solucionar() no captura al seu interior les excepcions, sinó que les passa cap al mètode que l'havia invocat, cal incloure al seu prototip la declaració de les excepcions que pot llançar.
+Com que el mètode *solucionar()* no captura al seu interior les excepcions, sinó que les passa cap al mètode que l'havia invocat, cal incloure al seu prototip la declaració de les excepcions que pot llançar.
 
 ```java
 public void solucionar() throws PrimerGrauException, CapSolucioException {
     //...
 }
 ```
+
+Això força el compilador a demanar que tota invocació a aquest mètode estigui inclosa en un bloc try que capturi les excepcions indicades.
 
 [Exemple de definició d'excepcions](assets/5.1/5.1.1/Eq2nGrauTest.java). Il·lustra la resolució d'equacions de segon grau definint excepcions per als casos que no hi ha solució i es poden produir errors.
 
