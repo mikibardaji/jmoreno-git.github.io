@@ -89,7 +89,7 @@ try {
 Les excepcions que poden ser llançades en temps de compilació s'anomenen ***checked exceptions***. Han de ser obligatòriament gestionades pel codi, la qual cosa implica que cal escriure blocs try-cath que continguin l'execució on poden ser llançades i cal declarar-les al prototip dels mètodes a l'interior dels quals es puguin produir i que no les capturin. Totes hereten de ***Exception***. 
 Les excepcions que es poden produir en qualsevol moment en temps d'execució es diuen ***unchecked exceptions***. Els mètodes no estan obligats a capturar-les ni declarar explícitament que les llancen. Totes hereten de ***RuntimeException***.
 
-[Jerarquia de les excepcions en Java](assets/5.1/5.1.1/exception-call_stack.png)
+![Jerarquia de les excepcions en Java](assets/5.1/5.1.1/java-exceptions-hierarchy.png)
 
 [Exemple de captura d'excepcions en el mateix mètode](assets/5.1/5.1.1/Exception1.java)
 
@@ -112,6 +112,8 @@ Exception(String message)
 Exception(String message, Throwable cause)
 Exception(Throwable cause)
 ```
+
+Amb el contructor que rep *Throwable cause* podem capturar una excepció i llançar-ne una altra passant-li la que es va generar inicialment (*cause*).
 
 ### Exemples de definició d'excepcions específiques
 
@@ -160,4 +162,10 @@ Això força el compilador a demanar que tota invocació a aquest mètode estigu
 
 [Exemple de definició d'excepcions](assets/5.1/5.1.1/Eq2nGrauTest.java). Il·lustra la resolució d'equacions de segon grau definint excepcions per als casos que no hi ha solució i es poden produir errors.
 
+A l'exemple següent definim excepcions per controlar la validació de la informació continguda als atributs d'una classe.
+
+També s'il·lustra com generar proves unitàries que permetin verificar que el comportament dels mètodes d'una classe s'ajusten al que s'ha planificat.
+
 [Exemple d'ús d'excepcions per a mantenir la coherència de les dades: Classe Person](assets/5.1/5.1.1/Person_with_exceptions.zip)
+
+L'exemple permet verificar que els canvis en els atributs es fan quan les dades són vàlides i que quan les dades no són vàlides es llancen les excepcions planificades.
