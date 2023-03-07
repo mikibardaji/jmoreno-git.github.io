@@ -10,11 +10,15 @@
 
 [Documentació de referència](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/doc-files/coll-overview.html)
 
+Anem a conéixer el [**Java Collection Framework**](https://docs.oracle.com/javase/tutorial/collections/index.html), el qual proporciona interfaces i classes per gestionar col·leccions de dades.
+
 ## Ús de col·leccions i llistes 
 
 La interface que ocupa la posició més alta a la jerarquia d'herència (i per tant la més general) és [***Collection***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html). 
 
 ![](assets/5.1/5.1.2/collectionsframeworkoverview.png)
+
+Collection esten la [interface ***Iterable***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html), la qual cosa permet a aquests objectes ser recorreguts amb bucles for avançats, com ara el bucle *for-each*.
 
 La interface ***Collection*** ofereix aquests mètodes.
 
@@ -58,81 +62,89 @@ import java.util.*;
 
 public class Colec {
 
-	public static void main(String[] args) {
-		
-		List<Integer> data = new LinkedList<>();
-		
-		//populate data.
-		data.add(new Integer(23));
-		data.add(new Integer(12));
-		data.add(new Integer(10));
-		data.add(new Integer(45));
-		
-		System.out.println("Number of elements: "+data.size());
-		
-		System.out.println("Iterate with for-each loop");
-		for (Integer elem: data) {
-			System.out.println(elem.toString());	
-		}
-		
-		System.out.println("Iterate with iterator");
-		Iterator<Integer> iter = data.iterator();
-		while (iter.hasNext()) {
-			Integer elem = iter.next();
-			System.out.println(elem.toString());
-		}
-		
-		System.out.println("Collection contains 23: "+data.contains(23));
-		System.out.println("Collection contains 99: "+data.contains(99));
-		
-		System.out.println("Is empty?:" + data.isEmpty());
-		
-		System.out.println("Remove element 23");
-		data.remove(new Integer(23));
-		for (Integer elem: data) {
-			System.out.println(elem.toString());	
-		}
-		
-		System.out.println("Iterate with listiterator");
-		ListIterator<Integer> iter2 = data.listIterator();
-                
-		while (iter2.hasNext()) {
-			Integer elem = iter2.next();
-			System.out.println("Next elem: " + elem.toString());
-                       
-		}	
-                 
-		System.out.println("Add an element at index 1");
-		data.add(1, new Integer(55));
-		printList(data);
-		
-		System.out.println("Add an element at the top of the list");
-		data.add(new Integer(77));
-		printList(data);
-		
-		System.out.println("Modify element at index 2");
-		data.set(2, new Integer(44));
-		printList(data);
-		
-		System.out.println("Iterate with a counter and use method get");
-		for (int i = 0; i<data.size(); i++){
-			Integer elem = data.get(i);
-			System.out.println(elem.toString());
-		}
-		
-		System.out.println("To string method");
-		System.out.println(data.toString());
-		
-		System.out.println("Index of method");
-		int p = data.indexOf(44);
-		System.out.println("Index of elem 44= " +p);
-	}
+    public static void main(String[] args) {
+        //Declare collection or list, but instantiate concrete classes
+        List<Integer> data = new ArrayList<>();
+        //List<Integer> data = new LinkedList<>();
+        //Both ArrayList and LinkedList work the same way and are interchangeable
+        
+        //collection methods
+        System.out.println("Collection methods");
+        
+        //populate data.
+        data.add(Integer.valueOf(23));
+        data.add(Integer.valueOf(12));
+        data.add(Integer.valueOf(10));
+        data.add(Integer.valueOf(45));
 
-	private static void printList(List<Integer> l) {
-		for (Integer elem: l) {
-			System.out.println(elem.toString());	
-		}
-	}
+        System.out.println("Number of elements: " + data.size());
+
+        System.out.println("Iterate with for-each loop");
+        for (Integer elem : data) {
+            System.out.println(elem.toString());
+        }
+
+        System.out.println("Iterate with iterator");
+        Iterator<Integer> iter = data.iterator();
+        while (iter.hasNext()) {
+            Integer elem = iter.next();
+            System.out.println(elem.toString());
+        }
+
+        System.out.println("Collection contains value 23?: " + data.contains(23));
+        System.out.println("Collection contains value 99?: " + data.contains(99));
+
+        System.out.println("Collection is empty?: " + data.isEmpty());
+
+        System.out.println("Remove element with value 23");
+        data.remove(Integer.valueOf(23));
+        //display collection after removal
+        for (Integer elem : data) {
+            System.out.println(elem.toString());
+        }
+
+        //list methods
+        System.out.println("List methods");
+        
+        System.out.println("Iterate with listiterator");
+        ListIterator<Integer> iter2 = data.listIterator();
+        while (iter2.hasNext()) {
+            Integer elem = iter2.next();
+            System.out.println("Next elem: " + elem.toString());
+
+        }
+
+        System.out.println("Add an element at index 1");
+        data.add(1, Integer.valueOf(55));
+        printList(data);
+
+        System.out.println("Add an element at the top of the list");
+        data.add(Integer.valueOf(77));
+        printList(data);
+
+        System.out.println("Modify element at index 2");
+        data.set(2, Integer.valueOf(44));
+        printList(data);
+
+        System.out.println("Iterate list with a counter and use method get");
+        for (int i = 0; i < data.size(); i++) {
+            Integer elem = data.get(i);
+            System.out.println(elem.toString());
+        }
+
+        System.out.println("Method toString");
+        System.out.println(data.toString());
+
+        System.out.println("Method indexOf");
+        int p = data.indexOf(Integer.valueOf(44));
+        System.out.println("Index of elem 44: " + p);
+    }
+
+    private static void printList(List<Integer> l) {
+        for (Integer elem : l) {
+            System.out.println(elem.toString());
+        }
+    }
 
 }
 ```
@@ -143,26 +155,45 @@ Per recórrer la llista es poden utilitzar diversos procediments.
 
 Aquest és el procediment general per a qualsevol ***Collection***.
 
-    Iterator<Integer> iter = data.iterator();
-    while (iter.hasNext()) {
-        Integer elem = iter.next();
-        System.out.println(elem.toString());
-    }
+```java
+Iterator<Integer> iter = data.iterator();
+while (iter.hasNext()) {
+	Integer elem = iter.next();
+	System.out.println(elem.toString());
+}
+```
+
+La [***interface Iterator***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Iterator.html) permet recórrer els elements de la col·lecció, assegurant que passa una única vegada per cada element de la mateixa.
+
+*Iterator* proporciona els següents mètodes:
+
+| Mètode | Descripció | 
+|:----------:|----------|
+| **hasNext()**    | Retorna true si la iteració té més elements |
+| **next())**    | Retorna el següent element en la  iteració |
+| **remove()**    | Suprimeix de la col·lecció el darrer element recorregut |
+
+### Recorregut amb bucle foreach (Collection)
+
+Si *collection* és la referència a la col·lecció de tipus *Integer* que es vol recórrer:
+
+```java
+for (Integer elem: collection) {
+	System.out.println(elem.toString());	
+}
+```
+on *elem* és l'identificador de la variable que anirà agafant els valors dels diferents elements de la col·lecció a mesura que avança el recorregut.
 
 ### Recorregut amb comptador de posició (List)
 
 Accedim a cada posició de la llista amb el mètode ***get(int index)***.
 
-    for (int i = 0; i<data.size(); i++){
-        Integer elem = data.get(i);
-        System.out.println(elem.toString());
-    }
-
-### Recorregut amb bucle foreach (Collection)
-
-    for (Integer elem: l) {
-        System.out.println(elem.toString());	
-    }
+```java
+for (int i = 0; i<data.size(); i++){
+	Integer elem = data.get(i);
+	System.out.println(elem.toString());
+}
+```
 
 # Cerca d'elements a una llista
 
@@ -170,15 +201,17 @@ Accedim a cada posició de la llista amb el mètode ***get(int index)***.
 
 ```
 import java.util.*;
+
 /**
- * Program to test LinkedList functionality 
- * @author ProvenSoft
+ * Program to test LinkedList functionality
+ *
+ * @author Jose
  */
 public class LinkedListTester {
 
     public static void main(String[] args) {
-		//declare and instantiate the list
-        List <Integer> list1 = new LinkedList <> ();
+        //declare and instantiate the list
+        List<Integer> list1 = new LinkedList<>();
         //populate the list with some data
         list1.add(1);
         list1.add(2);
@@ -189,53 +222,52 @@ public class LinkedListTester {
         list1.add(21);
         list1.add(34);
         list1.add(3);
-        
-        System.out.println ("Size = " +list1.size());
-      
-        System.out.println ("Test get method");
+
+        System.out.println("Size = " + list1.size());
+
+        System.out.println("Test get method");
         Integer elem = list1.get(3);
-        System.out.println ("Element at index 3  is = " +elem);
-            
-        System.out.println ("\nTest get method  --> exception");
-        try { Integer elem2 = list1.get(99);}
-             
-        catch (IndexOutOfBoundsException e){
-            System.out.println ("Exception message " +e.getMessage());
-           // e.printStackTrace();
+        System.out.println("Element at index 3 is = " + elem);
+
+        System.out.println("\nTest get method  --> exception");
+        try {
+            Integer elem2 = list1.get(99);  //this element does not exist
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Exception message " + e.getMessage());
+            // e.printStackTrace();
         }
 
-        System.out.println ("\nTest indexOf method");
-        int i = list1.indexOf (13);
-        System.out.println ("The index of element 13 is " +i);
-        
-        int i2 = list1.indexOf (0);
-        System.out.println ("The index of element 0 is " +i2);
-        
-        
-        System.out.println ("\nTest latIndexOf method");
+        System.out.println("\nTest indexOf method");
+        int i = list1.indexOf(13);
+        System.out.println("The index of element 13 is " + i);
+
+        int i2 = list1.indexOf(0);
+        System.out.println("The index of element 0 is " + i2);
+
+        System.out.println("\nTest lastIndexOf method");
         int i3 = list1.lastIndexOf(3);
-        System.out.println ("The last index of element 3 is " +i3);
-        
+        System.out.println("The last index of element 3 is " + i3);
+
         int i4 = list1.lastIndexOf(0);
-        System.out.println ("The last index of element 0 is " +i4);
-    
-        System.out.println ("\nLoop using get");
-        for (int j = 0; j<list1.size(); j++){
+        System.out.println("The last index of element 0 is " + i4);
+
+        System.out.println("\nLoop using get");
+        for (int j = 0; j < list1.size(); j++) {
             System.out.println(list1.get(j));
         }
-        
-        System.out.println ("\nTest set method");
+
+        System.out.println("\nTest set method");
         list1.set(2, 22);
-         for (int j = 0; j<list1.size(); j++){
+        for (int j = 0; j < list1.size(); j++) {
             System.out.println(list1.get(j));
-        }   
-         
-    }        
-        
+        }
+
+    }
+
 }
 ```
 
-Els mètodes **indexOf()** i **lastIndexOf()** ens proporcionen la ubicació de l'objecte buscat a la llista (la primera aparició o l'última, respectivament) o bé retorna -1 si no troba l'objecte. Cal recordar que per trobar l'objecte la implementació de la llista usa el mètode ***equals()*** definit a la classe dels objectes emmagartzemats a la llista. Cal definir allà correctament com es comparen els objectes de la llista.
+Els mètodes **indexOf()** i **lastIndexOf()** ens proporcionen la ubicació de l'objecte buscat a la llista (la primera aparició o l'última, respectivament) o bé retornen -1 si no troben l'objecte. Cal recordar que per trobar l'objecte la implementació de la llista usa el mètode ***equals()*** definit a la classe dels objectes emmagatzemats a la llista. Cal definir allà correctament com es comparen els objectes de la llista.
 
 ## Comparació de List i Set
 
@@ -245,7 +277,7 @@ Un *Set* és una *Collection* on no pot haver-hi elements duplicats. El següent
 ```java
 import java.util.*;
 /**
- * Program to compare functionality between List and Set java classes
+ * Program to compare List and Set java classes functionality
  * @author ProvenSoft
  */
 public class ListVsSetTester {
@@ -337,7 +369,37 @@ public class ListVsSetTester {
    
 }	    
 ```
-	    
+
+## Comparació d'objectes
+
+Per tal de poder realitzar ordenació de col·leccions, els objectes han d'implementar mètodes de comparació que permetin establir un ordre.
+
+Hi ha dos mecanismes per fer-ho.
+
+### Interface Comparable
+
+L'interface ***Comparable*** s'ha d'utilitzar per definir el mecanisme natural de comparació d'una classe d'objectes.
+
+Els objectes a comparar han d'implementar l'[***interface Comparable***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html).
+
+Es tracta d'un interface funcional, l'únic mètode del qual és:
+
+   int compareTo(T o)
+
+El mètode retorna un enter negatiu, zero, o un enter positiu si aquest objecte és menor que, igual a, major que l'objecte especificat, respectivament. 
+
+### Interface Comparator
+
+L'interface ***Comparator*** s'utilitza per definir comparacions lògiques diferents de la natural o bé d'objectes que no controlem, és a dir, dels quals no podem modificar la definició.
+
+Un objecte que implementi aquest interface ha de definir el mètode:
+
+  int compare(T o1, T o2)
+
+El mètode retorna un enter negatiu, zero, o un enter positiu si l'objecte o1 és menor que, igual a, major que l'objecte o2, respectivament. 
+
+Podem definir diferents comparadors que implementin diferents mecanismes de comparació per a un mateix tipus d'objectes.
+
 ## Ordenació d'elements de col·leccions
 
 La interface *List* proveeix el mètode ***sort()*** per ordenar els elements. El paràmetre del mètode és un objecte d'una classe que implementi l'interface Comparator<T>, definint de forma adequada el mètode compare(T o1, T o2).
@@ -522,7 +584,37 @@ public class MapExample {
 
 ## Programació amb estructures de dades
 
+### Aplicacions amb menú d'usuari
+
+Per tal de desenvolupar aplicacions que interactuin amb l'usuari convé utilitzar menús amb les diferents opcions o funcionalitats de l'aplicació. Per sistematitzar aquest procés podem generar classes que representin un menú d'usuari i les diferents opcions del programa.
+
 [Classes Menu i MenuItem per programar menús d'usuari](assets/5.1/5.1.2/generic_menu.zip)
+
+L'exemple anterior conté les classes *Menu* i *MenuItem*.
+
+Les opcions del menú es representen amb la classe *MenuItem*, on *text* és el que es mostrarà a l'usuari i *actionCommand* és el codi amb què identifiquem l'opció al nostre programa.
+
+```java
+public class MenuItem {
+	private String text;
+	private String actionCommand;
+}
+```
+
+La classe *Menu* té el títol del menú i la llista d'opcions.
+
+```java
+public class Menu {
+	protected String title;
+	protected List<MenuItem> options;
+	//...
+	public int getSelectedOptionIndex() {...}
+	public String getSelectedOptionActionCommand() {...}
+}
+```
+Els mètodes que es mostren retornen, respectivament, l'índex i l'actionCommand de l'opció que ha estat seleccionada per l'usuari.
+
+### Exemple d'aplicació amb menú i gestió de llistes 
 
 Desenvolupat guiat de l'aplicació per gestionar clients. Els client s'emmagatzemen en una llista [ClientManagerWithList.zip](assets/5.1/5.1.2/ClientManagerWithList.zip).
 
@@ -542,7 +634,7 @@ Alguns dels mètodes que proporciona són:
 * Object setProperty(String key, String value)
 * void store(Writer writer, String comments)
 
-Consulteu la documentació per a obtenir més detalls de l'us de cada mètode.
+Consulteu la documentació per a obtenir més detalls de l'ús de cada mètode.
 
 [Exemple d'ús de Properties per mantenir usuari i paraula de pas: properties_example.zip](assets/5.1/5.1.2/properties_example.zip)
 
