@@ -616,7 +616,9 @@ Els mètodes que es mostren retornen, respectivament, l'índex i l'actionCommand
 
 ### Exemple d'aplicació amb menú i gestió de llistes 
 
-Desenvolupat guiat de l'aplicació per gestionar clients. Els client s'emmagatzemen en una llista [ClientManagerWithList.zip](assets/5.1/5.1.2/ClientManagerWithList.zip).
+Exemple de gestió de clients en una llista. Plantilla a completar a classe com a exercici. [ClientManagerWithList.zip](assets/5.1/5.1.2/ClientManagerWithList.zip).
+
+El mateix exemple dels clients en una llista, però separant dades a model i creant una classe menú per a l'aplicació. Plantilla a completar com a exercici. [ClientManagerWithList2.zip](assets/5.1/5.1.2/ClientManagerWithList2.zip).
 
 ## Classe Properties
 
