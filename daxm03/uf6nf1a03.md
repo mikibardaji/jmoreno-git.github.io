@@ -3,12 +3,12 @@
 ## Introducció
 Les aplicacions treballen amb objectes en memòria. En canvi, les bases de dades relacionals treballen amb taules i relacions. A les tècniques de processament de la informació dels objectes per fer-los persistents en forma d'entrades de taules i relacions se les anomena mapeig objecte relacional (***ORM: object relational mapping***).
 
-Anem a il·lustrar l'ORM amb un exemple d'aplicació: un gestor de vols.
+Anem a il·lustrar l'*ORM* amb un exemple d'aplicació: un gestor de vols.
 
 ## Objectius
 
-  - Implementar l'arquitectura MVC.
-  - Implementar el patró DAO per a accés a dades.
+  - Implementar l'arquitectura *MVC*.
+  - Implementar el patró *DAO* per a accés a dades.
   - Aplicar el patró Singleton a la classe que encapsula les dades de 
     connexió a la base de dades.
   - Crear la base de dades definint correctament les relacions entre les
@@ -23,7 +23,7 @@ Una empresa Japonesa ens ha demanat que desenvolupem un sistema per gestionar el
 
 El que necessita gestionar aquesta empresa és el següent.
 
-**Passatgers**: Un passatger es caracteritza per un nom, un telèfon(únic) i un booleà per indicar si és menor d'edat.
+**Passatgers**: Un passatger es caracteritza per un nom, un telèfon (únic) i un booleà per indicar si és menor d'edat.
 
 **Vols**: Un vol es caracteritza per un codi de vol (únic), una capacitat, una data i una hora de sortida del vol.
 
@@ -68,7 +68,7 @@ public class Main {
 }
 ```
 
-D'acord amb l'arquitectura MVC, cal instanciar primer el model, després el controlador i passar-li el model.
+D'acord amb l'arquitectura *MVC*, cal instanciar primer el model, després el controlador i passar-li el model.
 
 La vista s'instancia normalment al controlador, tot i que també es pot instanciar al principal i connectar-la amb el controlador.
 
@@ -319,9 +319,9 @@ public class MainMenu extends Menu {
 }
 ```
 
-La classe MainMenu defineix el menú d'opcions de l'aplicació. Utilitza les classes auxiliars Menu i Ooption.
+La classe *MainMenu* defineix el menú d'opcions de l'aplicació. Utilitza les classes auxiliars *Menu* i *Option*.
 
-Classes auxiliars Menu i Option. ![Classes auxiliars Menu i Option](/docencia/dam/m03/uf6/flightsmanager/menuoption.zip)
+Classes auxiliars *Menu* i *Option*. ![Classes auxiliars Menu i Option](/docencia/dam/m03/uf6/flightsmanager/menuoption.zip)
 
 ## Base de dades
 
@@ -355,7 +355,7 @@ ALTER TABLE flightspassengers ADD FOREIGN KEY fk_flight (flight_id) REFERENCES f
 ALTER TABLE flightspassengers ADD FOREIGN KEY fk_passenger (passenger_id) REFERENCES passengers(id);
 ```
 
-La relació entre passatgers i vols és mxn. Per això hi ha una taula de connexió entre les dues entitats amb les respectives claus primàries actuant com a foranes
+La relació entre passatgers i vols és mxn. Per això hi ha una taula de connexió entre les dues entitats amb les respectives claus primàries actuant com a foranes.
 
 ## Capa de persistència de dades
 
@@ -487,13 +487,11 @@ public class PassengerDao {
 }
 ```
 
-Cal escriure una classe DAO per a cada entitat que ha de fer-se persistent a la base de dades.
+Cal escriure una classe *DAO* per a cada entitat que ha de fer-se persistent a la base de dades.
 
-La pràctica consisteix en completar l'aplicació implementant totes les funcionalitats requerides i realitzant les proves pertinents que
-n'assegurin el correcte funcionament en totes les circumstàncies.
+La pràctica consisteix en completar l'aplicació implementant totes les funcionalitats requerides i realitzant les proves pertinents que n'assegurin el correcte funcionament en totes les circumstàncies.
 
-Cal definir l'estratègia de tractament d'errors: codis d'error, llançament d'excepcions, ..., de manera que es pugui informar a
-l'usuari amb prou detall del resultat de les accions que s'han realitzat.
+Cal definir l'estratègia de tractament d'errors: codis d'error, llançament d'excepcions, ..., de manera que es pugui informar a l'usuari amb prou detall del resultat de les accions que s'han realitzat.
 
 ### Relació entre vols i passatgers
 
