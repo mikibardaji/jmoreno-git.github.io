@@ -170,7 +170,7 @@ La [***interface Iterator***](https://docs.oracle.com/en/java/javase/17/docs/api
 | Mètode | Descripció | 
 |:----------:|----------|
 | **hasNext()**    | Retorna true si la iteració té més elements |
-| **next())**    | Retorna el següent element en la  iteració |
+| **next()**    | Retorna el següent element en la  iteració |
 | **remove()**    | Suprimeix de la col·lecció el darrer element recorregut |
 
 ### Recorregut amb bucle foreach (Collection)
@@ -384,7 +384,7 @@ Els objectes a comparar han d'implementar l'[***interface Comparable***](https:/
 
 Es tracta d'un interface funcional, l'únic mètode del qual és:
 
-   int compareTo(T o)
+```int compareTo(T o)```
 
 El mètode retorna un enter negatiu, zero, o un enter positiu si aquest objecte és menor que, igual a, major que l'objecte especificat, respectivament. 
 
@@ -394,7 +394,7 @@ L'interface ***Comparator*** s'utilitza per definir comparacions lògiques difer
 
 Un objecte que implementi aquest interface ha de definir el mètode:
 
-  int compare(T o1, T o2)
+```int compare(T o1, T o2)```
 
 El mètode retorna un enter negatiu, zero, o un enter positiu si l'objecte o1 és menor que, igual a, major que l'objecte o2, respectivament. 
 
