@@ -505,9 +505,9 @@ public class ListSort {
 La interface [***Map***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html) relaciona dues col·leccions d'elements: claus (*key*) i valors (*value*), permeten cerques per les claus.
 
 La interface proporciona tres vistes de les dades:
-  * Set<K> keySet(): proporciona un *Set* amb les *keys*
-  * Collection<V> values(): proporciona una *Collection* amb els *values*
-  * Set<Map.Entry<K,V>> entrySet(): proporciona un *Set* amb les parelles clau-valor (tipus ***Map.Entry<K,V>***)
+  * ***Set<K> keySet()***: proporciona un *Set* amb les *keys*
+  * ***Collection<V> values()***: proporciona una *Collection* amb els *values*
+  * ***Set<Map.Entry<K,V>> entrySet()***: proporciona un *Set* amb les parelles clau-valor (tipus ***Map.Entry<K,V>***)
 
 També proporciona diversos mètodes *getXX*, *putXX*, *replaceXX*, ... per accedir a la informació i per modificar-la.
 
