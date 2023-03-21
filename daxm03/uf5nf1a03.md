@@ -279,60 +279,108 @@ void writeShort(int v)
 void writeUTF(String s)
 ```
 
+El següent exemple il·lustra com escriure i llegir dades primitives en fitxer. Per llegir, es pot usar el mètode ***available()*** per estimar el nombre de bytes restants per llegir al fitxer i saber si s'ha de continuar llegint dades. Tot i això, cal capturar l'exepció ***EOFException***, la qual es llança en arribar al final del fitxer per si malgrat quedar bytes per llegir, no siguin suficients per a la lectura del tipus de dada que hem demanat.
 
 ```
 import java.io.*;
-/** DataStreamExample01.java
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
+/**
  * Example of using DataInputStream and DataOutputStream.
+ *
  * @author Jose
  */
-public class DataStreamExample01 {
-	public static void main(String [] args) {
-		// write information to file.
-		writeInfo();
-		// read information from file.
-		readAndShowInfo();
-	}
+public class DataStreamExample {
 
-	private static void writeInfo() {
-		int age = 30;
-		double salary = 1000.0;
-		String name = "Peter";
-		System.out.println("Writing to file ...");
-		try {
-			DataOutputStream dos = new DataOutputStream(
-				new FileOutputStream("myData.txt")
-			);
-			// do some stuff with the file.
-			dos.writeInt(age);
-			dos.writeDouble(salary);
-			dos.writeUTF(name);
-			// close the file.
-			dos.flush();
-			dos.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+    public static void main(String[] args) {
+        // write information to file.
+        writeInfo();
+        // read information from file.
+        readAndShowInfo();
+        // write array to file
+        writeList();
+        // read array from file
+        readAndShowList();
+    }
 
-	private static void readAndShowInfo() {
-		System.out.println("Reading from file ...");
-		try {
-			DataInputStream dis = new DataInputStream(
-				new FileInputStream("myData.txt")
-			);
-			// read data from file.
-			int age = dis.readInt();
-			double salary = dis.readDouble();
-			String name = dis.readUTF();
-			// show data to console.
-			System.out.format("age=%d\n", age);
-			System.out.format("salary=%f\n", salary);
-			System.out.format("name=%s\n", name);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}		
-	}
+    private static void writeInfo() {
+        int age = 30;
+        double salary = 1000.0;
+        String name = "Peter";
+        System.out.println("Writing to file ...");
+        try {
+            DataOutputStream dos = new DataOutputStream(
+                    new FileOutputStream("myData.txt")
+            );
+            // do some stuff with the file.
+            dos.writeInt(age);
+            dos.writeDouble(salary);
+            dos.writeUTF(name);
+            // close the file.
+            dos.flush();
+            dos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void readAndShowInfo() {
+        System.out.println("Reading from file ...");
+        try {
+            DataInputStream dis = new DataInputStream(
+                    new FileInputStream("myData.txt")
+            );
+            // read data from file.
+            int age = dis.readInt();
+            double salary = dis.readDouble();
+            String name = dis.readUTF();
+            // show data to console.
+            System.out.format("age=%d\n", age);
+            System.out.format("salary=%f\n", salary);
+            System.out.format("name=%s\n", name);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void writeList() {
+        //generate test data
+        List<Double> data = Stream
+                .of(1.0, 2.0, 3.0, 4.0, 5.0)
+                .toList();
+        //write data
+        try (DataOutputStream dos = new DataOutputStream(
+                    new FileOutputStream("myData2.txt"))) {
+            for (int i = 0; i < data.size(); i++) {
+                dos.writeDouble(data.get(i));
+            }            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static void readAndShowList() {
+        List<Double> data = new ArrayList<>();
+        //read data
+        try (DataInputStream dis = new DataInputStream(
+                new FileInputStream("myData2.txt"))) {
+            while (dis.available() > 0) {                
+                double d = dis.readDouble();
+                data.add(d);
+            }
+        } catch (EOFException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //display read data
+        for (Double elem : data) {
+            System.out.println(elem);
+        }
+    }
 
 }
 ```
@@ -345,6 +393,8 @@ Només els objectes que implementen l'interfície [***Serializable***](https://d
 
 Nota: les variables ***transient*** i ***static*** no es guarden durant la serialització.
 Usarem les **interfícies** ***ObjectOutput*** i ***ObjectInput***, i les **classes** ***ObjectOutputStream*** i ***ObjectInputStream***, que les implementen.
+
+Nota: les interfícies *ObjectOutput* i *ObjectInput* estenen respectivament *DataOutput* i *DataInput*, per la qual cosa hereten tots els seus mètodes.
 
 ![](assets/5.1/5.1.3/object-serialization.png)
 
