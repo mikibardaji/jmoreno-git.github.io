@@ -19,15 +19,17 @@
 Exercici proposat:
 Programa que llisti els fitxers d'un diretori amb els seus atributs, segons els paràmetres entrat des del terminal.
 Format d'execució:  dla -[params] [path]
-on 
+on
+
 * params pot ser '1' per llistar només noms en columna o 'a' per llistar tots els atributs possibles en una línia per a cada fitxer.
 * path és la ruta al directoria a mostrar (pot ser relativa o absoluta)
 
 ## Fluxos d'informació. Jerarquia de classes.
 
-Els programes poden enviar fluxos de dades (streams) o rebre'ls cap a o des de diferents orígens i destinacions. Ens centrarem bàsicament en streams per llegir i escriure fitxers.
+Els programes poden enviar fluxos de dades (*streams*) o rebre'ls cap a o des de diferents orígens i destinacions. Ens centrarem bàsicament en *streams* per llegir i escriure fitxers.
 
-Els streams es categoritzen en quatre grans blocs segons dues propietats:
+Els *streams* es categoritzen en quatre grans blocs segons dues propietats:
+
 * Direcció: entrada o sortida
 * Codificació: orientats a byte o orientats a caràcter
 
@@ -39,10 +41,56 @@ Char input streams ![Char input streams](assets/5.1/5.1.3/reader.png)
 
 Char output streams ![Char output streams](assets/5.1/5.1.3/writer.png)
 
+Mètodes útils proporcionats per la classe ***InputStream***:
+
+| mètode | descripció |
+| ------ | ------ |
+| public abstract int read() throws IOException     | llegeix i retorna el següent byte o -1 si ha arribat al final del fitxer    |
+| public int available() throws IOException     |  retorna el nombre de bytes que queden per llegir    | 
+| public void close() throws IOException     |  tanca el recurs    |
+| public long skip(long n) throws IOException     | salta i descarta un nombre de bytes sense llegir i retorna el nombre realment saltat    |
+| public int read(byte[] b) throws IOException     | llegeix array de bytes, retorna el nombre de bytes llegits o -1 si s'arriba al final del fitxer   |
+| public byte[] readAllBytes() throws IOException     | llegeix tots els bytes restants    |
+| public byte[] readANBytes(int len) throws IOException     | llegeix el nombre de bytes especificat    |
+| public long transferTo(OutputStream out) throws IOException     | llegeix tots els bytes del stream i els escriu a l'especificat; retorna el nombre de bytes transferits  |
+
+Mètodes útils proporcionats per la classe ***OutputStream***:
+
+| mètode | descripció |
+| ------ | ------ |
+| public void write(int b) throws IOException     | escriu un byte   |
+| public void write(byte[] b) throws IOException     | escriu un array de bytes   | 
+| public void write(byte[] b, int off, int len) throws IOException     | escriu un array de bytes des de la posició 'off' amb longitud 'len'  | 
+| public void flush() throws IOException     | descarrega el buffer del stream   |
+| public void close()throws IOException     |  tanca el recurs    |
+
+Mètodes útils proporcionats per la classe ***Reader***:
+
+| mètode | descripció |
+| ------ | ------ |
+| public abstract int read() throws IOException     | llegeix i retorna el següent caràcter o -1 si ha arribat al final del fitxer    |
+| public void close() throws IOException     |  tanca el recurs    |
+| public long skip(long n) throws IOException     | salta i descasrta un nombre de bytes sense llegir i retorna el nombre realment saltat    |
+| public int read(char[] b) throws IOException     | llegeix array de caràcters, retorna el nombre de caràcters llegits o -1 si s'arriba al final del fitxer   |
+| public long transferTo(Writer out) throws IOException     | llegeix tots els caràcters del stream i els escriu a l'especificat; retorna el nombre de caràcters transferits  |
+
+Mètodes útils proporcionats per la classe ***Writer***:
+
+| mètode | descripció |
+| ------ | ------ |
+| public void write(int b) throws IOException     | escriu un byte   |
+| public void write(byte[] b) throws IOException     | escriu un array de bytes   | 
+| public void write(byte[] b, int off, int len) throws IOException     | escriu un array de bytes des de la posició 'off' amb longitud 'len'  | 
+| public void flush() throws IOException     | descarrega el buffer del stream   |
+| public void close()throws IOException     |  tanca el recurs    |
+
+
 En primer lloc provem exemples d'escriptura i lectura senzilla de bytes i de caràcters. Més endavant provarem exemples per fer persistents dades primitives i objectes.
 
 ### Videos d'introducció a fitxers
+
 (de Píldoras informáticas)
+
 * [Lectura de text](https://youtu.be/etQN4EfYN7k)
 * [Escriptura de text](https://youtu.be/E0H4OzW2_1Y)
 * [Lectura i escriptura de text amb buffer](https://youtu.be/YCCE4sbmWrw)
@@ -192,6 +240,46 @@ public class ReadChars {
 
 Utilitzem les classes [***DataInputStream***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInputStream.html) i [***DataOutStream***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataOutputStream.html), les quals proveeixen mètodes per a la persistència de cada tipus primitiu.
 
+La classe *DataInputStream* implementa l'interface [***DataInput***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInput.html), la qual defineix els següents mètodes:
+
+```java
+boolean readBoolean()
+byte readByte()
+char readChar()
+double readDouble()
+float readFloat()
+void readFully(byte[] b)
+void readFully(byte[] b, int off, int len)
+int readInt()
+String readLine()
+long readLong()
+short readShort()
+int readUnsignedByte()
+int readUnsignedShort()
+String readUTF()
+int skipBytes(int n)
+```
+
+La classe *DataOutputStream* implementa l'interface [***DataOutput***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataOutput.html), la qual defineix els següents mètodes:
+
+```java
+void write(byte[] b)
+void write(byte[] b, int off, int len)
+void write(int b)
+void writeBoolean(boolean v)
+void writeByte(int v)
+void writeBytes(String s)
+void writeChar(int v)
+void writeChars(String s)
+void writeDouble(double v)
+void writeFloat(float v)
+void writeInt(int v)
+void writeLong(long v)
+void writeShort(int v)
+void writeUTF(String s)
+```
+
+
 ```
 import java.io.*;
 /** DataStreamExample01.java
@@ -205,7 +293,7 @@ public class DataStreamExample01 {
 		// read information from file.
 		readAndShowInfo();
 	}
-	
+
 	private static void writeInfo() {
 		int age = 30;
 		double salary = 1000.0;
@@ -226,7 +314,7 @@ public class DataStreamExample01 {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static void readAndShowInfo() {
 		System.out.println("Reading from file ...");
 		try {
@@ -243,9 +331,9 @@ public class DataStreamExample01 {
 			System.out.format("name=%s\n", name);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}			
+		}		
 	}
-	
+
 }
 ```
 
@@ -274,6 +362,7 @@ Consulteu la documentació online de Java per a la llista de mètodes que implem
 ## Biblioteques de classes per a fitxers XML.
 
 Per treballar amb fitxers en format [XML](https://en.wikipedia.org/wiki/XML), Java proporciona dues biblioteques:
+
 * **SAX (Simple API for XML)**
 * **DOM (Document Object Model)**
 
