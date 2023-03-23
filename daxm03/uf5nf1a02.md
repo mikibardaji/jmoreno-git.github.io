@@ -582,6 +582,104 @@ public class MapExample {
 }
 ```
 
+Un altre exemple, aquest per il·lustrar com gestionar una llista de qualificacions d'alumnes, en la qual el nom de l'alumne és la clau i la nota el valor.
+
+```java
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
+
+/**
+ *
+ * @author jose
+ */
+public class MapGrades {
+
+    private final Map<String, Integer> grades;
+
+    public MapGrades() {
+        grades = new HashMap<>();
+    }
+
+    public static void main(String[] args) {
+        MapGrades mg = new MapGrades();
+        mg.run();
+    }
+
+    private void run() {
+        Scanner sc = new Scanner(System.in);
+        //load test data
+        initializeData();
+        //display grades
+        displayGrades();
+        //calculate mean grade
+        int meanGrade = calculateGlobalMean();
+        System.out.println("Mean grade=" + meanGrade);
+        //modify a grade by student name
+        System.out.print("Input a student name to modify grade: ");
+        String name = sc.next();
+        System.out.print("Input new grade: ");
+        Integer grade = sc.nextInt();
+        if (grades.containsKey(name)) { //assess key exists
+            grades.replace(name, grade);
+        }
+        displayGrades();
+    }
+
+    /**
+     * initialize test data
+     */
+    private void initializeData() {
+        grades.put("John", 6);
+        grades.put("Mary", 7);
+        grades.put("Laura", 4);
+        grades.put("Peter", 3);
+        grades.put("Joseph", 8);
+        grades.put("Sophie", 5);
+    }
+
+    /**
+     * displays all grades
+     */
+    public void displayGrades() {
+        System.out.println("=== Grades ===");
+        Set<String> names = grades.keySet();
+        for (String name : names) {
+            System.out.format("%s: %d\n", name, grades.get(name));
+        }
+        System.out.format("%d grades displayed\n", grades.size());
+    }
+
+    /**
+     * calculates global mean grade
+     */
+    public Integer calculateGlobalMean() {
+        Collection<Integer> values = grades.values();
+        return calcMean(values);
+    }
+
+    /**
+     * calculates mean of data
+     *
+     * @param data the data collection to calculate mean
+     * @return mean of data
+     */
+    private Integer calcMean(Collection<Integer> data) {
+        Integer result = 0;
+        for (Integer e : data) {
+            result += e;
+        }
+        result /= data.size();
+        return result;
+    }
+
+}
+```
+
+
 ## Programació amb estructures de dades
 
 ### Aplicacions amb menú d'usuari
