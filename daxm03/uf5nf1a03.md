@@ -8,7 +8,7 @@
 
 ![](/images/disk_padre_usb.jpg)
 
-[Apuns de fluxos d'informació](assets/5.1/5.1.3/dax2_m03-a513-Fluxos_informacio.pdf)
+[Apunts de fluxos d'informació](assets/5.1/5.1.3/dax2_m03-a513-Fluxos_informacio.pdf)
 
 ## Gestió del sistema de fitxers.
 
@@ -17,12 +17,101 @@
 [Exemple de llistat dels atributs d'un fitxer: FileAttributes.java](assets/5.1/5.1.3/FileAttributes.java)
 
 Exercici proposat:
-Programa que llisti els fitxers d'un diretori amb els seus atributs, segons els paràmetres entrat des del terminal.
+Programa que llisti els fitxers d'un directori amb els seus atributs, segons els paràmetres entrat des del terminal.
 Format d'execució:  dla -[params] [path]
 on
 
 * params pot ser '1' per llistar només noms en columna o 'a' per llistar tots els atributs possibles en una línia per a cada fitxer.
 * path és la ruta al directoria a mostrar (pot ser relativa o absoluta)
+
+### Exemple de creació i esborrat de directoris i fitxers
+
+[Exemple de creació i esborrat de directoris i fitxers: FileExample.java](assets/5.1/5.1.3/FileExample.java)
+
+**Mètode per llistar en forma d'array els noms dels fitxers d'un directory**.
+
+```java
+/**
+ * example of how to display the names of all files in a directory
+ * @param dirPath path to directory
+ */
+public void listDirFilenames(String dirPath) {
+	File dir = new File(dirPath);
+	String[] filenames = dir.list();
+	System.out.println(Arrays.toString(filenames));
+}
+```
+**Mètode per crear un directory (o diversos) i omplir el més interior amb fitxers que tinguin el mateix nom i extensió però una numeració seqüencial.**
+
+```java
+/**
+ * example of creating a directory (or some directories tree) 
+ * and creating some files in it with same name and sequential number
+ * @param dirPath path of directory
+ * @param fileBaseName base name for files
+ * @param fileExtension extension for files
+ * @param numberOfFiles number of files to create
+ * @param multiDir true if multiple directories are to be created
+ * @throws IOException if some IO error occurs
+ */
+public void createDirAndFiles(String dirPath, 
+		String fileBaseName, String fileExtension, 
+		int numberOfFiles, boolean multiDir) 
+		throws IOException {
+	boolean success = false;
+	//create directory
+	File dir = new File(dirPath);
+	success = (multiDir) ? dir.mkdirs() : dir.mkdir();
+	if (success) {  //directory created by mkdir operation
+		System.out.format("Directory %s successfully created\n", dir.getAbsolutePath());
+	} else {
+		System.out.format("File %s already exists\n", dir.getAbsolutePath());
+	}
+	if (dir.exists() && dir.isDirectory()) { //check directory existence
+		//create some files with basename, extension and a sequential number
+		for (int i = 0; i < numberOfFiles; i++) {
+			//define f name using a sequential number
+			String filename = String.format(
+					"%s%02d.%s", 
+					fileBaseName, 
+					i, 
+					fileExtension);
+			File file = new File(dir, filename);
+			//create f
+			success = file.createNewFile();
+			if (success) {
+				System.out.format("File %s successfully created\n", file.getAbsolutePath());
+			} else {
+				System.out.format("File %s already exists\n", file.getAbsolutePath());
+			}
+		}
+	}
+}
+```
+
+**Mètode per esborrar un directory i tots els seus fitxers. Cal recordar que només es poden esborrar directoris buits.**
+
+```java
+/**
+ * example of how to delete a directory and all of its files
+ * (remember that only an empty directory can be deleted)
+ * @param dirPath path to directory
+ */
+public void deleteDirectoryAndFiles(String dirPath) {
+	boolean success = false;
+	File dir = new File(dirPath);
+	//get files in directory
+	File[] files = dir.listFiles();
+	//delete files
+	for (File f : files) {
+		success = f.delete();
+		System.out.format("File %s successfully deleted\n", f.getAbsolutePath());
+	}
+	//delete directory
+	success = dir.delete();
+	System.out.format("Directory %s successfully deleted\n", dir.getAbsolutePath());
+}
+```
 
 ## Fluxos d'informació. Jerarquia de classes.
 
@@ -30,7 +119,7 @@ Els programes poden enviar fluxos de dades (*streams*) o rebre'ls cap a o des de
 
 Els *streams* es categoritzen en quatre grans blocs segons dues propietats:
 
-* Direcció: entrada o sortida
+* Sentit: entrada o sortida
 * Codificació: orientats a byte o orientats a caràcter
 
 Byte input streams ![Byte input streams](assets/5.1/5.1.3/inputstream.png)
@@ -106,7 +195,7 @@ import java.io.IOException;
 /**
  * WriteBytes.java
  * Example writing bytes to a file
- * @author ProvenSoft
+ * @author Jose
  */
 public class WriteBytes {
 	public static void main(String[] args) {
@@ -142,7 +231,7 @@ import java.io.IOException;
 /**
  * ReadBytes.java
  * Example reading bytes from file
- * @author ProvenSoft
+ * @author Jose
  */
 public class ReadBytes {
 	public static void main(String[] args) {
@@ -178,7 +267,7 @@ import java.io.*;
 /**
  * WriteChars.java
  * Example writing characters to a file
- * @author ProvenSoft
+ * @author Jose
  */
 public class WriteChars {
 	public static void main(String[] args) {
@@ -209,7 +298,7 @@ public class WriteChars {
 /**
  * ReadChars.java
  * Example reading characters from file
- * @author ProvenSoft
+ * @author Jose
  */
 public class ReadChars {
 	public static void main(String[] args) {
