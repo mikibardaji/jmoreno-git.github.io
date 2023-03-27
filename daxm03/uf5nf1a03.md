@@ -114,12 +114,12 @@ public class WriteBytes {
 		if(args.length == 1) {	 //check parameter length 
 			File f = new File(args[0]);
 			try{
-				FileOutputStream fos = new FileOutputStream(f);
+				FileOutputStream fs = new FileOutputStream(f);
 				for(int i = 0; i < list.length; i++){
-					fos.write(list[i]);
-					fos.flush();
+					fs.write(list[i]);
 				}
-				fos.close();
+				fs.flush();
+				fs.close();
 			} catch(IOException e) {
 				System.out.println("Input or output problem related to this exception:");
 				e.printStackTrace();
@@ -150,12 +150,12 @@ public class ReadBytes {
 			File f = new File(args[0]);
 			int x=0; //byte llegit 
 			try{
-				FileInputStream fis = new FileInputStream(f);
-				while ((x = fis.read()) != -1) { //while not end of file,  keep reading
+				FileInputStream fs = new FileInputStream(f);
+				while ((x = fs.read()) != -1) { //while not end of file,  keep reading
 					System.out.print(" "+(byte)x);
 				}
 				System.out.print("\n");
-				fis.close();
+				fs.close();
 			} catch(FileNotFoundException e){
 				System.out.println("File not found. Exception info:");
 				e.printStackTrace();
@@ -185,11 +185,12 @@ public class WriteChars {
 		char [] list = {'a', 'e', 'i', 'o', 'u'};
 		if(args.length == 1) {	//check parameter length 
 			try{
-				BufferedWriter bw = new BufferedWriter(new FileWriter(args[0]));
+				FileWriter fs = new FileWriter(args[0]);
+				//BufferedWriter fs = new BufferedWriter(new FileWriter(args[0]));
 				for(int i = 0; i < list.length; i++){
-					bw.write(list[i]);
+					fs.write(list[i]);
 				}
-				bw.close();
+				fs.close();
 			} catch(IOException e) {
 				System.out.println("Input or output problem related to this exception:");
 				e.printStackTrace();
@@ -215,15 +216,16 @@ public class ReadChars {
 		int c; //character read
 		if(args.length == 1) {	//check parameter length
 			try{
-			BufferedReader br = new BufferedReader(new FileReader(args[0]));
-			while ((c=br.read()) != -1) {
-				System.out.print((char)c);
-			}
-			System.out.print("\n");
-			br.close();
+				FileReader fs = new FileReader(arg[0]);
+				//BufferedReader fs = new BufferedReader(new FileReader(args[0]));
+				while ((c=fs.read()) != -1) {
+					System.out.print((char)c);
+				}
+				System.out.print("\n");
+				fs.close();
 			} catch (FileNotFoundException e){
 				System.out.println ("File not found. Exception info:");
-				//e.printStackTrace();
+				e.printStackTrace();
 			} catch(IOException e) {
 				System.out.println("Input or output problem related to this exception:");
 				e.printStackTrace();

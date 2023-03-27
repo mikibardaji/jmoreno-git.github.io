@@ -5,7 +5,7 @@ import java.io.*;
  */
 public class FileAttributes {
 	
-	public static void main(String [] args) throws IOException~{
+	public static void main(String [] args) throws IOException {
 		
 		StringBuilder sb = new StringBuilder(); //output string
 		
