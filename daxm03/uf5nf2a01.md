@@ -141,3 +141,376 @@ public class BorderLayoutExample {
 ### Layouts
 
 [Layouts swing (from www.jairogarciarincon.com)](https://www.jairogarciarincon.com/clase/interfaces-de-usuario-con-java-swing/layout-managers-o-gestores-de-composicion)
+
+### Exemple aplicació càlcul índex de massa corporal
+
+Exemple de desenvolupament d'una aplicacó amb interfície gràfica d'usuari (*GUI*) amb un menú i un únic panell, el qual conté un formulari de càlcul de l'índex de massa corporal d'una persona, donats l'altura (en m) i el pes (en kg).
+
+[Descàrrega de l'exemple complet](assets/5.2/dam2m06uf52-bmi.zip)
+
+### Classe principal
+
+La classe principal només instancia i mostra la finestra principal de l'aplicació.
+
+```java
+public class BmiMain {
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                BmiFrame mainFrame = new BmiFrame();
+                mainFrame.setVisible(true);
+            }
+        });
+    }  
+}
+```
+
+La classe *BmiFrame* és la que defineix la finestra principal.
+
+### La finestra principal
+
+Creem una classe que estengui *JFrame*. El mètode *initComponents()* s'encarrega de crear i afegir al frame els components gràfics necessaris. 
+
+Cal definir el títol, l'operació de tancament per defecte, les dimensions de la finestra i la ubicació a la pantalla, entre altres coses.
+
+També definir una barra de menú per a l'aplicació. D'això s'encarrega el mètode *setUpMenu()*.
+
+```java
+public class BmiFrame extends JFrame {
+    
+    private BmiPanel bmiPanel;
+    
+    public BmiFrame() {
+        initComponents();
+    }
+    
+    private void initComponents() {
+        //set window title
+        setTitle("BMI application");
+        //set default close operation when close button is clicked
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //configure menu bar
+        setUpMenu();
+        //display bmi panel
+        displayBmiPanel();
+        //set window size
+        setSize(400, 300);
+        //set window location
+        setLocationRelativeTo(null);  //center in screen
+    }
+
+    private void setUpMenu() {
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menu;
+        JMenuItem menuItem;
+        //
+        menu = new JMenu("File");
+            //
+            menuItem = new JMenuItem("Exit");
+            menuItem.setActionCommand("exit");
+            menuItem.addActionListener(listener);
+            menu.add(menuItem);
+            //
+        menuBar.add(menu);
+        //
+        menu = new JMenu("Help");
+            //
+            menuItem = new JMenuItem("About");
+            menuItem.setActionCommand("about");
+            menuItem.addActionListener(listener);
+            menu.add(menuItem);
+            //
+        menuBar.add(menu);
+        //
+        setJMenuBar(menuBar);
+    }
+
+    private void displayBmiPanel() {
+        //TODO instantiate BmiPanel and put in frame content pane.
+    }
+    
+}
+```
+
+### El formulari de càlcul
+
+El formulari de càlcul de l'índex de massa corporal estarà en un panell independent, el qual contindrà un títol i les parelles etiqueta:camp per introduir les dades d'altura i pes, així com dos botons, un per esborrar els camps del formulari i un altre per realitzar el càlcul de l'índex de massa corporal. El resultat s'escriu en un altre camp de text.
+
+```java
+public class BmiPanel extends JPanel {
+    
+    private JTextField tfWeight;
+    private JTextField tfHeight;
+    private JTextField tfBmi;
+
+    private ActionListener listener;
+    
+    public BmiPanel() {
+        initComponents();
+        doClear();
+    }
+
+    private void initComponents() {
+        setLayout(new BorderLayout());
+        //create header label
+        JLabel lbHeader = new JLabel("BMI calculation form");
+        lbHeader.setHorizontalAlignment(JLabel.CENTER);
+        add(lbHeader, BorderLayout.NORTH);
+        //create calculation form
+        JPanel form = createBmiForm();
+        add(form, BorderLayout.CENTER);
+    }
+    
+    private JPanel createBmiForm() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(0,2));
+        //
+        panel.add(new JLabel("Weight:"));
+        tfWeight = new JTextField(20);
+        panel.add(tfWeight);
+        //
+        panel.add(new JLabel("Height:"));
+        tfHeight = new JTextField(20);
+        panel.add(tfHeight);
+        //
+        JButton btClear = new JButton("Clear");
+        btClear.setActionCommand("clear");
+        panel.add(btClear);
+        JButton btCalc = new JButton("Calculate");
+        btCalc.setActionCommand("calculate");
+        panel.add(btCalc);
+        //
+        panel.add(new JLabel("Body mass index:"));
+        tfBmi = new JTextField(20);
+        tfBmi.setEditable(false);
+        panel.add(tfBmi);
+        //
+        return panel;
+    }
+
+    private void doClear() {
+        tfWeight.setText("0.0");
+        tfHeight.setText("0.0");
+        tfBmi.setText("0.0");        
+    }
+
+}
+```
+
+### El model de dades
+
+La classe *Bmi* és l'encarregada de realitzar els càlculs.
+
+```java
+public class Bmi {
+    public double bmiCalc(double weight, double height) {
+        return weight / (height * height);
+    }
+}
+```
+
+Per realitzar els càlculs necessitarem, doncs, instanciar un objecte de la classe *Bmi* i invocar el seu mètode *bmiCalc()*.
+
+### Accions de la finestra principal
+
+Per tractar les accions de l'usuari amb la finestra principal, assignem un *ActionListener* per a les accions de cada MenuItem i un *WindowListener* per al botó de tancament de la finestra.
+
+Per respondre al botó de tancament de la finestra, creem un *WindowListener* independent, del qual cal definir el mètode *windowClosing()*. 
+
+```java
+//add window listener to close window when close button is clicked
+addWindowListener(new WindowAdapter() {
+    @Override
+    public void windowClosing(WindowEvent e) {
+        doExit();
+    }
+});
+```
+
+El *ActionListener* per als menús serà el propi *JFrame*. Per això, fem que implementi l'interface *ActionListener*, la qual cosa implica afegir un mètode *actionPerformed()* que respongui a les accions. Per a cada acció es defineix un mètode de control que realitza la resposta.
+
+```java
+public class BmiFrame extends JFrame implements ActionListener {
+    
+    private BmiPanel bmiPanel;
+    
+    private ActionListener listener;
+    
+    public BmiFrame() {
+        listener = this;
+        initComponents();
+    }
+    //...
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String actionCommand = e.getActionCommand();
+        switch (actionCommand) {
+            case "exit":
+                doExit();
+                break;
+            case "about":
+                displayAboutDialog();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void doExit() {
+        //TODO ask for confirmation
+        System.exit(0);
+    }
+
+}
+```
+
+A cada MenuItem dels diferents menús de la barra de menú els hem d'afegir un ActionListener: el propi JFrame.
+
+```java
+menuItem.addActionListener(listener);
+``` 
+
+El mètode *displayAboutDialog()* mostra una fiestra de diàleg (modal) amb la informació de l'aplicació.
+
+La informació a mostrar és a l'atribut *aboutMessage*, el qual afegim al *JFrame* i inicialitzem al constructor. Podem afegir format *html* al missatge.
+
+```java
+private String aboutMessage;
+
+private void displayAboutDialog() {
+    JOptionPane.showMessageDialog(this, aboutMessage, "About", JOptionPane.INFORMATION_MESSAGE);
+}
+```
+
+La classe **JOptionPane** proporciona mètodes per a diversos tipus de quadres de diàleg modals:
+
+* Confirmació (*showConfirmDialog*)
+* Missatge (*showMessageDialog*)
+* Entrada (*showInputDialog*)
+
+El mètode *doExit()* s'encarrega de demanar a l'usuari confirmació abans de sortir de l'aplicació i sortir, si és el cas.
+
+```java
+private void doExit() {
+    //ask for confirmation
+    int answer = JOptionPane.showConfirmDialog(this, "Are you sure?", "Exit application", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+    if (answer == JOptionPane.OK_OPTION) {
+        //exit
+        System.exit(0);
+    }
+}
+```
+
+### Accions del panell del formulari de càlcul
+
+Afegim un atribut per al model (classe *Bmi* per encapsular i realitzar els càlculs) i per al *ActionListener* del panell, que en aquest cas serà el propi panell. Per això, fem que implementi *ActionListener* i afegim un mètode *actionPerformed()* per respondre a les accions.
+
+A cada botó li afegim com a ActionListener el propi panell.
+
+```java
+public class BmiPanel extends JPanel implements ActionListener {
+    
+    private Bmi model;
+    
+    private JTextField tfWeight;
+    private JTextField tfHeight;
+    private JTextField tfBmi;
+
+    private ActionListener listener;
+    
+    public BmiPanel() {
+        model = new Bmi();
+        listener = this;
+        initComponents();
+        doClear();
+    }
+
+    private void initComponents() {
+        setLayout(new BorderLayout());
+        //create header label
+        JLabel lbHeader = new JLabel("BMI calculation form");
+        lbHeader.setHorizontalAlignment(JLabel.CENTER);
+        add(lbHeader, BorderLayout.NORTH);
+        //create calculation form
+        JPanel form = createBmiForm();
+        add(form, BorderLayout.CENTER);
+    }
+    
+    private JPanel createBmiForm() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(0,2));
+        //
+        panel.add(new JLabel("Weight:"));
+        tfWeight = new JTextField(20);
+        panel.add(tfWeight);
+        //
+        panel.add(new JLabel("Height:"));
+        tfHeight = new JTextField(20);
+        panel.add(tfHeight);
+        //
+        JButton btClear = new JButton("Clear");
+        btClear.setActionCommand("clear");
+        btClear.addActionListener(listener);
+        panel.add(btClear);
+        JButton btCalc = new JButton("Calculate");
+        btCalc.setActionCommand("calculate");
+        btCalc.addActionListener(listener);
+        panel.add(btCalc);
+        //
+        panel.add(new JLabel("Body mass index:"));
+        tfBmi = new JTextField(20);
+        tfBmi.setEditable(false);
+        panel.add(tfBmi);
+        //
+        return panel;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String actionCommand = e.getActionCommand();
+        switch (actionCommand) {
+            case "clear":
+                doClear();
+                break;
+            case "calculate":
+                doCalculate();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void doClear() {
+        tfWeight.setText("0.0");
+        tfHeight.setText("0.0");
+        tfBmi.setText("0.0");        
+    }
+
+    private void doCalculate() {
+        //TODO
+    }
+}
+```
+
+### Realització dels càlculs
+
+```java
+private void doCalculate() {
+    //read data from form
+    String sWeight = tfWeight.getText();
+    String sHeight = tfHeight.getText();
+    try {
+        //parse data
+        double weight = Double.parseDouble(sWeight);
+        double height = Double.parseDouble(sHeight);
+        //calculate
+        double bmi = model.bmiCalc(weight, height);
+        //write result to form
+        tfBmi.setText(String.valueOf(bmi));            
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Invalid data", "Validation", JOptionPane.ERROR_MESSAGE);
+    }
+
+}
+```
