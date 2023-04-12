@@ -327,6 +327,66 @@ public class ReadChars {
 }
 ```
 
+### Apertura de fitxers per afegir informació
+
+Totes les subclasses de *FileOutputStream* i *FileWriter* tenen constructors que permeten escollir si es vol obrir el fitxer en mode *append* per a afegir informació en comptes de sobreescriure-la.
+
+```java
+FileOutputStream(File file, boolean append)
+FileOutputStream(String name, boolean append)
+FileWriter(File file, boolean append)
+FileWriter(String fileName, boolean append)
+```
+
+Si es defineix append=true, el fitxer es crea si no existeix prèviament, i si ja existeix, la informació que s'hi escriu s'afegeix al final del mateix sense sobreescriure l'existent.
+
+```java
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+
+/**
+ * Open a file in append mode
+ * @author Jose
+ */
+public class CharAppend {
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Input file name: ");
+        String filename = scan.next();
+        System.out.print("Input character: ");
+        String sCharacter = scan.next();
+        char character = sCharacter.charAt(0);
+        
+        //write to file
+        try (FileWriter f = new FileWriter(filename, true)) {
+            f.write(character);
+        } catch (IOException ex) {
+            System.out.println("Error writing");
+        } 
+        
+        //read from file and display content
+        try (FileReader f  = new FileReader(filename)) {
+            int c;
+            while ( (c = f.read())!=-1 )  {
+                System.out.print((char)c);
+            }
+        } catch (FileNotFoundException ex) {
+            System.out.println("File not found");
+        } catch (IOException ex) {
+            System.out.println("Error reading");
+        }
+        
+    }
+    
+}
+
+```
+
 ### Seriació de tipus primitius
 
 Utilitzem les classes [***DataInputStream***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInputStream.html) i [***DataOutStream***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataOutputStream.html), les quals proveeixen mètodes per a la persistència de cada tipus primitiu.
@@ -475,6 +535,121 @@ public class DataStreamExample {
 
 }
 ```
+
+A continuació es mostra un exemple de com desar en fitxer part de la informació d'objectes i com recuperar-la després. En aquest cas, desem en fitxer la informació d'una llista d'usuaris exceptuant els passwords, els quals no volem emmagatzemar-los al fitxer.
+
+```java
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.EOFException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * Example: save to disk primitive data from list of objects
+ * @author Jose
+ */
+public class PrimTypeExample {
+
+    public static void main(String[] args) {
+        //instantiate list of objects
+        List<User> users = new ArrayList<>();
+        //populate list with objects
+        createUsers(users);
+        //display list
+        System.out.println("Initial data:");
+        displayUsers(users);
+        //define working file name
+        String filename = "users.txt"; //this value should be asked to user
+        //save part of object data to file
+        saveUsersDataToFile(users, filename);
+        //read data stored in file
+        List<User> users2 = readUsersDataFromFile(filename);
+        //display list with read data
+        System.out.println("Read data:");
+        displayUsers(users2);
+    }
+
+    /**
+     * create some users and store them in list
+     * @param users the list to populate
+     */
+    private static void createUsers(List<User> data) {
+        data.add( new User("Peter", "1234", 21) );
+        data.add( new User("John", "1235", 22) );
+        data.add( new User("Martha", "1236", 31) );
+        data.add( new User("Helen", "1237", 25) );
+        data.add( new User("Mary", "1238", 19) );
+    }
+
+    /**
+     * displays the list
+     * @param users the list to be displayed
+     */
+    private static void displayUsers(List<User> data) {
+        for (User elem : data) {
+            System.out.println(elem);
+        }
+    }
+
+    /**
+     * saves to file list of users (password is not stored)
+     * @param users the list of users
+     * @param filename the file name
+     */
+    private static void saveUsersDataToFile(List<User> data, String filename) {
+        try (
+          DataOutputStream dos = new DataOutputStream(
+            new FileOutputStream(filename, false))
+        ) {
+            for (User user : data) {
+                //write name
+                dos.writeUTF(user.getName());
+                //write age
+                dos.writeInt(user.getAge());
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * reads data stored in file
+     * @param filename the name of the file to read
+     * @return list of users with data read from file
+     */
+    private static List<User> readUsersDataFromFile(String filename) {
+        List<User> data = new ArrayList<>();
+        try (
+            DataInputStream dis = new DataInputStream(
+                    new FileInputStream(filename)
+            )
+        ) {
+            while ( dis.available() > 0 ) {
+                //read name
+                String name = dis.readUTF();
+                //read age
+                int age = dis.readInt();
+                //
+                User u = new User(name, "", age);
+                data.add(u);
+            }
+        } catch (EOFException ex) {
+            Logger.getLogger(PrimTypeExample.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(PrimTypeExample.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return data;
+    }
+    
+}
+```
+
 
 ### Seriació d'objectes
 
