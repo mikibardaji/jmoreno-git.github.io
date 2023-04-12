@@ -650,6 +650,62 @@ public class PrimTypeExample {
 }
 ```
 
+### Lectura i escriptura de línies de text
+
+Per a la lectura utilitzarem un ***BufferedReader***, el qual proporciona un buffer de lectura per millorar l'eficiència dels accessos a disc. També es pot usar per a l'escriptura un ***BufferedWriter***, per les mateixes raons. En el nostre cas, però, usarem un ***PrintStream*** o un ***PrintWriter***, els quals proporciona mètodes per escriure línies.
+
+De fet, l'objecte *System.out* que utilitzem per escriure a la sortida estàndard dels programes és un *PrintStream*.
+
+Exemple d'escriptura i lectura de fitxers de línies de text. [Descàrrega de l'exemple](assets/3.1/LineFile.java)
+
+```java
+private void saveLinesToFile(List<String> data, String filename) {
+    try (PrintStream out = new PrintStream(filename)) {
+        for (String elem : data) {
+            out.println(elem);
+        }
+    } catch (IOException e) {
+        System.out.println(e.getMessage());
+    }
+}
+```
+
+```java
+private List<String> readLinesFromFile(String filename) {
+    List<String> data = new ArrayList<>();
+    try (BufferedReader in = new BufferedReader(new FileReader(filename))) {
+        String elem;
+        while ( (elem = in.readLine())!= null ) {
+            data.add(elem);
+        }
+    } catch (FileNotFoundException e) {
+        System.out.println(e.getMessage());
+    } catch (IOException e) {
+        System.out.println(e.getMessage());
+    }        
+    return data;
+}
+```
+
+El mètode readLine() llegeix fins al canvi de línia i si arriba al final del fitxer retorna null.
+
+Les classes *PrintStream* i *PrintWriter* també proporciones sobrecàrregues delss mètodes ***print()*** i ***println()*** per escriure en format text tots els tipus de dades primitives.
+
+```java
+void print(boolean b)
+void print(char c)
+void print(char[] s)
+void print(double d)
+void print(float f)
+void print(int i)
+void print(long l)
+void print(String s)
+```
+així com mètodes ***format*** per imprmir dades amb un format especificat:
+
+```java
+PrintWriter format(String format, Object... args)
+```
 
 ### Seriació d'objectes
 
@@ -664,12 +720,12 @@ Nota: les interfícies *ObjectOutput* i *ObjectInput* estenen respectivament *Da
 
 ![](assets/5.1/5.1.3/object-serialization.png)
 
-La interfície [***ObjectOutput***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/ObjectOutput.html) extén les interfícies ***DataOutput*** i ***AutoCloseable*** i suporta serialització. Defineix els mètodes ***close()***, ***flush()***, ***write()*** i ***writeObject()***. Aquest últim s'invoca per serialitzar un objecte. Tots els mètodes llancen ***IOException*** si es produeix un error.
+La interfície [***ObjectOutput***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/ObjectOutput.html) estén les interfícies ***DataOutput*** i ***AutoCloseable*** i suporta serialització. Defineix els mètodes ***close()***, ***flush()***, ***write()*** i ***writeObject()***. Aquest últim s'invoca per serialitzar un objecte. Tots els mètodes llancen ***IOException*** si es produeix un error.
 
-La interfície [***ObjectInput***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/ObjectInput.html) extén les interfícies ***DataInput*** i ***AutoCloseable*** i suporta serialització. Defineix els mètodes ***close()***, ***available()***, ***read()*** i ***readObject()***. Aquest últim s'invoca per llegir un objecte serialitzat. Tots els mètodes llancen ***IOException*** si es produeix un error. El mètode ***readObject()*** pot llançar també l'excepció ***ClassNotFoundException***.
+La interfície [***ObjectInput***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/ObjectInput.html) estén les interfícies ***DataInput*** i ***AutoCloseable*** i suporta serialització. Defineix els mètodes ***close()***, ***available()***, ***read()*** i ***readObject()***. Aquest últim s'invoca per llegir un objecte serialitzat. Tots els mètodes llancen ***IOException*** si es produeix un error. El mètode ***readObject()*** pot llançar també l'excepció ***ClassNotFoundException***.
 
-La classe [***ObjectOutputStream***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/ObjectOutputStream.html) extén ***OutputStream*** i implementa la interfície ***ObjectOutput***. El seu constructor és: ***ObjectOutputStream(OutputStream outStream) throws IOException***
-La classe [***ObjectInputStream***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/ObjectInputStream.html) extén ***InputStream*** i implementa la interfície ***ObjectInput***. El seu constructor és: ***ObjectInputStream(InputStream inStream) throws IOException***.
+La classe [***ObjectOutputStream***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/ObjectOutputStream.html) estén ***OutputStream*** i implementa la interfície ***ObjectOutput***. El seu constructor és: ***ObjectOutputStream(OutputStream outStream) throws IOException***
+La classe [***ObjectInputStream***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/ObjectInputStream.html) estén ***InputStream*** i implementa la interfície ***ObjectInput***. El seu constructor és: ***ObjectInputStream(InputStream inStream) throws IOException***.
 
 Consulteu la documentació online de Java per a la llista de mètodes que implementen les dues classes anteriors.
 
