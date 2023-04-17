@@ -113,8 +113,7 @@ public final class DbConnect {
 
 ## Les classes del model de dades
 
-Són les classes que defineixen el tipus de dades (objectes) amb què
-treballa la nostra aplicació.
+Són les classes que defineixen el tipus de dades (objectes) amb què treballa la nostra aplicació.
 
 S'acostuma a anomenar aquesta capa *business layer*.
 
@@ -343,15 +342,11 @@ public class Product {
 
 ## Capa d'accés a dades (DAL). Les classes DAO
 
-La capa d'accés a dades (***Data Access Layer***) s'encarrega de la
-persistència de les dades del model (capa de negoci).
+La capa d'accés a dades (***Data Access Layer***) s'encarrega de la persistència de les dades del model (capa de negoci).
 
-Apliquem el patró **DAO** (***Data Access Object***), el qual usa una
-classe per a encapsular les consultes a cada una de les taules de la
-base de dades.
+Apliquem el patró **DAO** (***Data Access Object***), el qual usa una classe per a encapsular les consultes a cada una de les taules de la base de dades.
 
-Aquestes classes implementen les funcionalitats del conegut **CRUD**
-(*Create*, *Read*, *Update*, *Delete*).
+Aquestes classes implementen les funcionalitats del conegut **CRUD** (*Create*, *Read*, *Update*, *Delete*).
 
 ``` java
 package cat.proven.categprods.model.persist;
@@ -646,158 +641,7 @@ public class ProductDao {
 }
 ```
 
-## La classe principal de test
-
-``` java
-package cat.proven.categprods;
-
-import cat.proven.categprods.model.Category;
-import cat.proven.categprods.model.Product;
-import cat.proven.categprods.model.persist.CategoryDao;
-import cat.proven.categprods.model.persist.ProductDao;
-import java.util.List;
-import java.util.Scanner;
-
-/**
- * Main class to test Category and Product persistence
- * @author ProvenSoft
- */
-public class Tester {
-
-    private final CategoryDao categoryDao;
-    private final ProductDao productDao;
-
-    public Tester() {
-        categoryDao = new CategoryDao();
-        productDao = new ProductDao();        
-    }
-
-    public <T> void printList(List<T> data) {
-        if (data != null) {
-            data.forEach(System.out::println);
-        } else {
-            System.out.println("Null data");
-        }   
-    }
- 
-    public <T> void printSingle(T data) {
-        if (data != null) {
-            System.out.println(data.toString());
-        } else {
-            System.out.println("Null data");
-        }
-    }
-    
-    public static void main(String[] args) {
-        Tester main = new Tester();
-        main.runTests();
-    }
-
-    private void runTests() {
-        testRetrieveAllCategories();
-        testRetrieveAllProducts();
-        testRetrieveProductsByCategory();
-        testRetrieveProductWithCategory();
-        testInsertCategory();
-        testInsertProduct();
-        testUpdateCategory();
-    }
-
-    public void testRetrieveAllCategories() {
-        //test retrieve all categories
-        System.out.println("Retrieve all categories");
-        List<Category> allCategories = categoryDao.selectAll();
-        printList(allCategories);        
-    }
-
-    public void testRetrieveAllProducts() {
-        //test retrieve all products
-        System.out.println("Retrieve all products");
-        List<Product> allProducts = productDao.selectAll();
-        printList(allProducts);        
-    }
-
-    public void testRetrieveProductsByCategory() {
-        //test retrieve products by category
-        System.out.println("Retrieve products by category");
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Input category id: ");
-        long categoryId = scan.nextLong();
-        List<Product> products = productDao.selectWhereCategory(new Category(categoryId));
-        printList(products);
-    }
-    
-    public void testRetrieveProductWithCategory() {
-        //test retrieve product with category
-        System.out.println("Retrieve product with category");
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Input product id: ");
-        long productId = scan.nextLong();
-        Product product = productDao.select(new Product(productId));
-        printSingle(product); 
-        if (product != null) {
-            Category category = categoryDao.select(new Category(product.getId()));
-            product.setCategory(category);
-            printSingle(product);            
-        }
-    }
-    
-    public void testInsertCategory() {
-        //test insert a new category
-        System.out.println("Insert a new category");
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Category code: ");
-        String code = scan.next();
-        System.out.print("Category name: ");
-        String name = scan.next();
-        Category category = new Category(0, code, name);
-        int result = categoryDao.insert(category);
-        String resultMsg = (result==1)? "Category saved":"Category not saved";
-        System.out.println( resultMsg );
-    }
-
-    public void testInsertProduct() {
-        //test insert a new product
-        System.out.println("Insert a new product");
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Product code: ");
-        String code = scan.next();
-        System.out.print("Product name: ");
-        String name = scan.next();
-        System.out.print("Product stock: ");
-        int stock = scan.nextInt();
-        System.out.print("Product price: ");
-        double price = scan.nextDouble();
-        System.out.print("Product category id: ");
-        long categoryId = scan.nextLong();
-        Product product = new Product(0, code, name, stock, price, new Category(categoryId));
-        int result = productDao.insert(product);
-        String resultMsg = (result==1)? "Product saved":"Product not saved";
-        System.out.println( resultMsg );
-    }
-    
-    public void testUpdateCategory() {
-        //test update a category
-        System.out.println("Update a category");
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Category id (of category to be updated): ");
-        long id = scan.nextLong();
-        Category actualCategory = new Category(id);
-        System.out.print("New category code: ");
-        String code = scan.next();
-        System.out.print("New category name: ");
-        String name = scan.next();
-        Category updatedCategory = new Category(0, code, name);
-        int result = categoryDao.update(actualCategory, updatedCategory);
-        String resultMsg = (result==1)? "Category updated":"Category not updated";
-        System.out.println( resultMsg );
-    }
-    
-}
-```
-
-![Descàrrega del codi explicat fins
-aquí](/docencia/dam/m06/uf2/nf1/categproduct-sense_model.zip)
+![Descàrrega del codi explicat fins aquí](/docencia/dam/m06/uf2/nf1/categproduct-sense_model.zip)
 
 Proposta d'exercici: Completar totes les consultes possibles i
 implementar els tests.
@@ -964,148 +808,6 @@ public class StoreModel {
         }
         return p;
     }
-}
-```
-
-I ara, la classe de test per provar-ne el funcionament serà la següent:
-
-``` java
-package cat.proven.categprods;
-
-import cat.proven.categprods.model.Category;
-import cat.proven.categprods.model.Product;
-import cat.proven.categprods.model.StoreModel;
-import java.util.List;
-import java.util.Scanner;
-
-/**
- * Main class to test Category and Product persistence
- * @author ProvenSoft
- */
-public class Tester2 {
-
-    private final StoreModel model;
-
-    public Tester2() {
-        model = new StoreModel();
-    }
-
-    public <T> void printList(List<T> data) {
-        if (data != null) {
-            data.forEach(System.out::println);
-        } else {
-            System.out.println("Null data");
-        }   
-    }
- 
-    public <T> void printSingle(T data) {
-        if (data != null) {
-            System.out.println(data.toString());
-        } else {
-            System.out.println("Null data");
-        }
-    }
-    
-    public static void main(String[] args) {
-        Tester2 main = new Tester2();
-        main.runTests();
-    }
-
-    private void runTests() {
-        testRetrieveAllCategories();
-        testRetrieveAllProducts();
-        testRetrieveProductsByCategory();
-        testRetrieveProductWithCategory();
-        testInsertCategory();
-        testInsertProduct();
-        testUpdateCategory();
-    }
-
-    public void testRetrieveAllCategories() {
-        //test retrieve all categories
-        System.out.println("Retrieve all categories");
-        List<Category> allCategories = model.findAllCategories();
-        printList(allCategories);        
-    }
-
-    public void testRetrieveAllProducts() {
-        //test retrieve all products
-        System.out.println("Retrieve all products");
-        List<Product> allProducts = model.findAllProducts();
-        printList(allProducts);        
-    }
-
-    public void testRetrieveProductsByCategory() {
-        //test retrieve products by category
-        System.out.println("Retrieve products by category");
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Input category id: ");
-        long categoryId = scan.nextLong();
-        List<Product> products = model.findProductsByCategory(new Category(categoryId));
-        printList(products);
-    }
-    
-    public void testRetrieveProductWithCategory() {
-        //test retrieve product with category
-        System.out.println("Retrieve product with category");
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Input product id: ");
-        long productId = scan.nextLong();
-        Product product = model.findProductWithCategory(new Product(productId));
-        printSingle(product); 
-    }
-    
-    public void testInsertCategory() {
-        //test insert a new category
-        System.out.println("Insert a new category");
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Category code: ");
-        String code = scan.next();
-        System.out.print("Category name: ");
-        String name = scan.next();
-        Category category = new Category(0, code, name);
-        int result = model.addCategory(category);
-        String resultMsg = (result==1)? "Category saved":"Category not saved";
-        System.out.println( resultMsg );
-    }
-
-    public void testInsertProduct() {
-        //test insert a new product
-        System.out.println("Insert a new product");
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Product code: ");
-        String code = scan.next();
-        System.out.print("Product name: ");
-        String name = scan.next();
-        System.out.print("Product stock: ");
-        int stock = scan.nextInt();
-        System.out.print("Product price: ");
-        double price = scan.nextDouble();
-        System.out.print("Product category id: ");
-        long categoryId = scan.nextLong();
-        Product product = new Product(0, code, name, stock, price, new Category(categoryId));
-        int result = model.addProduct(product);
-        String resultMsg = (result==1)? "Product saved":"Product not saved";
-        System.out.println( resultMsg );
-    }
-    
-    public void testUpdateCategory() {
-        //test update a category
-        System.out.println("Update a category");
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Category id (of category to be updated): ");
-        long id = scan.nextLong();
-        Category actualCategory = new Category(id);
-        System.out.print("New category code: ");
-        String code = scan.next();
-        System.out.print("New category name: ");
-        String name = scan.next();
-        Category updatedCategory = new Category(0, code, name);
-        int result = model.modifyCategory(actualCategory, updatedCategory);
-        String resultMsg = (result==1)? "Category updated":"Category not updated";
-        System.out.println( resultMsg );
-    }
-    
 }
 ```
 

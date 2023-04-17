@@ -538,6 +538,8 @@ public class DataStreamExample {
 
 A continuació es mostra un exemple de com desar en fitxer part de la informació d'objectes i com recuperar-la després. En aquest cas, desem en fitxer la informació d'una llista d'usuaris exceptuant els passwords, els quals no volem emmagatzemar-los al fitxer.
 
+[Descàrrega de l'exemple](assets/3.1/primitivefileuser.zip)
+
 ```java
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -551,102 +553,64 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Example: save to disk primitive data from list of objects
+ * Class to persist part of an object (User) in a file
  * @author Jose
  */
-public class PrimTypeExample {
-
-    public static void main(String[] args) {
-        //instantiate list of objects
-        List<User> users = new ArrayList<>();
-        //populate list with objects
-        createUsers(users);
-        //display list
-        System.out.println("Initial data:");
-        displayUsers(users);
-        //define working file name
-        String filename = "users.txt"; //this value should be asked to user
-        //save part of object data to file
-        saveUsersDataToFile(users, filename);
-        //read data stored in file
-        List<User> users2 = readUsersDataFromFile(filename);
-        //display list with read data
-        System.out.println("Read data:");
-        displayUsers(users2);
-    }
-
-    /**
-     * create some users and store them in list
-     * @param users the list to populate
-     */
-    private static void createUsers(List<User> data) {
-        data.add( new User("Peter", "1234", 21) );
-        data.add( new User("John", "1235", 22) );
-        data.add( new User("Martha", "1236", 31) );
-        data.add( new User("Helen", "1237", 25) );
-        data.add( new User("Mary", "1238", 19) );
-    }
-
-    /**
-     * displays the list
-     * @param users the list to be displayed
-     */
-    private static void displayUsers(List<User> data) {
-        for (User elem : data) {
-            System.out.println(elem);
-        }
-    }
+public class PrimitiveFileUser {
 
     /**
      * saves to file list of users (password is not stored)
+     *
      * @param users the list of users
      * @param filename the file name
+     * @return the number of elements actually saved
      */
-    private static void saveUsersDataToFile(List<User> data, String filename) {
+    public int saveUsersDataToFile(List<User> data, String filename) {
+        int counter = 0;
         try (
-          DataOutputStream dos = new DataOutputStream(
-            new FileOutputStream(filename, false))
-        ) {
+                 DataOutputStream dos = new DataOutputStream(
+                        new FileOutputStream(filename, false))) {
             for (User user : data) {
                 //write name
                 dos.writeUTF(user.getName());
                 //write age
                 dos.writeInt(user.getAge());
+                counter++;
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+        return counter;
     }
 
     /**
      * reads data stored in file
+     *
      * @param filename the name of the file to read
      * @return list of users with data read from file
      */
-    private static List<User> readUsersDataFromFile(String filename) {
+    public List<User> readUsersDataFromFile(String filename) {
         List<User> data = new ArrayList<>();
         try (
-            DataInputStream dis = new DataInputStream(
-                    new FileInputStream(filename)
-            )
-        ) {
-            while ( dis.available() > 0 ) {
+                 DataInputStream dis = new DataInputStream(
+                        new FileInputStream(filename)
+                )) {
+            while (dis.available() > 0) {
                 //read name
                 String name = dis.readUTF();
                 //read age
                 int age = dis.readInt();
-                //
+                //instantiate object (password is not read from file)
                 User u = new User(name, "", age);
                 data.add(u);
             }
         } catch (EOFException ex) {
-            Logger.getLogger(PrimTypeExample.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(PrimTypeExample.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
         return data;
     }
-    
 }
 ```
 
@@ -656,40 +620,69 @@ Per a la lectura utilitzarem un ***BufferedReader***, el qual proporciona un buf
 
 De fet, l'objecte *System.out* que utilitzem per escriure a la sortida estàndard dels programes és un *PrintStream*.
 
-Exemple d'escriptura i lectura de fitxers de línies de text. [Descàrrega de l'exemple](assets/3.1/LineFile.java)
+Exemple d'escriptura i lectura de fitxers de línies de text. [Descàrrega de l'exemple](assets/3.1/LinesFile.zip)
 
 ```java
-private void saveLinesToFile(List<String> data, String filename) {
-    try (PrintStream out = new PrintStream(filename)) {
-        for (String elem : data) {
-            out.println(elem);
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ * Class to provide persistence of string texts in file line by line
+ * @author Jose
+ */
+public class LinesFile {
+    /**
+     * saves array of String into a file, each element in a line
+     * @param data the array of String to be saved
+     * @param filename the name of the file
+     * @return the number of lines actually written
+     */
+    public int saveLinesToFile(List<String> data, String filename) {
+        int counter = 0;
+        try (PrintStream out = new PrintStream(filename)) {
+            for (String elem : data) {
+                out.println(elem);
+                counter++;
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
-    } catch (IOException e) {
-        System.out.println(e.getMessage());
+        return counter;
     }
-}
-```
-
-```java
-private List<String> readLinesFromFile(String filename) {
-    List<String> data = new ArrayList<>();
-    try (BufferedReader in = new BufferedReader(new FileReader(filename))) {
-        String elem;
-        while ( (elem = in.readLine())!= null ) {
-            data.add(elem);
+    
+    /**
+     * reads array of String from a file, each element from a line
+     * @param filename the name of the file
+     * @return the list of String
+     */
+    public List<String> readLinesFromFile(String filename) {
+        List<String> data = new ArrayList<>();
+        try (BufferedReader in = new BufferedReader( new FileReader(filename) )) {
+            String elem;
+            while ( (elem = in.readLine()) != null ) {
+                data.add(elem);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
-    } catch (FileNotFoundException e) {
-        System.out.println(e.getMessage());
-    } catch (IOException e) {
-        System.out.println(e.getMessage());
-    }        
-    return data;
+        return data;
+    }
+    
 }
 ```
 
-El mètode readLine() llegeix fins al canvi de línia i si arriba al final del fitxer retorna null.
+El mètode *readLine()* llegeix fins al canvi de línia i si arriba al final del fitxer retorna *null*.
 
-Les classes *PrintStream* i *PrintWriter* també proporciones sobrecàrregues delss mètodes ***print()*** i ***println()*** per escriure en format text tots els tipus de dades primitives.
+Les classes *PrintStream* i *PrintWriter* també proporcionen sobrecàrregues dels mètodes ***print()*** i ***println()*** per escriure en format text tots els tipus de dades primitives.
 
 ```java
 void print(boolean b)
@@ -727,7 +720,7 @@ La interfície [***ObjectInput***](https://docs.oracle.com/en/java/javase/17/doc
 La classe [***ObjectOutputStream***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/ObjectOutputStream.html) estén ***OutputStream*** i implementa la interfície ***ObjectOutput***. El seu constructor és: ***ObjectOutputStream(OutputStream outStream) throws IOException***
 La classe [***ObjectInputStream***](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/ObjectInputStream.html) estén ***InputStream*** i implementa la interfície ***ObjectInput***. El seu constructor és: ***ObjectInputStream(InputStream inStream) throws IOException***.
 
-Consulteu la documentació online de Java per a la llista de mètodes que implementen les dues classes anteriors.
+Consulteu la documentació en línia de Java per a la llista de mètodes que implementen les dues classes anteriors.
 
 [Exemple de seriació d'objectes a fitxer en binari](assets/5.1/5.1.3/exampleobjectstream.zip)
 
