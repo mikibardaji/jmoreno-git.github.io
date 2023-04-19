@@ -722,7 +722,7 @@ La classe [***ObjectInputStream***](https://docs.oracle.com/en/java/javase/17/do
 
 Consulteu la documentació en línia de Java per a la llista de mètodes que implementen les dues classes anteriors.
 
-[Exemple de seriació d'objectes a fitxer en binari](assets/5.1/5.1.3/exampleobjectstream.zip)
+[Exemple de seriació d'objectes a fitxer en binari](assets/5.1/5.1.3/contactobjectstream.zip)
 
 ## Biblioteques de classes per a fitxers XML.
 
