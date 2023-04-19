@@ -81,7 +81,11 @@ Els components més habituals són:
   * JCheckbox
   * JRadioButton
 
-### BorderLayout
+### Layouts
+
+[Layouts swing (from www.jairogarciarincon.com)](https://www.jairogarciarincon.com/clase/interfaces-de-usuario-con-java-swing/layout-managers-o-gestores-de-composicion)
+
+#### BorderLayout
 
 [BorderLayout](https://docs.oracle.com/en/java/javase/17/docs/api/java.desktop/java/awt/BorderLayout.html) disposa els elements d'un contenidor en 5 regions: nord, sud, est, oest i centre. En afegir cada component al contenidor, cal especificar a quina posició ha d'anar.
 
@@ -164,17 +168,14 @@ public class BorderLayoutExample {
     }
 }
 ```
-### Layouts
-
-[Layouts swing (from www.jairogarciarincon.com)](https://www.jairogarciarincon.com/clase/interfaces-de-usuario-con-java-swing/layout-managers-o-gestores-de-composicion)
 
 ### Exemple aplicació càlcul índex de massa corporal
 
-Exemple de desenvolupament d'una aplicacó amb interfície gràfica d'usuari (*GUI*) amb un menú i un únic panell, el qual conté un formulari de càlcul de l'índex de massa corporal d'una persona, donats l'altura (en m) i el pes (en kg).
+Exemple de desenvolupament d'una aplicació amb interfície gràfica d'usuari (*GUI*) amb un menú i un únic panell, el qual conté un formulari de càlcul de l'índex de massa corporal d'una persona, donats l'altura (en m) i el pes (en kg).
 
 [Descàrrega de l'exemple complet](assets/5.2/dam2m06uf52-bmi.zip)
 
-### Classe principal
+#### Classe principal
 
 La classe principal només instancia i mostra la finestra principal de l'aplicació.
 
@@ -194,7 +195,7 @@ public class BmiMain {
 
 La classe *BmiFrame* és la que defineix la finestra principal.
 
-### La finestra principal
+#### La finestra principal
 
 Creem una classe que estengui *JFrame*. El mètode *initComponents()* s'encarrega de crear i afegir al frame els components gràfics necessaris. 
 
@@ -259,7 +260,7 @@ public class BmiFrame extends JFrame {
 }
 ```
 
-### El formulari de càlcul
+#### El formulari de càlcul
 
 El formulari de càlcul de l'índex de massa corporal estarà en un panell independent, el qual contindrà un títol i les parelles etiqueta:camp per introduir les dades d'altura i pes, així com dos botons, un per esborrar els camps del formulari i un altre per realitzar el càlcul de l'índex de massa corporal. El resultat s'escriu en un altre camp de text.
 
@@ -324,7 +325,7 @@ public class BmiPanel extends JPanel {
 }
 ```
 
-### El model de dades
+#### El model de dades
 
 La classe *Bmi* és l'encarregada de realitzar els càlculs.
 
@@ -338,7 +339,7 @@ public class Bmi {
 
 Per realitzar els càlculs necessitarem, doncs, instanciar un objecte de la classe *Bmi* i invocar el seu mètode *bmiCalc()*.
 
-### Accions de la finestra principal
+#### Accions de la finestra principal
 
 Per tractar les accions de l'usuari amb la finestra principal, assignem un *ActionListener* per a les accions de cada MenuItem i un *WindowListener* per al botó de tancament de la finestra.
 
@@ -391,7 +392,7 @@ public class BmiFrame extends JFrame implements ActionListener {
 }
 ```
 
-A cada MenuItem dels diferents menús de la barra de menú els hem d'afegir un ActionListener: el propi JFrame.
+A cada *MenuItem* dels diferents menús de la barra de menú els hem d'afegir un *ActionListener*: el propi *JFrame*.
 
 ```java
 menuItem.addActionListener(listener);
@@ -428,7 +429,7 @@ private void doExit() {
 }
 ```
 
-### Accions del panell del formulari de càlcul
+#### Accions del panell del formulari de càlcul
 
 Afegim un atribut per al model (classe *Bmi* per encapsular i realitzar els càlculs) i per al *ActionListener* del panell, que en aquest cas serà el propi panell. Per això, fem que implementi *ActionListener* i afegim un mètode *actionPerformed()* per respondre a les accions.
 
@@ -519,7 +520,7 @@ public class BmiPanel extends JPanel implements ActionListener {
 }
 ```
 
-### Realització dels càlculs
+#### Realització dels càlculs
 
 ```java
 private void doCalculate() {
