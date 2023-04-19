@@ -20,7 +20,7 @@ Una empresa ens ha encarregat que desenvolupem una aplicació per gestionar els 
 
 El que necessita gestionar aquesta empresa és el següent:
 
-Les funcionalitats que cal implementar son altes, baixes, modificacions i consultes de categories, productes i les que gestionen la relació entre categoria i producte
+Les funcionalitats que cal implementar son altes, baixes, modificacions i consultes de categories, productes i les que gestionen la relació entre categoria i producte.
 
 ## La base de dades
 
@@ -69,7 +69,15 @@ INSERT INTO products VALUES
     (9, "P09", "product09", 109, 1009.0, 3);
 ```
 
+Les claus primàries s'han escollit de tipus autoincremental.
+
+Les restriccions d'integritat de la clau forana que relaciona producte amb categoria estan definides de manera que les actualitzacions es propaguen en cascada però els esborrats no, per evitar pèrdues massives de dades en esborrar.
+
+S'ha definit un usuari per a l'accés des de l'aplicació, al qual s'han atorgat els permisos imprescindibles.
+
 ## La classe de connexió
+
+Aquesta classe encapsula les dades de connexió a la base de dades des de l'aplicació i s'encarrega també de proporcionar connexions a través del mètode *getConnection()*.
 
 ``` java
 package cat.proven.categprods.model.persist;
@@ -116,6 +124,8 @@ public final class DbConnect {
 Són les classes que defineixen el tipus de dades (objectes) amb què treballa la nostra aplicació.
 
 S'acostuma a anomenar aquesta capa *business layer*.
+
+Definim una classe per a l'entitat *Category* i una altra per a l'entitat *Product*.
 
 ```java
 package cat.proven.categprods.model;
@@ -347,6 +357,10 @@ La capa d'accés a dades (***Data Access Layer***) s'encarrega de la persistènc
 Apliquem el patró **DAO** (***Data Access Object***), el qual usa una classe per a encapsular les consultes a cada una de les taules de la base de dades.
 
 Aquestes classes implementen les funcionalitats del conegut **CRUD** (*Create*, *Read*, *Update*, *Delete*).
+
+Cas que la relació entre les entitats fos mxn, al model relacional apareixeria també una taula pivot *categoriesproducts*, per a la qual caldria també definir una classe del model *CategoyProduct*. En el nostre cas, com que la relació és 1xn, només hi ha una columna addicional a la taula *products* per emmagatzemar la clau forana que relaciona amb la primària de la taula *categories*.
+
+Els mètodes ```T fromResultset(Resulset rs) throws SQLException``` són mètodes de conveniència per llegir els camps obtinguts a una fila del Resulset (després d'haver executat una consulta de dades) i crear amb ells un objecte de tipus T (Category o Product, segons el cas) que contingui la informació.
 
 ``` java
 package cat.proven.categprods.model.persist;
@@ -661,6 +675,19 @@ public class ProductDao {
 }
 ```
 
+Les consultes poden ser bàsicament de dos tipus:
+
+* consultes que retornen dades: s'executen amb *executeQuery()* i retornen un *ResultSet*.
+* consultes que realitzen canvis a la base de dades: s'executen amb *executeUpdate()* i retornen el nombre de registres afectats per les modificacions
+
+Per a encapsular les consultes utilitzem la classe [***Statement***](https://docs.oracle.com/en/java/javase/20/docs/api/java.sql/java/sql/class-use/Statement.html).
+
+Un *Statement* es crea amb el mètode *createStatement()* de la classe [**Connection**](https://docs.oracle.com/en/java/javase/20/docs/api/java.sql/java/sql/Connection.html).
+
+Per a consultes que admeten paràmetres variables (select ... where, etc) utilitzem [***PreparedStatement***](https://docs.oracle.com/en/java/javase/20/docs/api/java.sql/java/sql/PreparedStatement.html). Els paràmetres es defineixen a la consulta amb el símbol '*?*' i se'ls assigna valors amb mètodes *setXXX* del *PreparedStatement* (hi ha mètodes setXXX diferents segons els tipus de dades a assignar). Els PreparedStatement es creen amb el mètode *prepareStatement(String sql)* de *Connection*.
+
+Les consultes de selecció de dades retornen un [***ResulSet***](https://docs.oracle.com/en/java/javase/20/docs/api/java.sql/java/sql/ResultSet.html), el qual és un cursor amb mètodes per recórrer els resultats de la consulta i per llegir-ne els valors i les seves propietats.
+
 ## Encapsulant els serveis de dades: El model
 
 La lògica de l'aplicació (**capa de control**) i la interacció amb l'usuari (**vista**) constitueixen, si no estan separades, la **capa de presentació**.
@@ -832,13 +859,38 @@ public class StoreModel {
 
 ## Implementant la interacció amb l'usuari
 
-El servei de dades el proveeix la classe StoreModel del model, abans definida. Ara hem d'implementar la capa de presentació, la qual comprén la lògica de l'aplicació (controlador) i la interfície d'usuari (vista).
+El servei de dades el proveeix la classe *StoreModel* del model, abans definida. Ara hem d'implementar la capa de presentació, la qual comprén la lògica de l'aplicació (controlador) i la interfície d'usuari (vista).
 
 Definirem una classe principal (és a dir, amb un mètode *main()*), la qual contindrà una referència del model (per accedir als serveis de dades) i un menú textual perquè l'usuari esculli quina opció vol executar en cada moment.
 
 Aquesta classe contindrà el bucle principal de control, el qual mostrarà el menú, llegirà de l'usuari l'opció que vol executar i delegarà al mètode de control corresponent la realització de l'acció sol·licitada.
 
 Les respostes a l'usuari s'encarreguen a mètodes de vista que presentaran els missatges i els resultats de les accions.
+
+La comunicació de la classe d'interfície amb l'usuari (UI) amb model de dades de l'aplicació es pot aconseguir de diverses maneres:
+
+* Instanciar el model al constructor de la UI
+```java
+public class CategProdUI {
+    private final StoreModel model;
+    public CategProdUI() {
+        this.model = new StoreModel();
+    }
+    ...
+}
+```
+* Instanciant el model al principal (main()) i passant-ne la referència a la UI com a paràmetre del seu constructor
+```java
+public class CategProdUI {
+    private final StoreModel model;
+    public CategProdUI(StoreModel model) {
+        this.model = model;
+    }
+    ...
+}
+```
+
+A l'exemple que segueix hem optat per la segona opció.
 
 ```java
 package cat.proven.categprods;
@@ -1138,7 +1190,8 @@ public class CategProdUI {
 
 [Descàrrega del codi](assets/6.1/categproduct.zip)
 
-Exercici: 
+Exercici proposat: 
 
-Completar totes les funcionalitats possibles de l'aplicació. Assegurar que es proven totes les funcionalitats tenint en compte tots els fluxos alternatius de cada una d'elles, de manera que es controlin adequadament tots els errors.
+1. Completar totes les funcionalitats possibles de l'aplicació. Assegurar que es proven totes les funcionalitats tenint en compte tots els fluxos alternatius de cada una d'elles, de manera que es controlin adequadament tots els errors.
+2. Modificar el codi de manera que el control d'errors es faci mitjançant excepcions.
 
