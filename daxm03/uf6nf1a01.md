@@ -245,7 +245,7 @@ public class Country {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Country)) {
             return false;
         }
         final Country other = (Country) obj;
