@@ -14,6 +14,8 @@ Per programar interfícies gràfiques d'usuari (*GUI*) utilitzarem la biblioteca
 
 [Presentació de GUI amb Swing](assets/5.2/gui_amb_swing.pdf)
 
+[Jerarquia de la biblioteca swing](assets/5.2/swing_hierarchy.jpg)
+
 ### Primera aplicació amb Swing
 
 Les finestres que poden residir sobre el sistema operatiu són els [***JFrame***](https://docs.oracle.com/en/java/javase/20/docs/api/java.desktop/javax/swing/JFrame.html).
