@@ -16,6 +16,14 @@ Per programar interfícies gràfiques d'usuari (*GUI*) utilitzarem la biblioteca
 
 ### Primera aplicació amb Swing
 
+Les finestres que poden residir sobre el sistema operatiu són els [***JFrame***](https://docs.oracle.com/en/java/javase/20/docs/api/java.desktop/javax/swing/JFrame.html).
+
+Un *JFrame* pot tenir un títol, una barra de menús i una capa de contingut (content pane) on ubicar el contingut de la finestra. També disposa dels botons habituals per minimitzar, maximitzar i tancar la finestra.
+
+El comportament per defecte del botó de tancament es defineix amb el mètode *setDefaultCloseOperation()*.
+
+Si cal forçar el repintat d'un contenidor, es pot fer amb el mètode *validate()*.
+
 [HelloWorldSwing.java (descàrrega)](assets/5.2/HelloWorldSwing.java)
 ```
 import javax.swing.*;        
@@ -54,6 +62,24 @@ public class HelloWorldSwing {
     }
 }
 ```
+
+La càrrega de la interfície gràfica es fa amb el mètode invokeLater(), el qual assegura que es carreguen els components amb el fil d'execució del tractament dels esdeveniments.
+
+Per dimensionar la finestra utilitzem el mètode *setSize()*. Alternativament, el mètode *pack()* la redimensiona al menor tamany possible tenint en compte el seu contingut.
+
+Como a contenidor de components s'acostuma a utilizar la classe [***JPanel***](https://docs.oracle.com/en/java/javase/20/docs/api/java.desktop/javax/swing/JPanel.html).
+
+
+Per tal de facilitar la ubicació dels components dintre dels contenidors, disposem de *layouts* predefinits: [**FlowLayout**](https://docs.oracle.com/en/java/javase/20/docs/api/java.desktop/java/awt/FlowLayout.html), [**BorderLayout**](https://docs.oracle.com/en/java/javase/20/docs/api/java.desktop/java/awt/BorderLayout.html), [**GridLayout**](https://docs.oracle.com/en/java/javase/20/docs/api/java.desktop/java/awt/GridLayout.html), [**GridBagLayout**](https://docs.oracle.com/en/java/javase/20/docs/api/java.desktop/java/awt/GridBagLayout.html), ...
+
+### Components
+
+Els components més habituals són:
+  * [***JButton***](https://docs.oracle.com/en/java/javase/20/docs/api/java.desktop/javax/swing/JButton.html)
+  * JLabel
+  * JTextField
+  * JCheckbox
+  * JRadioButton
 
 ### BorderLayout
 
